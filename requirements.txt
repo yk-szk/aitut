@@ -2,8 +2,8 @@ jupyter
 numpy
 pandas
 scipy
+tensorflow
 tqdm
 scikit-learn
 matplotlib
 pydotplus
-keras-tqdm
