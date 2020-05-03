@@ -16,3 +16,6 @@ ipython_config.py
 #   git rm -r .ipynb_checkpoints/
 
 # End of https://www.gitignore.io/api/jupyternotebooks
+
+docs/_build/
+docs/notebooks/
