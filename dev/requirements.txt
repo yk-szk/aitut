@@ -1,0 +1,7 @@
+sphinx_rtd_theme
+sphinx-autobuild
+nbsphinx
+sphinxcontrib-katex
+commonmark
+recommonmark
+nb-clean
