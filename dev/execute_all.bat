@@ -1,4 +1,3 @@
-set listfile=
 call :FOREACH subroutine %listfile%
 exit /b
 
@@ -9,8 +8,7 @@ exit /b
 :FOREACH
 setlocal
 set subroutine=%1
-set listfile=%2
-for /F "tokens=1" %%A in (%listfile%) do (
+for /F "tokens=1" %%A in ("*.ipynb") do (
     call :%subroutine% %%A
 )
 exit /b
