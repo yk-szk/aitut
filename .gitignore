@@ -19,4 +19,4 @@ ipython_config.py
 
 notebooks/Data/
 docs/_build/
-docs/notebooks/
+docs/notebooks/*.ipynb
