@@ -17,10 +17,12 @@
 
 # -- Project information -----------------------------------------------------
 
-project = '人工知能画像診断学共同研究講座チュートリアル'
-copyright = '2020, Yuki Suzuki'
-author = 'Yuki Suzuki'
+project = '深層学習チュートリアル'
+author = '人工知能画像診断学共同研究講座'
+copyright = '2020, ' + author
 version = '0.0.1'
+release = version
+editors = ['Yuki Suzuki']
 
 
 # -- General configuration ---------------------------------------------------
@@ -64,6 +66,77 @@ html_favicon = 'images/logo.svg'
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
 
-latex_show_urls = 'True'
+latex_show_urls = 'footnote'
 latex_logo = 'images/logo.pdf'
-latex_elements = {'papersize': 'a4paper'}
+latex_preamble = r'''
+\setcounter{tocdepth}{2}
+\setcounter{secnumdepth}{2}
+
+\authoraddress{
+  大阪大学医学系研究科
+}
+'''
+
+latex_bg = r'''
+\usepackage{transparent}
+\usepackage{eso-pic}
+\newcommand\BackgroundPic{
+  \put(0,0){
+    \parbox[b][\paperheight]{\paperwidth}{
+      \vfill
+      \hspace{.1\paperwidth}
+      \scalebox{-1}[1]{
+           \includegraphics[width=.5\paperwidth,height=.5\paperheight,
+             keepaspectratio]{logo.pdf}
+           }
+          \vspace{.2\paperheight}
+    }
+  }
+}
+'''
+
+latex_title = r'''
+\begin{titlepage}
+  \noindent\rule{\textwidth}{1pt}\par
+      \begingroup % for PDF information dictionary
+       \def\endgraf{ }\def\and{\& }%
+       \pdfstringdefDisableCommands{\def\\{, }}% overwrite hyperref setup
+       \hypersetup{pdfauthor={$author}, pdftitle={$title}}%
+      \endgroup
+  \begin{flushright}
+    {\Huge $title \par}
+    {\itshape\LARGE Ver. $release \par}
+    {\LARGE
+      \begin{tabular}[t]{c}
+        $author
+      \end{tabular}\kern-\tabcolsep
+      \par}
+    {\large
+      $editors
+    }
+    \vfill
+        {\large
+          $date \par
+        }%
+
+  \end{flushright}
+  \AddToShipoutPicture*{\BackgroundPic}
+\end{titlepage}
+\setcounter{footnote}{0}%
+\clearpage
+'''
+
+from datetime import datetime
+date = datetime.today().strftime("%Y/%m/%d")
+import string
+latex_title = string.Template(latex_title).substitute(title=project,release=release,author=author,editors=', '.join(editors),date=date)
+
+latex_elements = {
+  'papersize': 'a4paper',
+  'extraclassoptions': 'openany,oneside', # remove empty pages
+  'releasename': 'Ver.',
+  'preamble': latex_preamble + latex_bg,
+  'maketitle': latex_title,
+}
+
+
