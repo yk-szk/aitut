@@ -1,6 +1,7 @@
 jupyter
 numpy
 pandas
+Pillow
 scipy
 tensorflow
 tqdm
