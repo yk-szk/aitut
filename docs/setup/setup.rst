@@ -12,6 +12,7 @@ Anacondaのインストール
 チュートリアル用のenvを作成
 ===========================
 Anaconda Promptで以下のコマンドを実行する。
+
 .. code-block:: shell-session
 
    $ conda create -n ai_tut python==3.7
@@ -20,6 +21,7 @@ Anaconda Promptで以下のコマンドを実行する。
 必要なパッケージをインストール
 ==============================
 notebooksディレクトリに移動し以下のコマンドを実行する。
+
 .. code-block:: shell-session
 
    $ pip install -r requirements.txt
