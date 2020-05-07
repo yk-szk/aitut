@@ -14,6 +14,8 @@ Jupyter Notebookの設定(Optional)
    jupyter contrib nbextension install --user
    jupyter nbextensions_configurator enable --user
 
+拡張機能が追加できない場合は``disable configuration for nbextensions`` のチェックを外す
+
 目次の追加
 ======================
 `Table of Contents (2) <https://jupyter-contrib-nbextensions.readthedocs.io/en/latest/nbextensions/toc2/README.html>`_ 見出しをもとに目次を表示する。

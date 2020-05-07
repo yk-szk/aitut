@@ -11,16 +11,18 @@ Anacondaのインストール
 
 チュートリアル用のenvを作成
 ===========================
-.. code-block:: Bash
+Anaconda Promptで以下のコマンドを実行する。
+.. code-block:: shell-session
 
-   conda create -n ai_tut python==3.7
-   activate ai_tut
+   $ conda create -n ai_tut python==3.7
+   $ activate ai_tut
 
 必要なパッケージをインストール
 ==============================
-.. code-block:: Bash
+notebooksディレクトリに移動し以下のコマンドを実行する。
+.. code-block:: shell-session
 
-   pip install -r requirements.txt
+   $ pip install -r requirements.txt
 
 
 Tensorflow
@@ -29,14 +31,17 @@ Tensorflow
 
    TensorFlow 2以降ではGPUを使う場合でもtensorflow-gpuをインストールする必要はない。
 
-.. code-block:: Bash
+.. code-block:: shell-session
 
-   pip install tensorflow
+   $ pip install tensorflow
 
 GPUを使用するための追加作業
 ===========================
 * Visual Studio Community
-* Cuda
+
+   * C++によるデスクトップ開発を選択
+
+* CUDA
 * cuDNN
 
 Graphvizのインストール(Optional)
@@ -50,10 +55,12 @@ Graphvizのインストール(Optional)
 
    * [コントロールパネル] → [システム] → [システムの詳細設定]
    * ユーザー環境変数で[新規]をクリック
-   * 変数名 ``Graphviz`` 、変数値 ``C:\graphviz\release\bin`` を入力して[OK]
+   * 変数名 ``Graphviz`` 、変数値 ``C:\Program Files (x86)\Graphviz2.38\bin`` を入力して[OK]
    * ユーザー環境変数で ``Path`` を選択後[編集]をクリック
    * [新規]をクリック ``%Graphviz%`` を入力して[OK]
 
-* バージョンを表示してインストールできているかを確認 ::
+* コマンドプロンプトにて以下のコマンドを実行することで、バージョンを表示してインストールできているかを確認
 
-   dot -V
+.. code-block:: shell-session
+
+   $ dot -V

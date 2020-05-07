@@ -76,3 +76,11 @@ Chained comparison
    0 < x < 10
 
 複数の比較を簡潔に書けます。
+
+データの確認
+============
+
+.. toctree::
+   :maxdepth: 0
+
+   test_dataset
