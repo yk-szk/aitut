@@ -6,3 +6,4 @@
 
    imagedata_generator
    test_environment
+   modules

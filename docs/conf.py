@@ -10,9 +10,10 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-# import os
-# import sys
+import os
+import sys
 # sys.path.insert(0, os.path.abspath('.'))
+sys.path.insert(0, os.path.abspath('../notebooks'))
 
 
 # -- Project information -----------------------------------------------------
@@ -32,6 +33,8 @@ editors = ['Yuki Suzuki']
 # ones.
 extensions = [
     'nbsphinx',
+    'sphinx.ext.autodoc',
+    'sphinx.ext.napoleon',
     'sphinxcontrib.katex',
 ]
 
@@ -65,6 +68,9 @@ html_favicon = 'images/logo.svg'
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+html_css_files = [
+    'css/alerts.css',
+]
 
 latex_show_urls = 'footnote'
 latex_logo = 'images/logo.pdf'
