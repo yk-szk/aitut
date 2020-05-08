@@ -17,6 +17,7 @@ ipython_config.py
 
 # End of https://www.gitignore.io/api/jupyternotebooks
 
+__pycache__/
 notebooks/Data/
 docs/_build/
 docs/notebooks/*.ipynb
