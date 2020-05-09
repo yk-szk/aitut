@@ -40,16 +40,16 @@ def task_init():
 
     sources = list(pathlib.Path(SRC_NB_DIR).glob('*.ipynb'))
     sources = sources + list(pathlib.Path(SRC_NB_DIR).glob('*.py'))
-    sources = sources + list(pathlib.Path(SRC_NB_DIR).glob('requirements.txt'))
+    sources = sources + list(pathlib.Path(SRC_NB_DIR).glob('requirements.txt')) # needed for test_environment
     dst = pathlib.Path(DEV_NB_DIR)
     targets = [dst / src.name for src in sources]
     for source, target in zip(sources, targets):
         yield {
             'name': target.name,
             'actions': [copy_to_dev],
-            # 'file_dep': [source],
+            # 'file_dep': [source], # no file_dep to avoid cyclic dependencies
             'targets': [target],
-            'uptodate': [nb_uptodate(target, source)],
+            'uptodate': [nb_uptodate(target, source) or timestamp_uptodate(target, source)],
         }
 
 def task_execute():
