@@ -83,4 +83,4 @@ Chained comparison
 .. toctree::
    :maxdepth: 0
 
-   test_dataset
+   ../notebooks/test_dataset

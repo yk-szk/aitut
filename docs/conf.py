@@ -73,7 +73,9 @@ html_css_files = [
 ]
 
 latex_show_urls = 'footnote'
+latex_show_pagerefs = True
 latex_logo = 'images/logo.pdf'
+
 latex_preamble = r'''
 \setcounter{tocdepth}{2}
 \setcounter{secnumdepth}{2}
