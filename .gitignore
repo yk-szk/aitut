@@ -21,3 +21,7 @@ __pycache__/
 notebooks/Data/
 docs/_build/
 docs/notebooks/*.ipynb
+docs/*/*.ipynb
+dev/notebooks/
+
+.doit*
