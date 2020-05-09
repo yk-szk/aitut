@@ -14,6 +14,8 @@ Dataはdev/notebooks内に置く。
 pip install -r dev/requirements.txt
 ```
 
+### plot用の設定
+
 ``` bash
 ipython profile create
 ```
@@ -24,7 +26,7 @@ c.InlineBackend.figure_formats = {'pdf', 'retina'}
 ```
 
 ## Initialize development
-notebooks/からファイルをdev/notebooksにコピーする。
+以下のコマンドを実行して、notebooks/からファイルをdev/notebooksにコピーする。
 ``` bash
 doit init
 ```
@@ -40,9 +42,5 @@ doit execute
 doit clear
 ```
 
-`git add`前に(手動で😥)notebooksディレクトリ内で`..\dev\clean_all.bat`する。
-
-
-## build html and pdf
-
-notebooksディレクトリ内で`..\dev\execute_all.bat`する。
+## pdfをbuild
+WSLでdocs/_build/latexに移動してmake
