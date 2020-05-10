@@ -19,6 +19,8 @@
 
       * K-Fold交差検証
       * DataAugmentation (ImageDataGenerator)
+      * カットオフ値
+      * Probability Calibration curves
 
 * :doc:`NBI_colonoscopy`
 
