@@ -85,7 +85,25 @@ def task_clear():
             'targets': [target],
             'uptodate': [nb_uptodate(target, source)],
         }
+def task_precommit():
+    '''
+    Run this before git commit.
+    '''
+    def copy_to_git(targets):
+        for target in targets:
+            shutil.copy2(pathlib.Path(DEV_NB_DIR) / pathlib.Path(target).name, GIT_NB_DIR)
 
+    sources = list(pathlib.Path(DEV_NB_DIR).glob('*.py'))
+    dst = pathlib.Path(GIT_NB_DIR)
+    targets = [dst / src.name for src in sources]
+    for source, target in zip(sources, targets):
+        yield {
+            'name': target.name,
+            'actions': [copy_to_git],
+            'targets': [target],
+            'task_dep':['clear'],
+            'uptodate': [timestamp_uptodate(target, source)],
+        }
 
 def task_html():
     '''
