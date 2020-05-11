@@ -25,9 +25,13 @@ def are_same_notebooks(filename1, filename2):
     return len(diff) == 0
 
 def nb_uptodate(source, target):
+    if not target.exists():
+        return False
     return are_same_notebooks(source, target)
 
 def timestamp_uptodate(target, source):
+    if not target.exists():
+        return False
     return os.path.getatime(source) <= os.path.getatime(target)
 
 def task_init():
