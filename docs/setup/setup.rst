@@ -39,12 +39,24 @@ Tensorflow
 
 GPUを使用するための追加作業
 ===========================
+.. note::
+
+   必須ではありませんが、可能ならGPUが利用できる環境を用意することをお勧めします。
+
 * Visual Studio Community
 
    * C++によるデスクトップ開発を選択
 
 * CUDA
+
+   * `表 <https://www.tensorflow.org/install/source_windows?hl=en#gpu>`_ でtensorflowのバージョンに対応しているCUDAのバージョンを確認する。
+   * `インストーラー <https://developer.nvidia.com/cuda-toolkit-archive>`_ をダウンロードしインストールする。
+
 * cuDNN
+
+   * `cuDNN公式サイト <https://developer.nvidia.com/cudnn>`_ からインストーラーをダウンロードし実行。登録が必要。
+
+* :doc:`test_environment.ipynb <../notebooks/test_environment>` でGPUが認識できているかを確認する。
 
 Graphvizのインストール(Optional)
 ================================
