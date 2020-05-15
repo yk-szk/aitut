@@ -2,7 +2,7 @@ Python
 ======
 
 条件演算子(conditional operator)
-----------------------------
+--------------------------------
 .. code-block:: python
 
    x if a > b else y

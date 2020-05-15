@@ -1,7 +1,7 @@
 概観
 ****
 
-* :doc:`lung_nodule`
+* :doc:`pulmonary_nodule`
 
    * 問題：2クラス分類
    * 新規要素
@@ -13,7 +13,7 @@
       * 混同行列
       * ROC曲線とAUC
 
-* :doc:`lung_nodule_cv`
+* :doc:`pulmonary_nodule_cv`
 
    * 問題：2クラス分類
    * 新規要素
@@ -23,19 +23,20 @@
       * カットオフ値
       * Probability Calibration curves
 
-* :doc:`NBI_colonoscopy`
+* :doc:`skin_lesion`
 
-   * 問題：3クラス分類
+   * 問題：7クラス分類
    * 新規要素
 
+      * カラー画像
       * 多クラス分類
-      * 学習の早期終了(trainingセットを利用)
       * 事前学習されたモデルからの転移学習・ファインチューニング
+      * 学習の早期終了(trainingセットを利用)
 
 
 * :doc:`dld`
 
-   * 問題：6クラス分類
+   * 問題：4クラス分類
    * 新規要素
 
       * 教師データをtraining、validation、testの3つに分割

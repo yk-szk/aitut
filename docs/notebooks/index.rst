@@ -9,7 +9,7 @@
 .. toctree::
    :maxdepth: 0
 
-   lung_nodule
-   lung_nodule_cv
-   NBI_colonoscopy
+   pulmonary_nodule
+   pulmonary_nodule_cv
+   skin_lesion
    dld
