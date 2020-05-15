@@ -20,3 +20,4 @@
    :maxdepth: 0
 
    notebooks/misc
+   copyright

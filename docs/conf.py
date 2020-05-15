@@ -83,6 +83,8 @@ latex_preamble = r'''
 \authoraddress{
   大阪大学医学系研究科
 }
+
+\usepackage[labelformat=empty]{caption}
 '''
 
 latex_bg = r'''
