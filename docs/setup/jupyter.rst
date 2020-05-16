@@ -14,7 +14,7 @@ Jupyter Notebookの設定(Optional)
    jupyter contrib nbextension install --user
    jupyter nbextensions_configurator enable --user
 
-拡張機能が追加できない場合は``disable configuration for nbextensions`` のチェックを外す
+拡張機能が追加できない場合は :guilabel:`disable configuration for nbextensions` のチェックを外す
 
 目次の追加
 ======================

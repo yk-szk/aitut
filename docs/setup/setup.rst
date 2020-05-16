@@ -67,9 +67,9 @@ Graphvizのインストール(Optional)
 * `公式サイト <https://graphviz.gitlab.io/download/#executable-packages>`_ からインストーラーをダウンロードし実行。
 * 環境変数を変更してパスを通す。
 
-   * [コントロールパネル] → [システム] → [システムの詳細設定]
+   * :menuselection:`[コントロールパネル] --> [システム] --> [システムの詳細設定]`
    * ユーザー環境変数で[新規]をクリック
-   * 変数名 ``Graphviz`` 、変数値 ``C:\Program Files (x86)\Graphviz2.38\bin`` を入力して[OK]
+   * 変数名 ``Graphviz`` 、変数値 :file:`C:\Program Files (x86)\Graphviz2.38\bin` を入力して[OK]
    * ユーザー環境変数で ``Path`` を選択後[編集]をクリック
    * [新規]をクリック ``%Graphviz%`` を入力して[OK]
 
