@@ -74,7 +74,7 @@ def predict_binary(model, data, index):
         index=index)
     return df_result
 
-def show_images_each_class(df, n_rows=2, n_cols=5):
+def show_images_each_class(df, n_rows=2, n_cols=5, figsize=None):
     '''
     Show images from each class
 
@@ -84,6 +84,7 @@ def show_images_each_class(df, n_rows=2, n_cols=5):
 
     for class_label, group in df.groupby('class_label'):
         print(class_label)
+        plt.figure(figsize=figsize)
         for i, row in enumerate(group.sample(n=n_rows * n_cols).itertuples()):
             plt.subplot(n_rows, n_cols, i + 1)
             image = Image.open(row.filepath)
