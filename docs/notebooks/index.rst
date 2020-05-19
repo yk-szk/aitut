@@ -13,3 +13,11 @@
    pulmonary_nodule_cv
    skin_lesion
    dld
+
+Semantic segmentation
+---------------------
+
+.. toctree::
+   :maxdepth: 0
+
+   lung_segmentation
