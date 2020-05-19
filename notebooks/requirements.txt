@@ -7,4 +7,5 @@ tensorflow
 tqdm
 scikit-learn
 matplotlib
+seaborn
 pydotplus
