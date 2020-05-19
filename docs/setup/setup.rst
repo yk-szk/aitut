@@ -78,3 +78,25 @@ Graphvizのインストール(Optional)
 .. code-block:: shell-session
 
    $ dot -V
+
+*******************
+Google Colaboratory
+*******************
+準備中
+
+Google Driveのマウント
+
+.. code-block:: python
+
+   from google.colab import drive
+   drive.mount('/content/drive')
+
+データをコピー(Google Driveから直接ファイルを読み込むと遅いため事前にコピーしておく)
+
+.. code-block:: bash
+
+   !rsync -ahv --progress '/content/drive/My Drive/tutorial/chest_xray.zip' .
+   !mkdir -p ./Data/Images
+   !unzip -nq chest_xray.zip -d Data/Images
+
+左のフォルダアイコンで:file:`Data/Images/...` ができていればOK.
