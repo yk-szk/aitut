@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 from PIL import Image
 import tensorflow as tf
 from sklearn import metrics
+import tqdm
+import time
 
 def create_dataset_df(data_root, class_labels, image_ext):
     '''
@@ -25,6 +27,76 @@ def create_dataset_df(data_root, class_labels, image_ext):
         dfs.append(df)
     df_dataset = pd.concat(dfs, ignore_index=True)
     return df_dataset
+
+class ProgressBarCallback(tf.keras.callbacks.Callback):
+    '''Nested progress with single bar
+  '''
+    def __init__(self, epochs, n_batches, batch_size, leave=True):
+        '''
+    Args:
+       n_epochs: # of epochs
+       n_batchs: # of batchs per epoch
+       batch_size: batch size
+       leave: tqdm's leave argument
+    '''
+        self.n_epochs = epochs
+        self.n_batches = n_batches
+        self.batch_size = batch_size
+        self.time_pbar_begin = time.time()
+        self.bar = tqdm.tqdm(
+            total=self.n_batches,
+            leave=leave,
+            unit='batch',
+            desc='1/{n_epochs} epoch'.format(n_epochs=self.n_epochs))
+
+    def __enter__(self):
+        return self
+
+    def on_epoch_begin(self, epoch, logs={}):
+        self.bar.reset()
+        self.logs = []
+        self.time_epoch_begin = time.time()
+
+    @staticmethod
+    def _duration2str(duration):
+        if duration >= 100 * 60:  # in hours
+            return '{:.02g}h'.format(duration / 360)
+        elif duration >= 100:  # in mins
+            return '{:.02g}m'.format(duration / 60)
+        else:  # in secs
+            return '{:.02g}s'.format(duration)
+
+    def on_epoch_end(self, epoch, logs={}):
+        summary = pd.DataFrame(self.logs).mean().to_dict()
+        str_summary = ','.join(
+            ['{}={:.03g}'.format(k, v) for k, v in summary.items()])
+        duration = time.time() - self.time_pbar_begin
+        duration_per_epoch = duration / (epoch + 1)
+        expected_duration = ProgressBarCallback._duration2str(
+            duration_per_epoch * self.n_epochs)
+        duration_per_epoch = ProgressBarCallback._duration2str(
+            duration_per_epoch)
+        duration = ProgressBarCallback._duration2str(duration)
+        self.bar.set_description(
+            '{epoch}/{n_epochs} epoch [{duration}/{expected_duration} ({epoch_duration}/epoch) last_epoch=({summary})]'
+            .format(duration=duration,
+                    expected_duration=expected_duration,
+                    epoch_duration=duration_per_epoch,
+                    summary=str_summary,
+                    epoch=epoch + 1,
+                    n_epochs=self.n_epochs))
+
+    def on_batch_begin(self, batch, logs={}):
+        pass
+
+    def on_batch_end(self, batch, logs={}):
+        logs.pop('batch'), logs.pop('size')
+        self.logs.append(logs)
+        self.bar.update(self.batch_size)
+        self.bar.set_postfix(logs)
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.bar.close()
 
 def predict_multiclass(model, data, index):
     '''
