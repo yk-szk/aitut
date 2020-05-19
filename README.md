@@ -1,12 +1,10 @@
-# チュートリアル
-画像データはアップロードしない(できない)
+# 深層学習チュートリアル
+
+## データ
+[Google drive](https://drive.google.com/drive/folders/1DRVorm2s9VziYHkRuqyinwZ2mH9L6LU9?usp=sharing "GDrive")
+Data.zipをダウンロードして
+- : チュートリアルで使用するデータ。`notebooks\Data\Images`となるように展開する。
+
 
 ## notebooks
-noteobok置き場。データは`notebooks\Data`となるようにする。
-以下の順番
-
-- lung_nodule
-- lung_nodule_cv
-- NBI_colonoscopy
-- dld
-- imagedata_generator
+noteobok置き場。
