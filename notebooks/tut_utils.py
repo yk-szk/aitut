@@ -29,16 +29,23 @@ def create_dataset_df(data_root, class_labels, image_ext):
     return df_dataset
 
 class ProgressBarCallback(tf.keras.callbacks.Callback):
-    '''Nested progress with single bar
-  '''
+    '''
+    Nested progress with single bar
+
+    Example:
+        >>> with ProgressBarCallback(epochs, n_batches, batch_size) as pbar:
+        >>>     model.fit(..., callbacks=[pbar])
+    '''
     def __init__(self, epochs, n_batches, batch_size, leave=True):
         '''
-    Args:
-       n_epochs: # of epochs
-       n_batchs: # of batchs per epoch
-       batch_size: batch size
-       leave: tqdm's leave argument
-    '''
+        Initialize an object
+
+        Args:
+            n_epochs: # of epochs
+            n_batchs: # of batchs per epoch
+            batch_size: batch size
+            leave: tqdm's leave argument
+        '''
         self.n_epochs = epochs
         self.n_batches = n_batches
         self.batch_size = batch_size
