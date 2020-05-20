@@ -21,3 +21,11 @@ Semantic segmentation
    :maxdepth: 0
 
    lung_segmentation
+
+Imaget-to-Image translation
+---------------------------
+
+.. toctree::
+   :maxdepth: 0
+
+   img2img_unet
