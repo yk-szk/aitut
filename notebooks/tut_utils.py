@@ -28,6 +28,7 @@ def create_dataset_df(data_root, class_labels, image_ext):
     df_dataset = pd.concat(dfs, ignore_index=True)
     return df_dataset
 
+
 class ProgressBarCallback(tf.keras.callbacks.Callback):
     '''
     Nested progress with single bar
@@ -51,18 +52,13 @@ class ProgressBarCallback(tf.keras.callbacks.Callback):
         self.batch_size = batch_size
         self.time_pbar_begin = time.time()
         self.bar = tqdm.tqdm(
-            total=self.n_batches,
+            total=self.n_batches * self.batch_size,
             leave=leave,
             unit='batch',
             desc='1/{n_epochs} epoch'.format(n_epochs=self.n_epochs))
 
     def __enter__(self):
         return self
-
-    def on_epoch_begin(self, epoch, logs={}):
-        self.bar.reset()
-        self.logs = []
-        self.time_epoch_begin = time.time()
 
     @staticmethod
     def _duration2str(duration):
@@ -73,14 +69,18 @@ class ProgressBarCallback(tf.keras.callbacks.Callback):
         else:  # in secs
             return '{:.02g}s'.format(duration)
 
+    def on_epoch_begin(self, epoch, logs={}):
+        self.bar.reset(total=self.n_batches * self.batch_size)
+        self.logs = []
+
     def on_epoch_end(self, epoch, logs={}):
         summary = pd.DataFrame(self.logs).mean().to_dict()
         str_summary = ','.join(
             ['{}={:.03g}'.format(k, v) for k, v in summary.items()])
         duration = time.time() - self.time_pbar_begin
         duration_per_epoch = duration / (epoch + 1)
-        expected_duration = ProgressBarCallback._duration2str(
-            duration_per_epoch * self.n_epochs)
+        expected_duration = self._duration2str(duration_per_epoch *
+                                               self.n_epochs)
         duration_per_epoch = ProgressBarCallback._duration2str(
             duration_per_epoch)
         duration = ProgressBarCallback._duration2str(duration)
