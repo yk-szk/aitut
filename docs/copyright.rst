@@ -45,6 +45,13 @@
 `Creative Commons Attribution-NonCommercial (CC BY-NC) 4.0 license <https://creativecommons.org/licenses/by-nc/4.0/>`_ で配布されている、
 `HAM10000 dataset <https://challenge2018.isic-archive.com/task3/training/>`_ をもとに作成したものです。
 
+胸部X線画像
+***********
+`Creative Commons Attribution 3.0 Unported License <https://creativecommons.org/licenses/by/3.0/>`_ で配布されている、
+`LIDC-IDRI <https://wiki.cancerimagingarchive.net/display/Public/LIDC-IDRI>`_ をもとに作成したものです。
+
+:ref:`lidc-data`, :ref:`lidc-publication`, :ref:`tcia`
+
 ロゴ
 ----
 .. figure:: images/logo.*
