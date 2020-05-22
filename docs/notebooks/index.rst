@@ -29,3 +29,5 @@ Imaget-to-Image translation
    :maxdepth: 0
 
    img2img_unet
+   img2img_pix2pix
+   img2img_comparison
