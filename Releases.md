@@ -1,5 +1,9 @@
 # Releases
 
+## 0.1.2
+- img2img_pix2pix, img2img_comparisonを追加
+- bone_enhancement画像を追加
+
 ## 0.1.1
 - img2img_unetを追加
 
