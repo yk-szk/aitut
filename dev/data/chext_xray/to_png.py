@@ -34,24 +34,25 @@ for i in range(285):
     lung,_ = mhd.read('output/{:03d}_lung.mha'.format(i))
     
     lung_bin = dilation(lung > 100)
-#    plt.imshow(lung_bin)
-#    plt.show()
-#    minmax = percent(img, lung_bin, 1)
+
     normed = normalize(img, percentile=3)
-#    normed = normalize(img, minmax=minmax)
-#    normed = normalize(img , wlww=(590,750))
     Image.fromarray(normed).save('png/regular/{:03d}.png'.format(i))
     plt.imshow(normed, cmap='gray')
     plt.show()
+
     img_h,h = mhd.read('output/{:03d}_high.mha'.format(i))
-#    minmax = percent(img_h, lung_bin, 1)
     normed = normalize(img_h, percentile=3)
-#    normed = normalize(img_h, minmax=minmax)
-#    normed = normalize(img , wlww=(1150, 380))
     plt.imshow(normed, cmap='gray')
     plt.show()
     Image.fromarray(normed).save('png/bone_suppression/{:03d}.png'.format(i))
-    lung_bin = lung > 50
-    Image.fromarray((lung_bin*255).astype(np.uint8)).save('png/lung/{:03d}.png'.format(i))
+
+    img_h,h = mhd.read('output/{:03d}_lower.mha'.format(i))
+    normed = normalize(img_h, percentile=3)
+    plt.imshow(normed, cmap='gray')
+    plt.show()
+    Image.fromarray(normed).save('png/bone_enhancement/{:03d}.png'.format(i))
+
+    # lung_bin = lung > 50
+    # Image.fromarray((lung_bin*255).astype(np.uint8)).save('png/lung/{:03d}.png'.format(i))
 #    if i >= 10:
 #        break
