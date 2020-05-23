@@ -52,7 +52,5 @@ for i in range(285):
     plt.show()
     Image.fromarray(normed).save('png/bone_enhancement/{:03d}.png'.format(i))
 
-    # lung_bin = lung > 50
-    # Image.fromarray((lung_bin*255).astype(np.uint8)).save('png/lung/{:03d}.png'.format(i))
-#    if i >= 10:
-#        break
+     lung_bin = lung > 50
+     Image.fromarray((lung_bin*255).astype(np.uint8)).save('png/lung/{:03d}.png'.format(i))

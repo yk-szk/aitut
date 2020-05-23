@@ -18,8 +18,8 @@ def largest(img, n=1):
         new_image[labels==indices[i+1]] = 1
     return new_image.astype(np.uint8)
 
-def extract_lung(volume):
-    air = volume < -500
+def extract_lung(volume, t_air=-500):
+    air = volume < t_air
     body = 1 - air
     filled = morphology.binary_fill_holes(body, np.ones((1,3,3)))
     air_inbody = filled - body
