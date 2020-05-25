@@ -36,7 +36,9 @@
 びまん性肺疾患
 **************
 `Creative Commons Attribution 3.0 Unported License <https://creativecommons.org/licenses/by/3.0/>`_ で配布されている、
-`LIDC-IDRI <https://wiki.cancerimagingarchive.net/display/Public/LIDC-IDRI>`_ をもとに作成したものです。
+`LIDC-IDRI <https://wiki.cancerimagingarchive.net/display/Public/LIDC-IDRI>`_ 及び、
+CC BY-NC-SAで配布されている[COVID-19 image dataset collection (volumes folder) March 30th 2020 - Academic Torrents](https://academictorrents.com/details/136ffddd0959108becb2b3a86630bec049fcb0ff)
+をもとに作成したものです。
 
 :ref:`lidc-data`, :ref:`lidc-publication`, :ref:`tcia`
 
