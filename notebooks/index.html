@@ -1,0 +1,480 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>画像分類 &mdash; 深層学習チュートリアル</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/logo.svg"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/translations.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script>
+        <script src="../_static/katex_autorenderer.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/alerts.css" type="text/css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/katex-math.css" type="text/css" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="next" title="概観" href="overview.html" />
+    <link rel="prev" title="データの確認" href="test_dataset.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> 深層学習チュートリアル
+          
+
+          
+            
+            <img src="../_static/logo.svg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../setup/index.html">セットアップ</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../prerequisites/index.html">はじめに</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">画像分類</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="overview.html">概観</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pulmonary_nodule.html">肺結節の良悪性判定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pulmonary_nodule_cv.html">肺結節の良悪性判定(K-Fold 交差検証)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skin_lesion.html">Skin lesion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dld.html">びまん性肺疾患(4クラス, (train, validate, test))</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#semantic-segmentation">Semantic segmentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lung_segmentation.html">肺野セグメンテーション</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#imaget-to-image-translation">Imaget-to-Image translation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="img2img_unet.html">Bone suppression(U-Net)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="img2img_pix2pix.html">Bone suppression(pix2pix)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="img2img_comparison.html">pix2pixとU-Netの比較</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="misc.html">その他</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../copyright.html">著作権・ライセンス表記</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">深層学習チュートリアル</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>画像分類</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="id1">
+<h1>画像分類<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">概観</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="pulmonary_nodule.html">肺結節の良悪性判定</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pulmonary_nodule.html#前準備">前準備</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pulmonary_nodule.html#主要パッケージのインポート">主要パッケージのインポート</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pulmonary_nodule.html#データディレクトリの指定">データディレクトリの指定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pulmonary_nodule.html#画像ファイルを基にpd.DataFrameを作成する">画像ファイルを基にpd.DataFrameを作成する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pulmonary_nodule.html#クラスごとの画像数を確認する">クラスごとの画像数を確認する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pulmonary_nodule.html#画像を表示してみる">画像を表示してみる</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pulmonary_nodule.html#ホールドアウト検証用にデータセットを分割する">ホールドアウト検証用にデータセットを分割する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pulmonary_nodule.html#データを読み込む">データを読み込む</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pulmonary_nodule.html#ネットワーク作成">ネットワーク作成</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pulmonary_nodule.html#ネットワーク構造の可視化">ネットワーク構造の可視化</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pulmonary_nodule.html#学習">学習</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pulmonary_nodule.html#学習経過をモニタするためのクラスを作成">学習経過をモニタするためのクラスを作成</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pulmonary_nodule.html#fit">fit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pulmonary_nodule.html#学習履歴の可視化">学習履歴の可視化</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pulmonary_nodule.html#評価">評価</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pulmonary_nodule.html#混同行列">混同行列</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pulmonary_nodule.html#ROCカーブ">ROCカーブ</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pulmonary_nodule_cv.html">肺結節の良悪性判定(K-Fold 交差検証)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pulmonary_nodule_cv.html#前準備">前準備</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pulmonary_nodule_cv.html#主要パッケージを読み込む">主要パッケージを読み込む</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pulmonary_nodule_cv.html#データディレクトリの指定">データディレクトリの指定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pulmonary_nodule_cv.html#画像ファイルを基にpd.DataFrameを作成する">画像ファイルを基にpd.DataFrameを作成する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pulmonary_nodule_cv.html#データ読み込み用の関数を作成">データ読み込み用の関数を作成</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pulmonary_nodule_cv.html#Data-augmentation">Data augmentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pulmonary_nodule_cv.html#ネットワーク作成関数を作成">ネットワーク作成関数を作成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pulmonary_nodule_cv.html#K-Fold-交差検証">K-Fold 交差検証</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pulmonary_nodule_cv.html#評価">評価</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pulmonary_nodule_cv.html#混同行列">混同行列</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pulmonary_nodule_cv.html#ROCカーブ">ROCカーブ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pulmonary_nodule_cv.html#カットオフ値">カットオフ値</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pulmonary_nodule_cv.html#Probability-Calibration-curves">Probability Calibration curves</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pulmonary_nodule_cv.html#Decision-Curve-Analysis">Decision Curve Analysis</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="skin_lesion.html">Skin lesion</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="skin_lesion.html#前準備">前準備</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="skin_lesion.html#主要パッケージを読み込む">主要パッケージを読み込む</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skin_lesion.html#データディレクトリの指定">データディレクトリの指定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skin_lesion.html#画像ファイルを基にpd.DataFrameを作成する">画像ファイルを基にpd.DataFrameを作成する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skin_lesion.html#クラスごとの画像数を確認する">クラスごとの画像数を確認する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skin_lesion.html#各クラスの画像を表示してみる">各クラスの画像を表示してみる</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skin_lesion.html#データ読み込み用の関数を作成">データ読み込み用の関数を作成</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="skin_lesion.html#Data-augmentation">Data augmentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skin_lesion.html#モデル作成">モデル作成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skin_lesion.html#K-Fold-交差検証">K-Fold 交差検証</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skin_lesion.html#評価">評価</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="skin_lesion.html#混同行列">混同行列</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skin_lesion.html#ROCカーブ">ROCカーブ</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dld.html">びまん性肺疾患(4クラス, (train, validate, test))</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dld.html#前準備">前準備</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dld.html#主要パッケージを読み込む">主要パッケージを読み込む</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dld.html#データディレクトリの指定">データディレクトリの指定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dld.html#画像ファイルを基にpd.DataFrameを作成する">画像ファイルを基にpd.DataFrameを作成する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dld.html#クラス毎の画像数を確認する。">クラス毎の画像数を確認する。</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dld.html#各クラスの画像を表示してみる">各クラスの画像を表示してみる</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dld.html#データ読み込み用の関数を作成">データ読み込み用の関数を作成</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dld.html#Data-augmentation">Data augmentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dld.html#ネットワーク作成関数を作成">ネットワーク作成関数を作成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dld.html#K-Fold-交差検証(train,-validate,-test)">K-Fold 交差検証(train, validate, test)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dld.html#DataFrameに交差検証用の列を追加する">DataFrameに交差検証用の列を追加する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dld.html#train,-validate,-testを用いた交差検証を行う">train, validate, testを用いた交差検証を行う</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dld.html#評価">評価</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dld.html#混同行列">混同行列</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dld.html#ROC">ROC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dld.html#クラスごとに間違えている例を表示">クラスごとに間違えている例を表示</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="dld.html#画像ごとにlossを計算">画像ごとにlossを計算</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dld.html#lossの値が大きい画像を表示">lossの値が大きい画像を表示</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="semantic-segmentation">
+<h1>Semantic segmentation<a class="headerlink" href="#semantic-segmentation" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="lung_segmentation.html">肺野セグメンテーション</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lung_segmentation.html#前準備">前準備</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lung_segmentation.html#主要パッケージのインポート">主要パッケージのインポート</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lung_segmentation.html#データディレクトリの指定">データディレクトリの指定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lung_segmentation.html#画像ファイルを基にpd.DataFrameを作成する">画像ファイルを基にpd.DataFrameを作成する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lung_segmentation.html#画像を表示">画像を表示</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lung_segmentation.html#ホールドアウト">ホールドアウト</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lung_segmentation.html#モデル作成">モデル作成</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lung_segmentation.html#Skip-connectionとデコーダー">Skip connectionとデコーダー</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lung_segmentation.html#学習">学習</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lung_segmentation.html#tf.data.Datasetを作成">tf.data.Datasetを作成</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lung_segmentation.html#Data-augmentation">Data augmentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lung_segmentation.html#Fit">Fit</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lung_segmentation.html#評価">評価</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lung_segmentation.html#分布の確認">分布の確認</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lung_segmentation.html#Boxplot">Boxplot</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lung_segmentation.html#Letter-value-plot">Letter value plot</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lung_segmentation.html#Violinplot">Violinplot</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="imaget-to-image-translation">
+<h1>Imaget-to-Image translation<a class="headerlink" href="#imaget-to-image-translation" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="img2img_unet.html">Bone suppression(U-Net)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="img2img_unet.html#前準備">前準備</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="img2img_unet.html#主要パッケージのインポート">主要パッケージのインポート</a></li>
+<li class="toctree-l3"><a class="reference internal" href="img2img_unet.html#データディレクトリの指定">データディレクトリの指定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="img2img_unet.html#画像ファイルを基にpd.DataFrameを作成する">画像ファイルを基にpd.DataFrameを作成する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="img2img_unet.html#画像を表示">画像を表示</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="img2img_unet.html#モデル作成">モデル作成</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="img2img_unet.html#Compile">Compile</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="img2img_unet.html#学習">学習</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="img2img_unet.html#ホールドアウト">ホールドアウト</a></li>
+<li class="toctree-l3"><a class="reference internal" href="img2img_unet.html#Data-augmentation">Data augmentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="img2img_unet.html#fit">fit</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="img2img_unet.html#評価">評価</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="img2img_pix2pix.html">Bone suppression(pix2pix)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="img2img_pix2pix.html#前準備">前準備</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="img2img_pix2pix.html#主要パッケージのインポート">主要パッケージのインポート</a></li>
+<li class="toctree-l3"><a class="reference internal" href="img2img_pix2pix.html#データディレクトリの指定">データディレクトリの指定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="img2img_pix2pix.html#画像ファイルを基にpd.DataFrameを作成する">画像ファイルを基にpd.DataFrameを作成する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="img2img_pix2pix.html#画像を表示">画像を表示</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="img2img_pix2pix.html#モデル作成">モデル作成</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="img2img_pix2pix.html#Generator-model">Generator model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="img2img_pix2pix.html#Generator-loss">Generator loss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="img2img_pix2pix.html#Discriminator-model">Discriminator model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="img2img_pix2pix.html#Discriminator-loss">Discriminator loss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="img2img_pix2pix.html#Optimizer">Optimizer</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="img2img_pix2pix.html#学習">学習</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="img2img_pix2pix.html#ホールドアウト">ホールドアウト</a></li>
+<li class="toctree-l3"><a class="reference internal" href="img2img_pix2pix.html#Data-augmentation">Data augmentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="img2img_pix2pix.html#fit">fit</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="img2img_pix2pix.html#評価">評価</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="img2img_comparison.html">pix2pixとU-Netの比較</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="img2img_comparison.html#前準備">前準備</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="img2img_comparison.html#主要パッケージのインポート">主要パッケージのインポート</a></li>
+<li class="toctree-l3"><a class="reference internal" href="img2img_comparison.html#データディレクトリの指定">データディレクトリの指定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="img2img_comparison.html#画像ファイルを基にpd.DataFrameを作成する">画像ファイルを基にpd.DataFrameを作成する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="img2img_comparison.html#ホールドアウトされたデータの取り出し">ホールドアウトされたデータの取り出し</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="img2img_comparison.html#pix2pix">pix2pix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="img2img_comparison.html#U-Net">U-Net</a></li>
+<li class="toctree-l2"><a class="reference internal" href="img2img_comparison.html#比較">比較</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="overview.html" class="btn btn-neutral float-right" title="概観" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="test_dataset.html" class="btn btn-neutral float-left" title="データの確認" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; <a href="../copyright.html">Copyright</a> 2020, 人工知能画像診断学共同研究講座
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

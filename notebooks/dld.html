@@ -1,0 +1,1878 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>びまん性肺疾患(4クラス, (train, validate, test)) &mdash; 深層学習チュートリアル</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/logo.svg"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/translations.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script>
+        <script src="../_static/katex_autorenderer.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/alerts.css" type="text/css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/katex-math.css" type="text/css" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="next" title="肺野セグメンテーション" href="lung_segmentation.html" />
+    <link rel="prev" title="Skin lesion" href="skin_lesion.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> 深層学習チュートリアル
+          
+
+          
+            
+            <img src="../_static/logo.svg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../setup/index.html">セットアップ</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../prerequisites/index.html">はじめに</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">画像分類</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">概観</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pulmonary_nodule.html">肺結節の良悪性判定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pulmonary_nodule_cv.html">肺結節の良悪性判定(K-Fold 交差検証)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skin_lesion.html">Skin lesion</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">びまん性肺疾患(4クラス, (train, validate, test))</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#前準備">前準備</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#主要パッケージを読み込む">主要パッケージを読み込む</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#データディレクトリの指定">データディレクトリの指定</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#画像ファイルを基にpd.DataFrameを作成する">画像ファイルを基にpd.DataFrameを作成する</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#クラス毎の画像数を確認する。">クラス毎の画像数を確認する。</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#各クラスの画像を表示してみる">各クラスの画像を表示してみる</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#データ読み込み用の関数を作成">データ読み込み用の関数を作成</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#Data-augmentation">Data augmentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ネットワーク作成関数を作成">ネットワーク作成関数を作成</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#K-Fold-交差検証(train,-validate,-test)">K-Fold 交差検証(train, validate, test)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#DataFrameに交差検証用の列を追加する">DataFrameに交差検証用の列を追加する</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#train,-validate,-testを用いた交差検証を行う">train, validate, testを用いた交差検証を行う</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#評価">評価</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#混同行列">混同行列</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ROC">ROC</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#クラスごとに間違えている例を表示">クラスごとに間違えている例を表示</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#semantic-segmentation">Semantic segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#imaget-to-image-translation">Imaget-to-Image translation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="misc.html">その他</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../copyright.html">著作権・ライセンス表記</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">深層学習チュートリアル</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">画像分類</a> &raquo;</li>
+        
+      <li>びまん性肺疾患(4クラス, (train, validate, test))</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container,
+div.nbinput.container div.prompt,
+div.nbinput.container div.input_area,
+div.nbinput.container div[class*=highlight],
+div.nbinput.container div[class*=highlight] pre,
+div.nboutput.container,
+div.nboutput.container div.prompt,
+div.nboutput.container div.output_area,
+div.nboutput.container div[class*=highlight],
+div.nboutput.container div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="びまん性肺疾患(4クラス,-(train,-validate,-test))">
+<h1>びまん性肺疾患(4クラス, (train, validate, test))<a class="headerlink" href="#びまん性肺疾患(4クラス,-(train,-validate,-test))" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="前準備">
+<h2>前準備<a class="headerlink" href="#前準備" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="主要パッケージを読み込む">
+<h3>主要パッケージを読み込む<a class="headerlink" href="#主要パッケージを読み込む" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>loggerの設定も行う</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">pathlib</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span>
+<span class="kn">from</span> <span class="nn">logging</span> <span class="kn">import</span> <span class="n">basicConfig</span><span class="p">,</span> <span class="n">getLogger</span><span class="p">,</span> <span class="n">INFO</span>
+<span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">INFO</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> </span><span class="si">%(levelname)s</span><span class="s1"> :</span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="データディレクトリの指定">
+<h3>データディレクトリの指定<a class="headerlink" href="#データディレクトリの指定" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">DATA_ROOT</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;Data/Images/LIDC_DLD&#39;</span><span class="p">)</span>
+<span class="n">CLASS_LABELS</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;normal&#39;</span><span class="p">,</span><span class="s1">&#39;GGO&#39;</span><span class="p">,</span><span class="s1">&#39;emphysema&#39;</span><span class="p">,</span><span class="s1">&#39;honeycomb&#39;</span><span class="p">)</span>
+<span class="n">IMAGE_EXT</span> <span class="o">=</span> <span class="s1">&#39;.png&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="画像ファイルを基にpd.DataFrameを作成する">
+<h3>画像ファイルを基にpd.DataFrameを作成する<a class="headerlink" href="#画像ファイルを基にpd.DataFrameを作成する" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">tut_utils</span>
+<span class="n">df_dataset</span> <span class="o">=</span> <span class="n">tut_utils</span><span class="o">.</span><span class="n">create_dataset_df</span><span class="p">(</span><span class="n">DATA_ROOT</span><span class="p">,</span> <span class="n">CLASS_LABELS</span><span class="p">,</span> <span class="n">IMAGE_EXT</span><span class="p">)</span>
+<span class="k">assert</span> <span class="nb">set</span><span class="p">(</span><span class="n">CLASS_LABELS</span><span class="p">)</span> <span class="o">==</span> <span class="nb">set</span><span class="p">(</span><span class="n">df_dataset</span><span class="p">[</span><span class="s1">&#39;class_label&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span>
+<span class="p">)),</span> <span class="s1">&#39;Discrepancy between CLASS_LABELS and df_dataset&#39;</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df_dataset</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>filepath</th>
+      <th>class_label</th>
+      <th>class</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Data\Images\LIDC_DLD\normal\000.png</td>
+      <td>normal</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Data\Images\LIDC_DLD\normal\001.png</td>
+      <td>normal</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Data\Images\LIDC_DLD\normal\002.png</td>
+      <td>normal</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Data\Images\LIDC_DLD\normal\003.png</td>
+      <td>normal</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Data\Images\LIDC_DLD\normal\004.png</td>
+      <td>normal</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>843</th>
+      <td>Data\Images\LIDC_DLD\honeycomb\156.png</td>
+      <td>honeycomb</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>844</th>
+      <td>Data\Images\LIDC_DLD\honeycomb\157.png</td>
+      <td>honeycomb</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>845</th>
+      <td>Data\Images\LIDC_DLD\honeycomb\158.png</td>
+      <td>honeycomb</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>846</th>
+      <td>Data\Images\LIDC_DLD\honeycomb\159.png</td>
+      <td>honeycomb</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>847</th>
+      <td>Data\Images\LIDC_DLD\honeycomb\160.png</td>
+      <td>honeycomb</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+<p>848 rows × 3 columns</p>
+</div></div>
+</div>
+</div>
+<div class="section" id="クラス毎の画像数を確認する。">
+<h3>クラス毎の画像数を確認する。<a class="headerlink" href="#クラス毎の画像数を確認する。" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">df_dataset</span><span class="p">[</span><span class="s1">&#39;class_label&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+normal       294
+GGO          203
+emphysema    190
+honeycomb    161
+Name: class_label, dtype: int64
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="各クラスの画像を表示してみる">
+<h3>各クラスの画像を表示してみる<a class="headerlink" href="#各クラスの画像を表示してみる" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">tut_utils</span>
+<span class="n">tut_utils</span><span class="o">.</span><span class="n">show_images_each_class</span><span class="p">(</span><span class="n">df_dataset</span><span class="p">,</span> <span class="n">n_rows</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+GGO
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<a class="reference internal image-reference" href="../_images/notebooks_dld_10_1.png"><img alt="../_images/notebooks_dld_10_1.png" src="../_images/notebooks_dld_10_1.png" style="width: 424px; height: 87px;" /></a>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+emphysema
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<a class="reference internal image-reference" href="../_images/notebooks_dld_10_3.png"><img alt="../_images/notebooks_dld_10_3.png" src="../_images/notebooks_dld_10_3.png" style="width: 424px; height: 87px;" /></a>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+honeycomb
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<a class="reference internal image-reference" href="../_images/notebooks_dld_10_5.png"><img alt="../_images/notebooks_dld_10_5.png" src="../_images/notebooks_dld_10_5.png" style="width: 424px; height: 87px;" /></a>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+normal
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<a class="reference internal image-reference" href="../_images/notebooks_dld_10_7.png"><img alt="../_images/notebooks_dld_10_7.png" src="../_images/notebooks_dld_10_7.png" style="width: 424px; height: 87px;" /></a>
+</div>
+</div>
+</div>
+<div class="section" id="データ読み込み用の関数を作成">
+<h3>データ読み込み用の関数を作成<a class="headerlink" href="#データ読み込み用の関数を作成" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="n">IMG_SHAPE</span> <span class="o">=</span> <span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">load_img</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_3d</span><span class="p">(</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">preprocessing</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load_img</span><span class="p">(</span>
+            <span class="n">filepath</span><span class="p">,</span>
+            <span class="n">color_mode</span><span class="o">=</span><span class="s1">&#39;grayscale&#39;</span> <span class="k">if</span> <span class="n">IMG_SHAPE</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="s1">&#39;rgb&#39;</span><span class="p">,</span>
+            <span class="n">target_size</span><span class="o">=</span><span class="n">IMG_SHAPE</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">load_dataset</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">load_img</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span> <span class="k">for</span> <span class="n">filepath</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;filepath&#39;</span><span class="p">]])</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">]</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span> <span class="o">/</span> <span class="mi">255</span>
+    <span class="k">return</span> <span class="n">data</span><span class="p">,</span> <span class="n">labels</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="Data-augmentation">
+<h2>Data augmentation<a class="headerlink" href="#Data-augmentation" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>いくつかの画像に対して実際にaugmentationを適用し表示する</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">tensorflow.keras.preprocessing.image</span> <span class="kn">import</span> <span class="n">ImageDataGenerator</span>
+
+<span class="k">def</span> <span class="nf">create_generator</span><span class="p">():</span>
+    <span class="n">datagen</span> <span class="o">=</span> <span class="n">ImageDataGenerator</span><span class="p">(</span>
+        <span class="n">rotation_range</span><span class="o">=</span><span class="mi">180</span><span class="p">,</span>
+        <span class="n">horizontal_flip</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">vertical_flip</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">fill_mode</span><span class="o">=</span><span class="s1">&#39;reflect&#39;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">datagen</span>
+
+<span class="n">N_TEST</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="k">def</span> <span class="nf">test_generator</span><span class="p">(</span><span class="n">df_dataset</span><span class="p">):</span>
+    <span class="n">df_train</span> <span class="o">=</span> <span class="n">df_dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="n">N_TEST</span><span class="p">]</span>
+    <span class="n">train_data</span><span class="p">,</span> <span class="n">train_labels</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="n">df_train</span><span class="p">)</span>
+    <span class="n">datagen</span> <span class="o">=</span> <span class="n">create_generator</span><span class="p">()</span>
+    <span class="n">flow</span> <span class="o">=</span> <span class="n">datagen</span><span class="o">.</span><span class="n">flow</span><span class="p">(</span><span class="n">train_data</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N_TEST</span><span class="p">):</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mf">1.5</span><span class="p">))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">flow</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">train_data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;pre-augmentation&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;post-augmentation&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">test_generator</span><span class="p">(</span><span class="n">df_dataset</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<a class="reference internal image-reference" href="../_images/notebooks_dld_14_0.png"><img alt="../_images/notebooks_dld_14_0.png" src="../_images/notebooks_dld_14_0.png" style="width: 247px; height: 111px;" /></a>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<a class="reference internal image-reference" href="../_images/notebooks_dld_14_1.png"><img alt="../_images/notebooks_dld_14_1.png" src="../_images/notebooks_dld_14_1.png" style="width: 247px; height: 111px;" /></a>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<a class="reference internal image-reference" href="../_images/notebooks_dld_14_2.png"><img alt="../_images/notebooks_dld_14_2.png" src="../_images/notebooks_dld_14_2.png" style="width: 247px; height: 111px;" /></a>
+</div>
+</div>
+</div>
+<div class="section" id="ネットワーク作成関数を作成">
+<h2>ネットワーク作成関数を作成<a class="headerlink" href="#ネットワーク作成関数を作成" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>交差検証のfold毎に新しいmodelを作成する必要があるため。</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">from</span> <span class="nn">tensorflow</span> <span class="kn">import</span> <span class="n">keras</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras</span> <span class="kn">import</span> <span class="n">layers</span>
+
+<span class="k">def</span> <span class="nf">build_model</span><span class="p">():</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Sequential</span><span class="p">()</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="n">IMG_SHAPE</span><span class="p">))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">BatchNormalization</span><span class="p">(</span><span class="n">momentum</span><span class="o">=</span><span class="mf">0.90</span><span class="p">))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">MaxPooling2D</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">BatchNormalization</span><span class="p">(</span><span class="n">momentum</span><span class="o">=</span><span class="mf">0.90</span><span class="p">))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">MaxPooling2D</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">BatchNormalization</span><span class="p">(</span><span class="n">momentum</span><span class="o">=</span><span class="mf">0.90</span><span class="p">))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Flatten</span><span class="p">())</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="o">.</span><span class="mi">25</span><span class="p">))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">CLASS_LABELS</span><span class="p">)))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(),</span>
+                  <span class="n">loss</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">SparseCategoricalCrossentropy</span><span class="p">(</span><span class="n">from_logits</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+                  <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">model</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="K-Fold-交差検証(train,-validate,-test)">
+<h2>K-Fold 交差検証(train, validate, test)<a class="headerlink" href="#K-Fold-交差検証(train,-validate,-test)" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>各fold中でデータセットの<span class="math">\(\frac{2}{4}\)</span>を学習用、<span class="math">\(\frac{1}{4}\)</span>をvalidation(EarlyStopping)用、<span class="math">\(\frac{1}{4}\)</span>を評価用に使用する</p>
+<div class="section" id="DataFrameに交差検証用の列を追加する">
+<h3>DataFrameに交差検証用の列を追加する<a class="headerlink" href="#DataFrameに交差検証用の列を追加する" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">StratifiedKFold</span>
+
+<span class="n">K_FOLD</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">kfold</span> <span class="o">=</span> <span class="n">StratifiedKFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="n">K_FOLD</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">test_indices</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">kfold</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">df_dataset</span><span class="p">[</span><span class="s1">&#39;filepath&#39;</span><span class="p">],</span> <span class="n">df_dataset</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">])</span>
+<span class="p">]</span>
+<span class="n">index2fold</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="nb">list</span><span class="p">(</span>
+        <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="o">*</span><span class="p">[[(</span><span class="n">idx</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">]</span>
+                          <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">indices</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">test_indices</span><span class="p">)])))</span>
+
+<span class="n">df_dataset</span><span class="p">[</span><span class="s1">&#39;fold&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_dataset</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">index2fold</span><span class="p">)</span>
+<span class="n">df_dataset</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>filepath</th>
+      <th>class_label</th>
+      <th>class</th>
+      <th>fold</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Data\Images\LIDC_DLD\normal\000.png</td>
+      <td>normal</td>
+      <td>0</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Data\Images\LIDC_DLD\normal\001.png</td>
+      <td>normal</td>
+      <td>0</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Data\Images\LIDC_DLD\normal\002.png</td>
+      <td>normal</td>
+      <td>0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Data\Images\LIDC_DLD\normal\003.png</td>
+      <td>normal</td>
+      <td>0</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Data\Images\LIDC_DLD\normal\004.png</td>
+      <td>normal</td>
+      <td>0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>843</th>
+      <td>Data\Images\LIDC_DLD\honeycomb\156.png</td>
+      <td>honeycomb</td>
+      <td>3</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>844</th>
+      <td>Data\Images\LIDC_DLD\honeycomb\157.png</td>
+      <td>honeycomb</td>
+      <td>3</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>845</th>
+      <td>Data\Images\LIDC_DLD\honeycomb\158.png</td>
+      <td>honeycomb</td>
+      <td>3</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>846</th>
+      <td>Data\Images\LIDC_DLD\honeycomb\159.png</td>
+      <td>honeycomb</td>
+      <td>3</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>847</th>
+      <td>Data\Images\LIDC_DLD\honeycomb\160.png</td>
+      <td>honeycomb</td>
+      <td>3</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+<p>848 rows × 4 columns</p>
+</div></div>
+</div>
+</div>
+<div class="section" id="train,-validate,-testを用いた交差検証を行う">
+<h3>train, validate, testを用いた交差検証を行う<a class="headerlink" href="#train,-validate,-testを用いた交差検証を行う" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">tut_utils</span>
+<span class="n">BATCH_SIZE</span> <span class="o">=</span> <span class="mi">32</span>
+<span class="n">EPOCHS</span> <span class="o">=</span> <span class="mi">128</span>
+<span class="n">ES_PATIENCE</span> <span class="o">=</span> <span class="mi">16</span>  <span class="c1"># early stopping</span>
+<span class="n">LR_PATIENCE</span> <span class="o">=</span> <span class="n">ES_PATIENCE</span> <span class="o">//</span> <span class="mi">2</span>  <span class="c1"># ReduceLROnPlateau</span>
+
+
+<span class="k">def</span> <span class="nf">plot_history</span><span class="p">(</span><span class="n">history</span><span class="p">):</span>
+    <span class="n">history</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">history</span><span class="p">)</span>
+    <span class="n">lr_history</span> <span class="o">=</span> <span class="n">history</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;lr&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">history</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Training history&#39;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;loss&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">lr_history</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">twinx</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">lr_history</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;lr&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;lr&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+
+<span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i_iter</span><span class="p">,</span> <span class="n">test_fold</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">K_FOLD</span><span class="p">)):</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{i}</span><span class="s1">th iteration of </span><span class="si">{k}</span><span class="s1">-fold CV&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="n">i_iter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                                                        <span class="n">k</span><span class="o">=</span><span class="n">K_FOLD</span><span class="p">))</span>
+    <span class="n">val_fold</span> <span class="o">=</span> <span class="p">(</span><span class="n">test_fold</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">K_FOLD</span>
+    <span class="n">train_folds</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">K_FOLD</span><span class="p">))</span> <span class="o">-</span> <span class="nb">set</span><span class="p">([</span><span class="n">test_fold</span><span class="p">])</span> <span class="o">-</span> <span class="nb">set</span><span class="p">([</span><span class="n">val_fold</span><span class="p">])</span>
+    <span class="n">df_train</span> <span class="o">=</span> <span class="n">df_dataset</span><span class="p">[</span><span class="n">df_dataset</span><span class="p">[</span><span class="s1">&#39;fold&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">e</span><span class="p">:</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">train_folds</span><span class="p">)]</span>
+    <span class="n">df_val</span> <span class="o">=</span> <span class="n">df_dataset</span><span class="p">[</span><span class="n">df_dataset</span><span class="p">[</span><span class="s1">&#39;fold&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">val_fold</span><span class="p">]</span>
+    <span class="n">df_test</span> <span class="o">=</span> <span class="n">df_dataset</span><span class="p">[</span><span class="n">df_dataset</span><span class="p">[</span><span class="s1">&#39;fold&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">test_fold</span><span class="p">]</span>
+    <span class="p">(</span><span class="n">train_data</span><span class="p">,</span>
+     <span class="n">train_labels</span><span class="p">),</span> <span class="p">(</span><span class="n">val_data</span><span class="p">,</span> <span class="n">val_labels</span><span class="p">),</span> <span class="p">(</span><span class="n">test_data</span><span class="p">,</span> <span class="n">test_labels</span><span class="p">)</span> <span class="o">=</span> <span class="p">[</span>
+         <span class="n">load_dataset</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="p">(</span><span class="n">df_train</span><span class="p">,</span> <span class="n">df_val</span><span class="p">,</span> <span class="n">df_test</span><span class="p">)</span>
+     <span class="p">]</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">build_model</span><span class="p">()</span>
+    <span class="n">datagen</span> <span class="o">=</span> <span class="n">create_generator</span><span class="p">()</span>
+    <span class="n">early_stopping</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">callbacks</span><span class="o">.</span><span class="n">EarlyStopping</span><span class="p">(</span>
+        <span class="n">monitor</span><span class="o">=</span><span class="s1">&#39;val_loss&#39;</span><span class="p">,</span> <span class="n">restore_best_weights</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">patience</span><span class="o">=</span><span class="n">ES_PATIENCE</span><span class="p">)</span>
+    <span class="n">reduce_lr</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">callbacks</span><span class="o">.</span><span class="n">ReduceLROnPlateau</span><span class="p">(</span><span class="n">monitor</span><span class="o">=</span><span class="s1">&#39;val_loss&#39;</span><span class="p">,</span>
+                                                     <span class="n">factor</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+                                                     <span class="n">patience</span><span class="o">=</span><span class="n">LR_PATIENCE</span><span class="p">,</span>
+                                                     <span class="n">min_lr</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">tut_utils</span><span class="o">.</span><span class="n">ProgressBarCallback</span><span class="p">(</span><span class="n">EPOCHS</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_train</span><span class="p">)</span> <span class="o">//</span> <span class="n">BATCH_SIZE</span><span class="p">,</span>
+                                       <span class="n">BATCH_SIZE</span><span class="p">)</span> <span class="k">as</span> <span class="n">pbar</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">datagen</span><span class="o">.</span><span class="n">flow</span><span class="p">(</span><span class="n">train_data</span><span class="p">,</span>
+                                        <span class="n">train_labels</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+                                        <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                        <span class="n">batch_size</span><span class="o">=</span><span class="n">BATCH_SIZE</span><span class="p">),</span>
+                           <span class="n">workers</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+                           <span class="n">validation_data</span><span class="o">=</span><span class="p">(</span><span class="n">val_data</span><span class="p">,</span> <span class="n">val_labels</span><span class="p">),</span>
+                           <span class="n">epochs</span><span class="o">=</span><span class="n">EPOCHS</span><span class="p">,</span>
+                           <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                           <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                           <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">early_stopping</span><span class="p">,</span> <span class="n">reduce_lr</span><span class="p">,</span> <span class="n">pbar</span><span class="p">])</span>
+    <span class="n">plot_history</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">history</span><span class="p">)</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+        <span class="n">tut_utils</span><span class="o">.</span><span class="n">predict_multiclass</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">test_data</span><span class="p">,</span> <span class="n">df_test</span><span class="o">.</span><span class="n">index</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2020-06-16 09:05:34,526 INFO :1th iteration of 4-fold CV
+1/128 epoch:   0%|          | 0/416 [00:00&lt;?, ?batch/s]2020-06-16 09:05:36,504 WARNING :sample_weight modes were coerced from
+  ...
+    to
+  [&#39;...&#39;]
+22/128 epoch [5.9s/34s (0.27s/epoch) last_epoch=(loss=1.35,accuracy=0.347)]: : 448batch [00:00, 2323.60batch/s, loss=1.28, accuracy=0.349]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;Figure size 216x288 with 0 Axes&gt;
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<a class="reference internal image-reference" href="../_images/notebooks_dld_20_2.png"><img alt="../_images/notebooks_dld_20_2.png" src="../_images/notebooks_dld_20_2.png" style="width: 385px; height: 209px;" /></a>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2020-06-16 09:05:42,862 INFO :2th iteration of 4-fold CV
+1/128 epoch:   0%|          | 0/416 [00:00&lt;?, ?batch/s]2020-06-16 09:05:43,170 WARNING :sample_weight modes were coerced from
+  ...
+    to
+  [&#39;...&#39;]
+108/128 epoch [20s/24s (0.18s/epoch) last_epoch=(loss=0.245,accuracy=0.907)]: : 448batch [00:00, 2335.72batch/s, loss=0.106, accuracy=0.908]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;Figure size 216x288 with 0 Axes&gt;
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<a class="reference internal image-reference" href="../_images/notebooks_dld_20_5.png"><img alt="../_images/notebooks_dld_20_5.png" src="../_images/notebooks_dld_20_5.png" style="width: 385px; height: 209px;" /></a>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2020-06-16 09:06:03,635 INFO :3th iteration of 4-fold CV
+1/128 epoch:   0%|          | 0/416 [00:00&lt;?, ?batch/s]2020-06-16 09:06:03,955 WARNING :sample_weight modes were coerced from
+  ...
+    to
+  [&#39;...&#39;]
+94/128 epoch [18s/24s (0.19s/epoch) last_epoch=(loss=0.212,accuracy=0.903)]: : 448batch [00:00, 2209.17batch/s, loss=0.21, accuracy=0.908]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;Figure size 216x288 with 0 Axes&gt;
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<a class="reference internal image-reference" href="../_images/notebooks_dld_20_8.png"><img alt="../_images/notebooks_dld_20_8.png" src="../_images/notebooks_dld_20_8.png" style="width: 385px; height: 209px;" /></a>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2020-06-16 09:06:22,043 INFO :4th iteration of 4-fold CV
+1/128 epoch:   0%|          | 0/416 [00:00&lt;?, ?batch/s]2020-06-16 09:06:22,384 WARNING :sample_weight modes were coerced from
+  ...
+    to
+  [&#39;...&#39;]
+95/128 epoch [18s/25s (0.19s/epoch) last_epoch=(loss=0.29,accuracy=0.903)]:  54%|█████▍    | 224/416 [00:00&lt;00:00, 2002.45batch/s, loss=0.116, accuracy=0.902]
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">df_result</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">df_result</span> <span class="o">=</span> <span class="n">df_dataset</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">df_result</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df_result</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>filepath</th>
+      <th>class_label</th>
+      <th>class</th>
+      <th>fold</th>
+      <th>pred_logits</th>
+      <th>pred_proba</th>
+      <th>pred_class</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Data\Images\LIDC_DLD\normal\000.png</td>
+      <td>normal</td>
+      <td>0</td>
+      <td>3</td>
+      <td>[2.9620948, -3.7417412, 0.7990144, -5.6957603]</td>
+      <td>[0.8957601, 0.0010983803, 0.1029859, 0.0001556...</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Data\Images\LIDC_DLD\normal\001.png</td>
+      <td>normal</td>
+      <td>0</td>
+      <td>3</td>
+      <td>[5.0693827, -2.4592793, -0.7064368, -5.489865]</td>
+      <td>[0.9963483, 0.0005354944, 0.0030903292, 2.5857...</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Data\Images\LIDC_DLD\normal\002.png</td>
+      <td>normal</td>
+      <td>0</td>
+      <td>2</td>
+      <td>[2.7064617, -2.783599, 2.9063764, -3.9511862]</td>
+      <td>[0.44909298, 0.0018536737, 0.54847664, 0.00057...</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Data\Images\LIDC_DLD\normal\003.png</td>
+      <td>normal</td>
+      <td>0</td>
+      <td>3</td>
+      <td>[2.6185024, -4.167133, 1.2020388, -5.601835]</td>
+      <td>[0.80387837, 0.0009082941, 0.19499703, 0.00021...</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Data\Images\LIDC_DLD\normal\004.png</td>
+      <td>normal</td>
+      <td>0</td>
+      <td>2</td>
+      <td>[3.6733356, -2.579745, 2.005442, -4.5247946]</td>
+      <td>[0.83974075, 0.0016160951, 0.15841205, 0.00023...</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>843</th>
+      <td>Data\Images\LIDC_DLD\honeycomb\156.png</td>
+      <td>honeycomb</td>
+      <td>3</td>
+      <td>2</td>
+      <td>[-4.7528186, 0.2632999, -3.2897131, 4.332012]</td>
+      <td>[0.000111400484, 0.016801957, 0.0004811783, 0....</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>844</th>
+      <td>Data\Images\LIDC_DLD\honeycomb\157.png</td>
+      <td>honeycomb</td>
+      <td>3</td>
+      <td>3</td>
+      <td>[-6.125652, 2.5334122, -7.144187, 6.359759]</td>
+      <td>[3.7007658e-06, 0.021324325, 1.3364331e-06, 0....</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>845</th>
+      <td>Data\Images\LIDC_DLD\honeycomb\158.png</td>
+      <td>honeycomb</td>
+      <td>3</td>
+      <td>3</td>
+      <td>[-5.7704425, 0.84405994, -5.1872654, 6.4927206]</td>
+      <td>[4.705908e-06, 0.0035098228, 8.431673e-06, 0.9...</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>846</th>
+      <td>Data\Images\LIDC_DLD\honeycomb\159.png</td>
+      <td>honeycomb</td>
+      <td>3</td>
+      <td>3</td>
+      <td>[-5.6733193, 1.938061, -6.28948, 5.5923424]</td>
+      <td>[1.2481895e-05, 0.025226723, 6.7403907e-06, 0....</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>847</th>
+      <td>Data\Images\LIDC_DLD\honeycomb\160.png</td>
+      <td>honeycomb</td>
+      <td>3</td>
+      <td>2</td>
+      <td>[-3.5025916, -1.7102633, -2.0806262, 3.7805667]</td>
+      <td>[0.00068179035, 0.00409307, 0.0028261982, 0.99...</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+<p>848 rows × 7 columns</p>
+</div></div>
+</div>
+</div>
+</div>
+<div class="section" id="評価">
+<h2>評価<a class="headerlink" href="#評価" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="混同行列">
+<h3>混同行列<a class="headerlink" href="#混同行列" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">df_cm</span> <span class="o">=</span> <span class="n">tut_utils</span><span class="o">.</span><span class="n">confusion_matrix</span><span class="p">(</span><span class="n">df_result</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Accuracy = </span><span class="si">{n}</span><span class="s1"> / </span><span class="si">{d}</span><span class="s1"> = </span><span class="si">{a:.03g}</span><span class="s1">%&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">df_cm</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">trace</span><span class="p">(),</span>
+                                                <span class="n">d</span><span class="o">=</span><span class="n">df_cm</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span>
+                                                <span class="n">a</span><span class="o">=</span><span class="mi">100</span> <span class="o">*</span> <span class="n">df_cm</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">trace</span><span class="p">()</span> <span class="o">/</span> <span class="n">df_cm</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">sum</span><span class="p">()))</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">df_cm</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Accuracy = 668 / 848 = 78.8%
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Prediction</th>
+      <th>normal</th>
+      <th>GGO</th>
+      <th>emphysema</th>
+      <th>honeycomb</th>
+    </tr>
+    <tr>
+      <th>Truth</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>normal</th>
+      <td>285</td>
+      <td>1</td>
+      <td>7</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>GGO</th>
+      <td>37</td>
+      <td>136</td>
+      <td>8</td>
+      <td>22</td>
+    </tr>
+    <tr>
+      <th>emphysema</th>
+      <td>39</td>
+      <td>5</td>
+      <td>141</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>honeycomb</th>
+      <td>32</td>
+      <td>21</td>
+      <td>2</td>
+      <td>106</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+<div class="section" id="ROC">
+<h3>ROC<a class="headerlink" href="#ROC" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">tut_utils</span><span class="o">.</span><span class="n">plot_roc_curves</span><span class="p">(</span><span class="n">df_result</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(4, 848)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<a class="reference internal image-reference" href="../_images/notebooks_dld_25_1.png"><img alt="../_images/notebooks_dld_25_1.png" src="../_images/notebooks_dld_25_1.png" style="width: 273px; height: 207px;" /></a>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">metrics</span>
+<span class="n">report</span> <span class="o">=</span> <span class="n">metrics</span><span class="o">.</span><span class="n">classification_report</span><span class="p">(</span><span class="n">df_result</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">],</span>
+                                       <span class="n">df_result</span><span class="p">[</span><span class="s1">&#39;pred_class&#39;</span><span class="p">],</span>
+                                       <span class="n">target_names</span><span class="o">=</span><span class="n">CLASS_LABELS</span><span class="p">,</span>
+                                       <span class="n">output_dict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df_report</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">report</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df_report</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>precision</th>
+      <th>recall</th>
+      <th>f1-score</th>
+      <th>support</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>normal</th>
+      <td>0.725191</td>
+      <td>0.969388</td>
+      <td>0.829694</td>
+      <td>294.000000</td>
+    </tr>
+    <tr>
+      <th>GGO</th>
+      <td>0.834356</td>
+      <td>0.669951</td>
+      <td>0.743169</td>
+      <td>203.000000</td>
+    </tr>
+    <tr>
+      <th>emphysema</th>
+      <td>0.892405</td>
+      <td>0.742105</td>
+      <td>0.810345</td>
+      <td>190.000000</td>
+    </tr>
+    <tr>
+      <th>honeycomb</th>
+      <td>0.791045</td>
+      <td>0.658385</td>
+      <td>0.718644</td>
+      <td>161.000000</td>
+    </tr>
+    <tr>
+      <th>accuracy</th>
+      <td>0.787736</td>
+      <td>0.787736</td>
+      <td>0.787736</td>
+      <td>0.787736</td>
+    </tr>
+    <tr>
+      <th>macro avg</th>
+      <td>0.810749</td>
+      <td>0.759957</td>
+      <td>0.775463</td>
+      <td>848.000000</td>
+    </tr>
+    <tr>
+      <th>weighted avg</th>
+      <td>0.801292</td>
+      <td>0.787736</td>
+      <td>0.783562</td>
+      <td>848.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+<div class="section" id="クラスごとに間違えている例を表示">
+<h3>クラスごとに間違えている例を表示<a class="headerlink" href="#クラスごとに間違えている例を表示" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="画像ごとにlossを計算">
+<h4>画像ごとにlossを計算<a class="headerlink" href="#画像ごとにlossを計算" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">df_result</span><span class="p">[</span><span class="s1">&#39;loss&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">sparse_categorical_crossentropy</span><span class="p">(</span>
+    <span class="n">df_result</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">],</span> <span class="n">df_result</span><span class="p">[</span><span class="s1">&#39;pred_logits&#39;</span><span class="p">],</span> <span class="n">from_logits</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df_result</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>filepath</th>
+      <th>class_label</th>
+      <th>class</th>
+      <th>fold</th>
+      <th>pred_logits</th>
+      <th>pred_proba</th>
+      <th>pred_class</th>
+      <th>loss</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Data\Images\LIDC_DLD\normal\000.png</td>
+      <td>normal</td>
+      <td>0</td>
+      <td>3</td>
+      <td>[2.9620948, -3.7417412, 0.7990144, -5.6957603]</td>
+      <td>[0.8957601, 0.0010983803, 0.1029859, 0.0001556...</td>
+      <td>0</td>
+      <td>0.110083</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Data\Images\LIDC_DLD\normal\001.png</td>
+      <td>normal</td>
+      <td>0</td>
+      <td>3</td>
+      <td>[5.0693827, -2.4592793, -0.7064368, -5.489865]</td>
+      <td>[0.9963483, 0.0005354944, 0.0030903292, 2.5857...</td>
+      <td>0</td>
+      <td>0.003659</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Data\Images\LIDC_DLD\normal\002.png</td>
+      <td>normal</td>
+      <td>0</td>
+      <td>2</td>
+      <td>[2.7064617, -2.783599, 2.9063764, -3.9511862]</td>
+      <td>[0.44909298, 0.0018536737, 0.54847664, 0.00057...</td>
+      <td>2</td>
+      <td>0.800525</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Data\Images\LIDC_DLD\normal\003.png</td>
+      <td>normal</td>
+      <td>0</td>
+      <td>3</td>
+      <td>[2.6185024, -4.167133, 1.2020388, -5.601835]</td>
+      <td>[0.80387837, 0.0009082941, 0.19499703, 0.00021...</td>
+      <td>0</td>
+      <td>0.218307</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Data\Images\LIDC_DLD\normal\004.png</td>
+      <td>normal</td>
+      <td>0</td>
+      <td>2</td>
+      <td>[3.6733356, -2.579745, 2.005442, -4.5247946]</td>
+      <td>[0.83974075, 0.0016160951, 0.15841205, 0.00023...</td>
+      <td>0</td>
+      <td>0.174662</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>843</th>
+      <td>Data\Images\LIDC_DLD\honeycomb\156.png</td>
+      <td>honeycomb</td>
+      <td>3</td>
+      <td>2</td>
+      <td>[-4.7528186, 0.2632999, -3.2897131, 4.332012]</td>
+      <td>[0.000111400484, 0.016801957, 0.0004811783, 0....</td>
+      <td>3</td>
+      <td>0.017548</td>
+    </tr>
+    <tr>
+      <th>844</th>
+      <td>Data\Images\LIDC_DLD\honeycomb\157.png</td>
+      <td>honeycomb</td>
+      <td>3</td>
+      <td>3</td>
+      <td>[-6.125652, 2.5334122, -7.144187, 6.359759]</td>
+      <td>[3.7007658e-06, 0.021324325, 1.3364331e-06, 0....</td>
+      <td>3</td>
+      <td>0.021560</td>
+    </tr>
+    <tr>
+      <th>845</th>
+      <td>Data\Images\LIDC_DLD\honeycomb\158.png</td>
+      <td>honeycomb</td>
+      <td>3</td>
+      <td>3</td>
+      <td>[-5.7704425, 0.84405994, -5.1872654, 6.4927206]</td>
+      <td>[4.705908e-06, 0.0035098228, 8.431673e-06, 0.9...</td>
+      <td>3</td>
+      <td>0.003529</td>
+    </tr>
+    <tr>
+      <th>846</th>
+      <td>Data\Images\LIDC_DLD\honeycomb\159.png</td>
+      <td>honeycomb</td>
+      <td>3</td>
+      <td>3</td>
+      <td>[-5.6733193, 1.938061, -6.28948, 5.5923424]</td>
+      <td>[1.2481895e-05, 0.025226723, 6.7403907e-06, 0....</td>
+      <td>3</td>
+      <td>0.025570</td>
+    </tr>
+    <tr>
+      <th>847</th>
+      <td>Data\Images\LIDC_DLD\honeycomb\160.png</td>
+      <td>honeycomb</td>
+      <td>3</td>
+      <td>2</td>
+      <td>[-3.5025916, -1.7102633, -2.0806262, 3.7805667]</td>
+      <td>[0.00068179035, 0.00409307, 0.0028261982, 0.99...</td>
+      <td>3</td>
+      <td>0.007630</td>
+    </tr>
+  </tbody>
+</table>
+<p>848 rows × 8 columns</p>
+</div></div>
+</div>
+</div>
+<div class="section" id="lossの値が大きい画像を表示">
+<h4>lossの値が大きい画像を表示<a class="headerlink" href="#lossの値が大きい画像を表示" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">N_SAMPLES</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="k">for</span> <span class="n">class_label</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">df_result</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;class_label&#39;</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">class_label</span><span class="p">)</span>
+    <span class="n">worst</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;loss&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">N_SAMPLES</span><span class="p">)</span>
+    <span class="n">worst_data</span><span class="p">,</span> <span class="n">worst_labels</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="n">worst</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">img</span><span class="p">,</span> <span class="n">pred_proba</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">worst_data</span><span class="p">,</span> <span class="n">worst</span><span class="p">[</span><span class="s1">&#39;pred_proba&#39;</span><span class="p">]):</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">pred_proba</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">CLASS_LABELS</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
+                                                     <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;barh&#39;</span><span class="p">,</span>
+                                                     <span class="n">legend</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+GGO
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<a class="reference internal image-reference" href="../_images/notebooks_dld_30_1.png"><img alt="../_images/notebooks_dld_30_1.png" src="../_images/notebooks_dld_30_1.png" style="width: 267px; height: 100px;" /></a>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<a class="reference internal image-reference" href="../_images/notebooks_dld_30_2.png"><img alt="../_images/notebooks_dld_30_2.png" src="../_images/notebooks_dld_30_2.png" style="width: 267px; height: 100px;" /></a>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+emphysema
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<a class="reference internal image-reference" href="../_images/notebooks_dld_30_4.png"><img alt="../_images/notebooks_dld_30_4.png" src="../_images/notebooks_dld_30_4.png" style="width: 267px; height: 100px;" /></a>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<a class="reference internal image-reference" href="../_images/notebooks_dld_30_5.png"><img alt="../_images/notebooks_dld_30_5.png" src="../_images/notebooks_dld_30_5.png" style="width: 266px; height: 100px;" /></a>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+honeycomb
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<a class="reference internal image-reference" href="../_images/notebooks_dld_30_7.png"><img alt="../_images/notebooks_dld_30_7.png" src="../_images/notebooks_dld_30_7.png" style="width: 266px; height: 100px;" /></a>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<a class="reference internal image-reference" href="../_images/notebooks_dld_30_8.png"><img alt="../_images/notebooks_dld_30_8.png" src="../_images/notebooks_dld_30_8.png" style="width: 266px; height: 100px;" /></a>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+normal
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<a class="reference internal image-reference" href="../_images/notebooks_dld_30_10.png"><img alt="../_images/notebooks_dld_30_10.png" src="../_images/notebooks_dld_30_10.png" style="width: 266px; height: 100px;" /></a>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<a class="reference internal image-reference" href="../_images/notebooks_dld_30_11.png"><img alt="../_images/notebooks_dld_30_11.png" src="../_images/notebooks_dld_30_11.png" style="width: 266px; height: 100px;" /></a>
+</div>
+</div>
+<script type="application/vnd.jupyter.widget-state+json">
+{"state": {"02690580c4e44bf6a4b7f59c42536d14": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "DescriptionStyleModel", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "DescriptionStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": ""}}, "096d14f2c41e485284fadd8ef5211685": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "DescriptionStyleModel", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "DescriptionStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": ""}}, "0fb28db6a4814a228ce77d6c5cd4aa32": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HBoxModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "HBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "HBoxView", "box_style": "", "children": ["IPY_MODEL_455924e64d314a0d93606e8f300533b5", "IPY_MODEL_5d28cba9f0e24cc099efa0e1a0ab68d2"], "layout": "IPY_MODEL_2aed0ce938a24164ac51a0438daa2b5e"}}, "1665264e74bd4ab2a27f901aca630758": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "1701eb0dd6464d82a05916a8bb5e4a65": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HBoxModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "HBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "HBoxView", "box_style": "", "children": ["IPY_MODEL_607f0bb8e58b44beb18bd25a4d701816", "IPY_MODEL_3642c89358d14b82a5d6d0b36cb4f550"], "layout": "IPY_MODEL_686fb4031b904c8c8908bd9d2d003fd0"}}, "210e07683eec47fcb5e4adfb1d66ca85": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "2aed0ce938a24164ac51a0438daa2b5e": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "2b4f8803ddbd452cba340ba7ec7d6dac": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "3642c89358d14b82a5d6d0b36cb4f550": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HTMLModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "HTMLModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "HTMLView", "description": "", "description_tooltip": null, "layout": "IPY_MODEL_9950a1c3f6b44f8693c5993ee16597a5", "placeholder": "\u200b", "style": "IPY_MODEL_9774d5cfb70848a8af150b9e54f28e6b", "value": " 54/128 [03:38&lt;04:59,  4.04s/epoch, loss=0.5, accuracy=0.817, val_loss=0.495, val_accuracy=0.817, lr=0.000125]"}}, "3c42b63dc0ac475e9abea9ad0d8ba952": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "ProgressStyleModel", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "ProgressStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "bar_color": null, "description_width": "initial"}}, "44862204f1a644cfad965f3c6e6bd47a": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "4492edcee3b542379bd3cac4122c33bd": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HTMLModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "HTMLModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "HTMLView", "description": "", "description_tooltip": null, "layout": "IPY_MODEL_7bf6a8224e164a1398487bf1990dbb42", "placeholder": "\u200b", "style": "IPY_MODEL_a9b677af2b104d4da60c25d25e726072", "value": " 5.19k/? [00:03&lt;00:00, 1.84kbatch/s, loss=0.89, accuracy=0.807]"}}, "455924e64d314a0d93606e8f300533b5": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "FloatProgressModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "FloatProgressModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "ProgressView", "bar_style": "", "description": "", "description_tooltip": null, "layout": "IPY_MODEL_4a252d7cc2be46f49ed7ca19106e1995", "max": 650, "min": 0, "orientation": "horizontal", "style": "IPY_MODEL_3c42b63dc0ac475e9abea9ad0d8ba952", "value": 650}}, "464e95729588447eaf0fe0774267ea3e": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "47a88afbe97a4226aaf763c06f6bdec4": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "FloatProgressModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "FloatProgressModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "ProgressView", "bar_style": "", "description": "", "description_tooltip": null, "layout": "IPY_MODEL_44862204f1a644cfad965f3c6e6bd47a", "max": 650, "min": 0, "orientation": "horizontal", "style": "IPY_MODEL_618cb939bb5a493ba134821b3883071d", "value": 650}}, "4a252d7cc2be46f49ed7ca19106e1995": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "56df59b70d51497fb21f930da97dd830": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "57713548701749dfa0786e65274ff9f0": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "DescriptionStyleModel", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "DescriptionStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": ""}}, "5a7564f31c10425ab7abf708025296a4": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "ProgressStyleModel", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "ProgressStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "bar_color": null, "description_width": "initial"}}, "5c5780433f6e45dfbcb55f4ef2cdad33": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "ProgressStyleModel", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "ProgressStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "bar_color": null, "description_width": "initial"}}, "5d28cba9f0e24cc099efa0e1a0ab68d2": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HTMLModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "HTMLModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "HTMLView", "description": "", "description_tooltip": null, "layout": "IPY_MODEL_ef9afe1b9dc94135afce50786353aa44", "placeholder": "\u200b", "style": "IPY_MODEL_74df71e2ab3d4f50a8d110c98e92eaba", "value": " 5.19k/? [00:03&lt;00:00, 1.90kbatch/s, loss=0.833, accuracy=0.817]"}}, "5e23b3aa1f5d4db58fd63738e160b3a9": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "607f0bb8e58b44beb18bd25a4d701816": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "FloatProgressModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "FloatProgressModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "ProgressView", "bar_style": "danger", "description": " 42%", "description_tooltip": null, "layout": "IPY_MODEL_56df59b70d51497fb21f930da97dd830", "max": 128, "min": 0, "orientation": "horizontal", "style": "IPY_MODEL_f161c33cddcd48cbba8045f8c2839439", "value": 54}}, "618cb939bb5a493ba134821b3883071d": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "ProgressStyleModel", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "ProgressStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "bar_color": null, "description_width": "initial"}}, "61b5470cb743429891d29adb786e20fe": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HBoxModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "HBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "HBoxView", "box_style": "", "children": ["IPY_MODEL_caffd28106364634a58048ec6908911b", "IPY_MODEL_ba1924e48de64931a0a231b79d6e73f5"], "layout": "IPY_MODEL_1665264e74bd4ab2a27f901aca630758"}}, "686fb4031b904c8c8908bd9d2d003fd0": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "744e70510cd640a7af74c601fb7aebb3": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "74df71e2ab3d4f50a8d110c98e92eaba": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "DescriptionStyleModel", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "DescriptionStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": ""}}, "75b2cc261cda476fa79387a8e5e6276e": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "7bf6a8224e164a1398487bf1990dbb42": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "83f32eb50e9546cb81813fed5925c74b": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HBoxModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "HBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "HBoxView", "box_style": "", "children": ["IPY_MODEL_cb6dd0dbc1da4c96a5bc4f12356df600", "IPY_MODEL_a3f3d1c7890941449bc9db6b4c0c7363"], "layout": "IPY_MODEL_75b2cc261cda476fa79387a8e5e6276e"}}, "8418dc3b31d6447e85275e7ca51d359f": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HTMLModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "HTMLModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "HTMLView", "description": "", "description_tooltip": null, "layout": "IPY_MODEL_cf815721add445daa6e3147ae4c3a945", "placeholder": "\u200b", "style": "IPY_MODEL_cafac38e17ec4165ba2432c66d800aae", "value": " 80/128 [11:15&lt;06:45,  8.44s/epoch, loss=0.534, accuracy=0.804, val_loss=0.469, val_accuracy=0.832, lr=3.13e-5]"}}, "8487386349204ba489c52d743c09a8cd": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "8e1d5b6343044bf0baaf5dc21d9401e4": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "FloatProgressModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "FloatProgressModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "ProgressView", "bar_style": "", "description": "", "description_tooltip": null, "layout": "IPY_MODEL_2b4f8803ddbd452cba340ba7ec7d6dac", "max": 650, "min": 0, "orientation": "horizontal", "style": "IPY_MODEL_5a7564f31c10425ab7abf708025296a4", "value": 650}}, "8f2e7af4181649a7aebcf7f522c30335": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "975a5561acec4eeabcd9401a1cfcbd3c": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HBoxModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "HBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "HBoxView", "box_style": "", "children": ["IPY_MODEL_b89524cd3df843bb872ba0259ecc2946", "IPY_MODEL_8418dc3b31d6447e85275e7ca51d359f"], "layout": "IPY_MODEL_464e95729588447eaf0fe0774267ea3e"}}, "9774d5cfb70848a8af150b9e54f28e6b": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "DescriptionStyleModel", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "DescriptionStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": ""}}, "9950a1c3f6b44f8693c5993ee16597a5": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "99e44a52eb4c4393b61d6040c36307ef": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "ProgressStyleModel", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "ProgressStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "bar_color": null, "description_width": "initial"}}, "a3f3d1c7890941449bc9db6b4c0c7363": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HTMLModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "HTMLModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "HTMLView", "description": "", "description_tooltip": null, "layout": "IPY_MODEL_f8d038eedd954c269c02ddae3f591706", "placeholder": "\u200b", "style": "IPY_MODEL_096d14f2c41e485284fadd8ef5211685", "value": " 36/128 [02:15&lt;05:35,  3.64s/epoch, loss=0.541, accuracy=0.804, val_loss=0.589, val_accuracy=0.788, lr=0.0005]"}}, "a9429af4f3a94837bccd5101adb25a23": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "FloatProgressModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "FloatProgressModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "ProgressView", "bar_style": "", "description": "", "description_tooltip": null, "layout": "IPY_MODEL_df5969476dc54c719a3aad590a32c336", "max": 650, "min": 0, "orientation": "horizontal", "style": "IPY_MODEL_99e44a52eb4c4393b61d6040c36307ef", "value": 650}}, "a9b677af2b104d4da60c25d25e726072": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "DescriptionStyleModel", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "DescriptionStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": ""}}, "b159e16df094432581aaf88c6deb3a28": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "b354b1cbbe814dada7aa791757c68857": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "DescriptionStyleModel", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "DescriptionStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": ""}}, "b89524cd3df843bb872ba0259ecc2946": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "FloatProgressModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "FloatProgressModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "ProgressView", "bar_style": "danger", "description": " 62%", "description_tooltip": null, "layout": "IPY_MODEL_b159e16df094432581aaf88c6deb3a28", "max": 128, "min": 0, "orientation": "horizontal", "style": "IPY_MODEL_dc05930cc3734a35b559e1d0fea7528e", "value": 80}}, "ba1924e48de64931a0a231b79d6e73f5": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HTMLModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "HTMLModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "HTMLView", "description": "", "description_tooltip": null, "layout": "IPY_MODEL_bd8ea94f319847a9b3e9527187c76c55", "placeholder": "\u200b", "style": "IPY_MODEL_b354b1cbbe814dada7aa791757c68857", "value": " 57/128 [14:53&lt;18:32, 15.67s/epoch, loss=0.539, accuracy=0.807, val_loss=0.524, val_accuracy=0.811, lr=0.00025]"}}, "bcb678cfc15444de87490e95baca7843": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HTMLModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "HTMLModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "HTMLView", "description": "", "description_tooltip": null, "layout": "IPY_MODEL_5e23b3aa1f5d4db58fd63738e160b3a9", "placeholder": "\u200b", "style": "IPY_MODEL_57713548701749dfa0786e65274ff9f0", "value": " 5.01k/? [00:02&lt;00:00, 1.86kbatch/s, loss=0.905, accuracy=0.797]"}}, "bd8ea94f319847a9b3e9527187c76c55": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "cafac38e17ec4165ba2432c66d800aae": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "DescriptionStyleModel", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "DescriptionStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": ""}}, "caffd28106364634a58048ec6908911b": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "FloatProgressModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "FloatProgressModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "ProgressView", "bar_style": "danger", "description": " 45%", "description_tooltip": null, "layout": "IPY_MODEL_744e70510cd640a7af74c601fb7aebb3", "max": 128, "min": 0, "orientation": "horizontal", "style": "IPY_MODEL_5c5780433f6e45dfbcb55f4ef2cdad33", "value": 57}}, "cb6dd0dbc1da4c96a5bc4f12356df600": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "FloatProgressModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "FloatProgressModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "ProgressView", "bar_style": "", "description": " 28%", "description_tooltip": null, "layout": "IPY_MODEL_210e07683eec47fcb5e4adfb1d66ca85", "max": 128, "min": 0, "orientation": "horizontal", "style": "IPY_MODEL_d595ee9afa214e7d895a20a53f66be6d", "value": 37}}, "cf815721add445daa6e3147ae4c3a945": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "d595ee9afa214e7d895a20a53f66be6d": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "ProgressStyleModel", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "ProgressStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "bar_color": null, "description_width": "initial"}}, "d7bfa9fd118941d488f9608863561fb1": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HBoxModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "HBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "HBoxView", "box_style": "", "children": ["IPY_MODEL_8e1d5b6343044bf0baaf5dc21d9401e4", "IPY_MODEL_4492edcee3b542379bd3cac4122c33bd"], "layout": "IPY_MODEL_ed944871abef40c0adf182b8b2575323"}}, "dc05930cc3734a35b559e1d0fea7528e": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "ProgressStyleModel", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "ProgressStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "bar_color": null, "description_width": "initial"}}, "df5969476dc54c719a3aad590a32c336": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "e8046b0607174e26ad0a21a69ad46258": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HBoxModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "HBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "HBoxView", "box_style": "", "children": ["IPY_MODEL_a9429af4f3a94837bccd5101adb25a23", "IPY_MODEL_f20dbce6337445d1b72dd27063cec5df"], "layout": "IPY_MODEL_f2fbbe7ec1984477ac15421ad610e18a"}}, "ed944871abef40c0adf182b8b2575323": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "ef9afe1b9dc94135afce50786353aa44": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "f161c33cddcd48cbba8045f8c2839439": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "ProgressStyleModel", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "ProgressStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "bar_color": null, "description_width": "initial"}}, "f20dbce6337445d1b72dd27063cec5df": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HTMLModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "HTMLModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "HTMLView", "description": "", "description_tooltip": null, "layout": "IPY_MODEL_8f2e7af4181649a7aebcf7f522c30335", "placeholder": "\u200b", "style": "IPY_MODEL_02690580c4e44bf6a4b7f59c42536d14", "value": " 5.19k/? [00:04&lt;00:00, 1.67kbatch/s, loss=0.962, accuracy=0.804]"}}, "f2fbbe7ec1984477ac15421ad610e18a": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "f8d038eedd954c269c02ddae3f591706": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "fdee70b99f8c40048b995ffd8a5106a2": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HBoxModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "HBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "HBoxView", "box_style": "", "children": ["IPY_MODEL_47a88afbe97a4226aaf763c06f6bdec4", "IPY_MODEL_bcb678cfc15444de87490e95baca7843"], "layout": "IPY_MODEL_8487386349204ba489c52d743c09a8cd"}}}, "version_major": 2, "version_minor": 0}
+</script></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="lung_segmentation.html" class="btn btn-neutral float-right" title="肺野セグメンテーション" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="skin_lesion.html" class="btn btn-neutral float-left" title="Skin lesion" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; <a href="../copyright.html">Copyright</a> 2020, 人工知能画像診断学共同研究講座
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

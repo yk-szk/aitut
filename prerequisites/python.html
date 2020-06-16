@@ -1,0 +1,342 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Python &mdash; 深層学習チュートリアル</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/logo.svg"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/translations.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script>
+        <script src="../_static/katex_autorenderer.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/alerts.css" type="text/css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/katex-math.css" type="text/css" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="copyright" title="著作権" href="../copyright.html" />
+    <link rel="next" title="データの確認" href="../notebooks/test_dataset.html" />
+    <link rel="prev" title="はじめに" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> 深層学習チュートリアル
+          
+
+          
+            
+            <img src="../_static/logo.svg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../setup/index.html">セットアップ</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">はじめに</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Python</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#conditional-operator">条件演算子(conditional operator)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#comprehension">内包表記(comprehension)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#slice">スライス(slice)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ellipsis">Ellipsis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#type-hint">型ヒント(Type hint)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#decorator">デコレータ(decorator)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#walrus-operator">セイウチ演算子(Walrus operator)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#chained-comparison">Chained comparison</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#id2">データの確認</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/index.html">画像分類</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/index.html#semantic-segmentation">Semantic segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/index.html#imaget-to-image-translation">Imaget-to-Image translation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/misc.html">その他</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../copyright.html">著作権・ライセンス表記</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">深層学習チュートリアル</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">はじめに</a> &raquo;</li>
+        
+      <li>Python</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="python">
+<h1>Python<a class="headerlink" href="#python" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="conditional-operator">
+<h2>条件演算子(conditional operator)<a class="headerlink" href="#conditional-operator" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="k">if</span> <span class="n">a</span> <span class="o">&gt;</span> <span class="n">b</span> <span class="k">else</span> <span class="n">y</span>
+</pre></div>
+</div>
+<p>if文を簡潔に書ける場合があります。</p>
+</div>
+<div class="section" id="comprehension">
+<h2>内包表記(comprehension)<a class="headerlink" href="#comprehension" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="mi">2</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
+</pre></div>
+</div>
+<p>for文を簡潔にかけるようになります。使われる括弧によって種類が変わります。</p>
+<ul class="simple">
+<li><p><code class="code docutils literal notranslate"><span class="pre">[]</span></code> : リスト内包表記</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">{}</span></code> : 集合内包表記か辞書内包表記</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">()</span></code> : ジェネレータ内包表記</p></li>
+</ul>
+</div>
+<div class="section" id="slice">
+<h2>スライス(slice)<a class="headerlink" href="#slice" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>リストや配列の部分指定等に使います。</p>
+<ul class="simple">
+<li><p><code class="code docutils literal notranslate"><span class="pre">[::-1]</span></code> : 逆順で取得</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">[::2]</span></code> : 偶数番目の要素を取得</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">[1::2]</span></code> : 奇数番目の要素を取得</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">[:3]</span></code> : 最初の3つを取得</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">[-3:]</span></code> : 最後の3つを取得</p></li>
+</ul>
+</div>
+<div class="section" id="ellipsis">
+<h2>Ellipsis<a class="headerlink" href="#ellipsis" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">image</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p><code class="code docutils literal notranslate"><span class="pre">...</span></code> の部分のことです。多次元配列でスライスの一部を省略するときに使えます。</p>
+</div>
+<div class="section" id="type-hint">
+<h2>型ヒント(Type hint)<a class="headerlink" href="#type-hint" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">x</span> <span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+</pre></div>
+</div>
+<p><code class="code docutils literal notranslate"><span class="pre">:</span> <span class="pre">int</span></code> の部分のことです。型を指定するときに使います。
+ただし、型が強制されるわけではないので指定されている型以外が使用された場合でもエラーは出ません。</p>
+</div>
+<div class="section" id="decorator">
+<h2>デコレータ(decorator)<a class="headerlink" href="#decorator" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@property</span>
+<span class="k">def</span> <span class="nf">x</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_x</span>
+</pre></div>
+</div>
+<p><code class="code docutils literal notranslate"><span class="pre">&#64;XXX</span></code> の部分のことです。関数に機能を付加する際に使います。</p>
+</div>
+<div class="section" id="walrus-operator">
+<h2>セイウチ演算子(Walrus operator)<a class="headerlink" href="#walrus-operator" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">:</span>
+</pre></div>
+</div>
+<p><code class="code docutils literal notranslate"><span class="pre">:=</span></code> の部分のことです。比較的新しい演算子なのであまり見ることはないと思います。安易に使うこともお勧めしません。</p>
+</div>
+<div class="section" id="chained-comparison">
+<h2>Chained comparison<a class="headerlink" href="#chained-comparison" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span> <span class="o">&lt;</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">10</span>
+</pre></div>
+</div>
+<p>複数の比較を簡潔に書けます。</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../notebooks/test_dataset.html" class="btn btn-neutral float-right" title="データの確認" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="はじめに" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; <a href="../copyright.html">Copyright</a> 2020, 人工知能画像診断学共同研究講座
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
