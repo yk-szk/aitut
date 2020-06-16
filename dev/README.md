@@ -44,3 +44,6 @@ doit clear
 
 ## pdfをbuild
 WSLでdocs/_build/latexに移動してmake
+
+## gh-pages
+docs/_build/htmlでcommitしてpush
