@@ -21,7 +21,7 @@ sys.path.insert(0, os.path.abspath('../notebooks'))
 project = '深層学習チュートリアル'
 author = '人工知能画像診断学共同研究講座'
 copyright = '2020, ' + author
-version = '0.1.2'
+version = '0.1.3'
 release = version
 editors = ['Yuki Suzuki']
 
