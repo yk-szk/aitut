@@ -7,7 +7,7 @@
 
 Anacondaのインストール
 ======================
-`Anacondaのサイト <https://www.anaconda.com>`_ からインストーラーをダウンロードし実行。
+`Anacondaのページ <https://www.anaconda.com/products/individual>`_ からインストーラーをダウンロードし実行。
 
 チュートリアル用のenvを作成
 ===========================
@@ -15,8 +15,8 @@ Anaconda Promptで以下のコマンドを実行する。
 
 .. code-block:: shell-session
 
-   $ conda create -n ai_tut python==3.7
-   $ activate ai_tut
+   $ conda create -n aitut python==3.8
+   $ activate aitut
 
 必要なパッケージをインストール
 ==============================
@@ -27,15 +27,9 @@ notebooksディレクトリに移動し以下のコマンドを実行する。
    $ pip install -r requirements.txt
 
 
-Tensorflow
-==========
-.. note::
-
-   TensorFlow 2以降ではGPUを使う場合でもtensorflow-gpuをインストールする必要はない。
-
-.. code-block:: shell-session
-
-   $ pip install tensorflow
+PyTorchのインストール
+=====================
+`PyTorchのページ <https://pytorch.org/get-started/locally/>`_ に従い、自分の環境に合った方法でインストールする。
 
 GPUを使用するための追加作業
 ===========================

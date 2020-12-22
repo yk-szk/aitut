@@ -1,11 +1,15 @@
+albumentations
 jupyter
 numpy
 pandas
 Pillow
 scipy
-tensorflow
 tqdm
+torchviz
+torch-summary
+pytorch-lightning
 scikit-learn
 matplotlib
 seaborn
 pydotplus
+logzero
