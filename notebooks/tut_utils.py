@@ -3,6 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image
 from sklearn import metrics
+import torch
+import torch.nn.functional as F
 
 def create_dataset_df(data_root, class_labels, image_ext):
     '''
@@ -25,45 +27,49 @@ def create_dataset_df(data_root, class_labels, image_ext):
     df_dataset = pd.concat(dfs, ignore_index=True)
     return df_dataset
 
+def load_dataset(df, load_img):
+    '''
+    Args:
+        df: pd.DataFrame with 'filepath' and 'class' columns
+        load_img: function for loading images
+    '''
+    data = np.stack([load_img(filepath) for filepath in df['filepath']])
+    labels = df['class'].tolist()
+    data = data / 255
+    return data.astype(np.float32), labels
 
-
-def predict_multiclass(model, data, index):
+def predict_multiclass(model, loader, index):
     '''
     Make predictions using multi-class model.
 
     Args:
         model: model that outputs logits.
-        datga: input data.
+        loader: input data.
         index: index used for DataFrame
 
     Returns:
         DataFrame with ('pred_logits', 'pred_proba', 'pred_class') columns.
     '''
+    model.freeze()
+    model.eval()
 
-    logits = model.predict(data)
-    predictions = tf.nn.softmax(logits).numpy()
-    df_result = pd.DataFrame(
-        {
-            'pred_logits': list(logits),
-            'pred_proba': list(predictions),
-            'pred_class': np.argmax(predictions, axis=1)
-        },
-        index=index)
+    ys = []
+    with torch.no_grad():
+        for batch in loader:
+            x, _ = batch
+            logits = model(x)
+            ys.append(logits)
+    logits = torch.cat(ys, axis=0)
+    preds = F.softmax(logits, dim=1)
+    preds = preds.cpu().numpy()
+    df_result = pd.DataFrame({
+        'logits': list(logits.cpu().numpy()),
+        'pred_proba': list(preds),
+        'pred_class': np.argmax(preds, axis=1)
+    })
+    df_result.index = index
     return df_result
 
-def predict_binary(model, data, index):
-    '''
-    Make predictions using binary model.
-
-    Args:
-        model: model that outputs logits.
-        datga: input data.
-        index: index used for DataFrame
-
-    Returns:
-        DataFrame with ('pred_logits', 'pred_proba', 'pred_class') columns.
-    '''
-    return 0
 
 def show_images_each_class(df, n_rows=2, n_cols=5, figsize=None):
     '''
@@ -80,10 +86,11 @@ def show_images_each_class(df, n_rows=2, n_cols=5, figsize=None):
             plt.subplot(n_rows, n_cols, i + 1)
             image = Image.open(row.filepath)
             row.filepath
-            plt.imshow(image, cmap='gray' if image.mode=='L' else None)
+            plt.imshow(image, cmap='gray' if image.mode == 'L' else None)
             plt.axis('off')
         plt.tight_layout()
         plt.show()
+
 
 def plot_roc_curves(df_result, figsize=(3, 3)):
     '''
@@ -119,6 +126,7 @@ def plot_roc_curves(df_result, figsize=(3, 3)):
     plt.ylabel('Sensitivity')
     plt.legend(loc='lower right')
 
+
 def confusion_matrix(df_result):
     '''
     Create DataFrame of confusion matrix.
@@ -131,3 +139,22 @@ def confusion_matrix(df_result):
     df_cm = pd.DataFrame(cm, index=class_labels, columns=class_labels)
     df_cm.index.name, df_cm.columns.name = 'Truth', 'Prediction'
     return df_cm
+
+
+class AugmentedDataset(torch.utils.data.Dataset):
+    def __init__(self, x, y, transform=None):
+        self.transform = transform
+
+        self.xs = x
+        self.ys = y
+
+    def __len__(self):
+        return len(self.xs)
+
+    def __getitem__(self, idx):
+        x, y = self.xs[idx], self.ys[idx]
+        if self.transform:
+            x = self.transform(image=x)['image']
+        x = x.transpose(2, 0, 1)  # to channel first
+
+        return x.astype(np.float32), y
