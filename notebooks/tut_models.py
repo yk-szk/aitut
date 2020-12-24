@@ -2,6 +2,32 @@ import torch
 import torch.nn as nn
 
 
+class SimpleCNN(nn.Module):
+    class ConvBNReLU(nn.Module):
+        def __init__(self, in_chs, out_chs, kernel_size=3):
+            super().__init__()
+            self.block = nn.Sequential(
+                nn.Conv2d(in_chs, out_chs, kernel_size=kernel_size),
+                nn.BatchNorm2d(out_chs), nn.ReLU(inplace=True),
+                nn.Conv2d(out_chs, out_chs, kernel_size=kernel_size),
+                nn.BatchNorm2d(out_chs), nn.ReLU(inplace=True))
+
+        def forward(self, x):
+            return self.block(x)
+
+    def __init__(self, out_chs=1):
+        super().__init__()
+        self.network = nn.Sequential(self.ConvBNReLU(1, 4), nn.MaxPool2d(2),
+                                     self.ConvBNReLU(4, 8), nn.MaxPool2d(2),
+                                     self.ConvBNReLU(8, 16), nn.MaxPool2d(2),
+                                     nn.Dropout(.25), nn.Flatten(start_dim=1),
+                                     nn.Linear(256, 32), nn.ReLU(inplace=True),
+                                     nn.Linear(32, out_chs))
+
+    def forward(self, x):
+        return self.network(x)
+
+
 class ConvBNReLU(nn.Module):
     def __init__(self, in_chs, out_chs, kernel_size, padding, leaky=False):
         super().__init__()

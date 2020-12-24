@@ -5,6 +5,7 @@ from PIL import Image
 from sklearn import metrics
 import torch
 import torch.nn.functional as F
+import tqdm
 
 def create_dataset_df(data_root, class_labels, image_ext):
     '''
@@ -34,9 +35,17 @@ def load_dataset(df, load_img):
         load_img: function for loading images
     '''
     data = np.stack([load_img(filepath) for filepath in df['filepath']])
-    labels = df['class'].tolist()
-    data = data / 255
-    return data.astype(np.float32), labels
+    labels = df['class'].to_numpy()
+    return data, labels
+
+def load_img2img_dataset(df, load_img, input_column='image_path', target_column='target_path', verbose=False):
+    pbar = tqdm.tqdm if verbose else iter # progress bar
+    data = np.stack(
+        [load_img(filepath) for filepath in pbar(df[input_column])])
+    labels = np.stack([
+        load_img(filepath)[..., :1] for filepath in pbar(df[target_column])
+    ])
+    return data, labels
 
 def predict_multiclass(model, loader, index):
     '''
@@ -63,7 +72,7 @@ def predict_multiclass(model, loader, index):
     preds = F.softmax(logits, dim=1)
     preds = preds.cpu().numpy()
     df_result = pd.DataFrame({
-        'logits': list(logits.cpu().numpy()),
+        'pred_logits': list(logits.cpu().numpy()),
         'pred_proba': list(preds),
         'pred_class': np.argmax(preds, axis=1)
     })
@@ -140,13 +149,11 @@ def confusion_matrix(df_result):
     df_cm.index.name, df_cm.columns.name = 'Truth', 'Prediction'
     return df_cm
 
-
 class AugmentedDataset(torch.utils.data.Dataset):
-    def __init__(self, x, y, transform=None):
+    def __init__(self, xs, ys, transform=None):
+        self.xs = xs
+        self.ys = ys
         self.transform = transform
-
-        self.xs = x
-        self.ys = y
 
     def __len__(self):
         return len(self.xs)
@@ -154,7 +161,6 @@ class AugmentedDataset(torch.utils.data.Dataset):
     def __getitem__(self, idx):
         x, y = self.xs[idx], self.ys[idx]
         if self.transform:
-            x = self.transform(image=x)['image']
-        x = x.transpose(2, 0, 1)  # to channel first
+            x, y = self.transform(x, y)
 
-        return x.astype(np.float32), y
+        return x, y
