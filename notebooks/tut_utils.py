@@ -53,7 +53,7 @@ def predict_multiclass(model, loader, index):
 
     Args:
         model: model that outputs logits.
-        loader: input data.
+        loader: input data loader.
         index: index used for DataFrame
 
     Returns:

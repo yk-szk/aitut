@@ -61,7 +61,12 @@ def task_execute():
     Execute all notebooks
     '''
     dst = pathlib.Path(DOC_NB_DIR)
-    sources = list(pathlib.Path(DEV_NB_DIR).glob('*.ipynb'))
+    sources = sorted(pathlib.Path(DEV_NB_DIR).glob('*.ipynb'))
+    for i, fn in enumerate(sources):
+        if 'img2img_comparison' in str(fn): # move img2img_comparison to the last
+            del sources[i]
+            sources.append(fn)
+            break
     targets = [dst / src.name for src in sources]
     
     for source, target in zip(sources, targets):

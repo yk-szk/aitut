@@ -1,5 +1,11 @@
+'''
+Models defined in the tutorial
+'''
 import torch
 import torch.nn as nn
+import torch.optim as optim
+import torch.nn.functional as F
+import pytorch_lightning as pl
 
 
 class SimpleCNN(nn.Module):

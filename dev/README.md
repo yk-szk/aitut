@@ -42,6 +42,9 @@ doit execute
 doit clear
 ```
 
+## html/pdfのbuild
+docsに移動して`make html/pdf`
+
 ## pdfをbuild
 WSLでdocs/_build/latexに移動してmake
 
