@@ -79,7 +79,7 @@ import mhd
 import tqdm
 import pandas as pd
 
-mhd_dir = r'E:\dataset\LIDC\mhd'
+mhd_dir = r'D:\dataset\LIDC\mhd'
 outdir = Path('output')
 taiou = []
 count = 0
@@ -111,9 +111,10 @@ for p in tqdm.tqdm(paths):
     proj_low = do(t_volume, MU_WATER_60, MU_BONE_60)
     proj_high = do(t_volume, MU_WATER_120, MU_BONE_120)
 
-    mhd.write(outdir/'{:03d}.mha'.format(count), proj_mu)
+    # mhd.write(outdir/'{:03d}.mha'.format(count), proj_mu)
     mhd.write(outdir/'{:03d}_lower.mha'.format(count), proj_lower)
     mhd.write(outdir/'{:03d}_low.mha'.format(count), proj_low)
     mhd.write(outdir/'{:03d}_high.mha'.format(count), proj_high)
 
     count += 1
+    break

@@ -12,3 +12,8 @@ MU_BONE_60, MU_BONE_120 = 0.275, 0.164
 HU_AIR = -1000
 HU_WATER = 0
 HU_BONE = 1000
+
+# thresholds
+t_air = -1000
+t_water = 0
+t_bone = 1000
