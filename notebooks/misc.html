@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
+<html class="writer-html5" lang="ja" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,13 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/alerts.css" type="text/css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/katex-math.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/logo.svg"/>
   
@@ -19,35 +25,28 @@
   
 
   
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
         <script src="../_static/translations.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"></script>
         <script src="../_static/katex_autorenderer.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/alerts.css" type="text/css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/katex-math.css" type="text/css" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="copyright" title="著作権" href="../copyright.html" />
-    <link rel="next" title="Arguments of ImageDataGenerator" href="imagedata_generator.html" />
+    <link rel="next" title="動作確認環境" href="test_environment.html" />
     <link rel="prev" title="pix2pixとU-Netの比較" href="img2img_comparison.html" /> 
 </head>
 
@@ -62,7 +61,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> 深層学習チュートリアル
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> 深層学習チュートリアル
           
 
           
@@ -75,7 +74,7 @@
             
             
               <div class="version">
-                0.1.3
+                0.2.0
               </div>
             
           
@@ -92,6 +91,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -112,7 +112,6 @@
 </ul>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">その他</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="imagedata_generator.html">Arguments of ImageDataGenerator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="test_environment.html">動作確認環境</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules.html">チュートリアルで作成したモジュールと関数</a></li>
 </ul>
@@ -123,6 +122,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -161,7 +161,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>その他</li>
     
@@ -208,23 +208,16 @@
 <h1>その他<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="imagedata_generator.html">Arguments of ImageDataGenerator</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="imagedata_generator.html#Parameters">Parameters</a></li>
-<li class="toctree-l2"><a class="reference internal" href="imagedata_generator.html#Fill-mode">Fill mode</a></li>
-<li class="toctree-l2"><a class="reference internal" href="imagedata_generator.html#ZCA-whitening">ZCA whitening</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="test_environment.html">動作確認環境</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="test_environment.html#Pythonのバージョン">Pythonのバージョン</a></li>
 <li class="toctree-l2"><a class="reference internal" href="test_environment.html#パッケージのバージョン">パッケージのバージョン</a></li>
-<li class="toctree-l2"><a class="reference internal" href="test_environment.html#GPU関連">GPU関連</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="test_environment.html#CUDAのバージョン">CUDAのバージョン</a></li>
-<li class="toctree-l3"><a class="reference internal" href="test_environment.html#GPUが認識できているかの確認">GPUが認識できているかの確認</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">チュートリアルで作成したモジュールと関数</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#module-tut_utils">tut_utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#module-tut_models">tut_models</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="modules.html">チュートリアルで作成したモジュールと関数</a></li>
 </ul>
 </div>
 </div>
@@ -237,7 +230,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="imagedata_generator.html" class="btn btn-neutral float-right" title="Arguments of ImageDataGenerator" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="test_environment.html" class="btn btn-neutral float-right" title="動作確認環境" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="img2img_comparison.html" class="btn btn-neutral float-left" title="pix2pixとU-Netの比較" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -249,11 +242,20 @@
 
   <div role="contentinfo">
     <p>
-        &copy; <a href="../copyright.html">Copyright</a> 2020, 人工知能画像診断学共同研究講座
+        
+        
+        &copy; <a href="../copyright.html">著作権</a> 2020, 人工知能画像診断学共同研究講座
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -264,7 +266,6 @@
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

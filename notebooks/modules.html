@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
+<html class="writer-html5" lang="ja" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,13 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/alerts.css" type="text/css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/katex-math.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/logo.svg"/>
   
@@ -19,31 +25,24 @@
   
 
   
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
         <script src="../_static/translations.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"></script>
         <script src="../_static/katex_autorenderer.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/alerts.css" type="text/css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/katex-math.css" type="text/css" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="copyright" title="著作権" href="../copyright.html" />
@@ -62,7 +61,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> 深層学習チュートリアル
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> 深層学習チュートリアル
           
 
           
@@ -75,7 +74,7 @@
             
             
               <div class="version">
-                0.1.3
+                0.2.0
               </div>
             
           
@@ -92,6 +91,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -112,9 +112,12 @@
 </ul>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="misc.html">その他</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="imagedata_generator.html">Arguments of ImageDataGenerator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="test_environment.html">動作確認環境</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">チュートリアルで作成したモジュールと関数</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">チュートリアルで作成したモジュールと関数</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-tut_utils">tut_utils</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-tut_models">tut_models</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../copyright.html">著作権・ライセンス表記</a></li>
@@ -123,6 +126,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -161,7 +165,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="misc.html">その他</a> &raquo;</li>
         
@@ -206,79 +210,18 @@
     text-align: unset;
 }
 </style>
+<div class="section" id="id1">
+<h1>チュートリアルで作成したモジュールと関数<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <div class="section" id="module-tut_utils">
-<span id="id1"></span><h1>チュートリアルで作成したモジュールと関数<a class="headerlink" href="#module-tut_utils" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<span id="tut-utils"></span><h2>tut_utils<a class="headerlink" href="#module-tut_utils" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <dl class="py class">
-<dt id="tut_utils.ProgressBarCallback">
-<em class="property">class </em><code class="sig-prename descclassname">tut_utils.</code><code class="sig-name descname">ProgressBarCallback</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">epochs</span></em>, <em class="sig-param"><span class="n">n_batches</span></em>, <em class="sig-param"><span class="n">batch_size</span></em>, <em class="sig-param"><span class="n">leave</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tut_utils.ProgressBarCallback" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">tensorflow.python.keras.callbacks.Callback</span></code></p>
-<p>Nested progress with single bar</p>
-<p class="rubric">サンプル</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">ProgressBarCallback</span><span class="p">(</span><span class="n">epochs</span><span class="p">,</span> <span class="n">n_batches</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">)</span> <span class="k">as</span> <span class="n">pbar</span><span class="p">:</span>
-<span class="gp">&gt;&gt;&gt; </span>    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">pbar</span><span class="p">])</span>
-</pre></div>
-</div>
+<dt id="tut_utils.AugmentedDataset">
+<em class="property">class </em><code class="sig-prename descclassname">tut_utils.</code><code class="sig-name descname">AugmentedDataset</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xs</span></em>, <em class="sig-param"><span class="n">ys</span></em>, <em class="sig-param"><span class="n">transform</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tut_utils.AugmentedDataset" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">torch.utils.data.dataset.T_co</span></code>]</p>
 <dl class="py method">
-<dt id="tut_utils.ProgressBarCallback.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">epochs</span></em>, <em class="sig-param"><span class="n">n_batches</span></em>, <em class="sig-param"><span class="n">batch_size</span></em>, <em class="sig-param"><span class="n">leave</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tut_utils.ProgressBarCallback.__init__" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Initialize an object</p>
-<dl class="field-list simple">
-<dt class="field-odd">パラメータ</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>n_epochs</strong> -- # of epochs</p></li>
-<li><p><strong>n_batchs</strong> -- # of batchs per epoch</p></li>
-<li><p><strong>batch_size</strong> -- batch size</p></li>
-<li><p><strong>leave</strong> -- tqdm's leave argument</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="tut_utils.ProgressBarCallback.on_batch_begin">
-<code class="sig-name descname">on_batch_begin</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">batch</span></em>, <em class="sig-param"><span class="n">logs</span><span class="o">=</span><span class="default_value">{}</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tut_utils.ProgressBarCallback.on_batch_begin" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>A backwards compatibility alias for <cite>on_train_batch_begin</cite>.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="tut_utils.ProgressBarCallback.on_batch_end">
-<code class="sig-name descname">on_batch_end</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">batch</span></em>, <em class="sig-param"><span class="n">logs</span><span class="o">=</span><span class="default_value">{}</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tut_utils.ProgressBarCallback.on_batch_end" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>A backwards compatibility alias for <cite>on_train_batch_end</cite>.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="tut_utils.ProgressBarCallback.on_epoch_begin">
-<code class="sig-name descname">on_epoch_begin</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">epoch</span></em>, <em class="sig-param"><span class="n">logs</span><span class="o">=</span><span class="default_value">{}</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tut_utils.ProgressBarCallback.on_epoch_begin" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Called at the start of an epoch.</p>
-<p>Subclasses should override for any actions to run. This function should only
-be called during TRAIN mode.</p>
-<dl class="field-list simple">
-<dt class="field-odd">パラメータ</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>epoch</strong> -- integer, index of epoch.</p></li>
-<li><p><strong>logs</strong> -- dict. Currently no data is passed to this argument for this method
-but that may change in the future.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="tut_utils.ProgressBarCallback.on_epoch_end">
-<code class="sig-name descname">on_epoch_end</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">epoch</span></em>, <em class="sig-param"><span class="n">logs</span><span class="o">=</span><span class="default_value">{}</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tut_utils.ProgressBarCallback.on_epoch_end" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Called at the end of an epoch.</p>
-<p>Subclasses should override for any actions to run. This function should only
-be called during TRAIN mode.</p>
-<dl class="field-list simple">
-<dt class="field-odd">パラメータ</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>epoch</strong> -- integer, index of epoch.</p></li>
-<li><p><strong>logs</strong> -- dict, metric results for this training epoch, and for the
-validation epoch if validation is performed. Validation result keys
-are prefixed with <cite>val_</cite>.</p></li>
-</ul>
-</dd>
-</dl>
+<dt id="tut_utils.AugmentedDataset.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xs</span></em>, <em class="sig-param"><span class="n">ys</span></em>, <em class="sig-param"><span class="n">transform</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tut_utils.AugmentedDataset.__init__" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
 </dd></dl>
 
 </dd></dl>
@@ -313,8 +256,26 @@ are prefixed with <cite>val_</cite>.</p></li>
 </dd></dl>
 
 <dl class="py function">
+<dt id="tut_utils.load_dataset">
+<code class="sig-prename descclassname">tut_utils.</code><code class="sig-name descname">load_dataset</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">load_img</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tut_utils.load_dataset" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">パラメータ</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> -- pd.DataFrame with 'filepath' and 'class' columns</p></li>
+<li><p><strong>load_img</strong> -- function for loading images</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="tut_utils.load_img2img_dataset">
+<code class="sig-prename descclassname">tut_utils.</code><code class="sig-name descname">load_img2img_dataset</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">load_img</span></em>, <em class="sig-param"><span class="n">input_column</span><span class="o">=</span><span class="default_value">'image_path'</span></em>, <em class="sig-param"><span class="n">target_column</span><span class="o">=</span><span class="default_value">'target_path'</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tut_utils.load_img2img_dataset" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
 <dt id="tut_utils.plot_roc_curves">
-<code class="sig-prename descclassname">tut_utils.</code><code class="sig-name descname">plot_roc_curves</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df_result</span></em>, <em class="sig-param"><span class="n">figsize</span><span class="o">=</span><span class="default_value">3, 3</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tut_utils.plot_roc_curves" title="この定義へのパーマリンク">¶</a></dt>
+<code class="sig-prename descclassname">tut_utils.</code><code class="sig-name descname">plot_roc_curves</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df_result</span></em>, <em class="sig-param"><span class="n">figsize</span><span class="o">=</span><span class="default_value">(3, 3)</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tut_utils.plot_roc_curves" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>Plot ROC curve(s)</p>
 <dl class="field-list simple">
 <dt class="field-odd">パラメータ</dt>
@@ -327,32 +288,14 @@ are prefixed with <cite>val_</cite>.</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt id="tut_utils.predict_binary">
-<code class="sig-prename descclassname">tut_utils.</code><code class="sig-name descname">predict_binary</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em>, <em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">index</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tut_utils.predict_binary" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Make predictions using binary model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">パラメータ</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>model</strong> -- model that outputs logits.</p></li>
-<li><p><strong>datga</strong> -- input data.</p></li>
-<li><p><strong>index</strong> -- index used for DataFrame</p></li>
-</ul>
-</dd>
-<dt class="field-even">戻り値</dt>
-<dd class="field-even"><p>DataFrame with ('pred_logits', 'pred_proba', 'pred_class') columns.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
 <dt id="tut_utils.predict_multiclass">
-<code class="sig-prename descclassname">tut_utils.</code><code class="sig-name descname">predict_multiclass</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em>, <em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">index</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tut_utils.predict_multiclass" title="この定義へのパーマリンク">¶</a></dt>
+<code class="sig-prename descclassname">tut_utils.</code><code class="sig-name descname">predict_multiclass</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em>, <em class="sig-param"><span class="n">loader</span></em>, <em class="sig-param"><span class="n">index</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tut_utils.predict_multiclass" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>Make predictions using multi-class model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">パラメータ</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>model</strong> -- model that outputs logits.</p></li>
-<li><p><strong>datga</strong> -- input data.</p></li>
+<li><p><strong>loader</strong> -- input data loader.</p></li>
 <li><p><strong>index</strong> -- index used for DataFrame</p></li>
 </ul>
 </dd>
@@ -373,6 +316,209 @@ are prefixed with <cite>val_</cite>.</p></li>
 </dl>
 </dd></dl>
 
+</div>
+<div class="section" id="module-tut_models">
+<span id="tut-models"></span><h2>tut_models<a class="headerlink" href="#module-tut_models" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Models defined in the tutorial</p>
+<dl class="py class">
+<dt id="tut_models.ConvBNReLU">
+<em class="property">class </em><code class="sig-prename descclassname">tut_models.</code><code class="sig-name descname">ConvBNReLU</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_chs</span></em>, <em class="sig-param"><span class="n">out_chs</span></em>, <em class="sig-param"><span class="n">kernel_size</span></em>, <em class="sig-param"><span class="n">padding</span></em>, <em class="sig-param"><span class="n">leaky</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tut_models.ConvBNReLU" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
+<dl class="py method">
+<dt id="tut_models.ConvBNReLU.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_chs</span></em>, <em class="sig-param"><span class="n">out_chs</span></em>, <em class="sig-param"><span class="n">kernel_size</span></em>, <em class="sig-param"><span class="n">padding</span></em>, <em class="sig-param"><span class="n">leaky</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tut_models.ConvBNReLU.__init__" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="tut_models.ConvBNReLU.forward">
+<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tut_models.ConvBNReLU.forward" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Defines the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="tut_models.ConvBNReLU.training">
+<code class="sig-name descname">training</code><em class="property">: bool</em><a class="headerlink" href="#tut_models.ConvBNReLU.training" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="tut_models.Decoder">
+<em class="property">class </em><code class="sig-prename descclassname">tut_models.</code><code class="sig-name descname">Decoder</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_chs</span></em>, <em class="sig-param"><span class="n">out_chs</span></em>, <em class="sig-param"><span class="n">kernel_size</span></em>, <em class="sig-param"><span class="n">padding</span></em>, <em class="sig-param"><span class="n">scale_factor</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">apply_dropout</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tut_models.Decoder" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
+<dl class="py method">
+<dt id="tut_models.Decoder.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_chs</span></em>, <em class="sig-param"><span class="n">out_chs</span></em>, <em class="sig-param"><span class="n">kernel_size</span></em>, <em class="sig-param"><span class="n">padding</span></em>, <em class="sig-param"><span class="n">scale_factor</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">apply_dropout</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tut_models.Decoder.__init__" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="tut_models.Decoder.forward">
+<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x1</span></em>, <em class="sig-param"><span class="n">x2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tut_models.Decoder.forward" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Defines the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="tut_models.Decoder.training">
+<code class="sig-name descname">training</code><em class="property">: bool</em><a class="headerlink" href="#tut_models.Decoder.training" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="tut_models.Encoder">
+<em class="property">class </em><code class="sig-prename descclassname">tut_models.</code><code class="sig-name descname">Encoder</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_chs</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">mid_chs</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">out_chs</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">kernel_size</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">padding</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tut_models.Encoder" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
+<dl class="py method">
+<dt id="tut_models.Encoder.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_chs</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">mid_chs</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">out_chs</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">kernel_size</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">padding</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tut_models.Encoder.__init__" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="tut_models.Encoder.forward">
+<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tut_models.Encoder.forward" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Defines the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="tut_models.Encoder.training">
+<code class="sig-name descname">training</code><em class="property">: bool</em><a class="headerlink" href="#tut_models.Encoder.training" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="tut_models.SimpleCNN">
+<em class="property">class </em><code class="sig-prename descclassname">tut_models.</code><code class="sig-name descname">SimpleCNN</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">out_chs</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tut_models.SimpleCNN" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
+<dl class="py class">
+<dt id="tut_models.SimpleCNN.ConvBNReLU">
+<em class="property">class </em><code class="sig-name descname">ConvBNReLU</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_chs</span></em>, <em class="sig-param"><span class="n">out_chs</span></em>, <em class="sig-param"><span class="n">kernel_size</span><span class="o">=</span><span class="default_value">3</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tut_models.SimpleCNN.ConvBNReLU" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
+<dl class="py method">
+<dt id="tut_models.SimpleCNN.ConvBNReLU.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_chs</span></em>, <em class="sig-param"><span class="n">out_chs</span></em>, <em class="sig-param"><span class="n">kernel_size</span><span class="o">=</span><span class="default_value">3</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tut_models.SimpleCNN.ConvBNReLU.__init__" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="tut_models.SimpleCNN.ConvBNReLU.forward">
+<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tut_models.SimpleCNN.ConvBNReLU.forward" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Defines the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="tut_models.SimpleCNN.ConvBNReLU.training">
+<code class="sig-name descname">training</code><em class="property">: bool</em><a class="headerlink" href="#tut_models.SimpleCNN.ConvBNReLU.training" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt id="tut_models.SimpleCNN.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">out_chs</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tut_models.SimpleCNN.__init__" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="tut_models.SimpleCNN.forward">
+<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tut_models.SimpleCNN.forward" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Defines the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="tut_models.SimpleCNN.training">
+<code class="sig-name descname">training</code><em class="property">: bool</em><a class="headerlink" href="#tut_models.SimpleCNN.training" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="tut_models.UNet">
+<em class="property">class </em><code class="sig-prename descclassname">tut_models.</code><code class="sig-name descname">UNet</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_chs</span></em>, <em class="sig-param"><span class="n">out_chs</span></em>, <em class="sig-param"><span class="n">depth</span></em>, <em class="sig-param"><span class="n">ini_chs</span><span class="o">=</span><span class="default_value">16</span></em>, <em class="sig-param"><span class="n">kernel_size</span><span class="o">=</span><span class="default_value">3</span></em>, <em class="sig-param"><span class="n">padding</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">scale_factor</span><span class="o">=</span><span class="default_value">2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tut_models.UNet" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
+<dl class="py method">
+<dt id="tut_models.UNet.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_chs</span></em>, <em class="sig-param"><span class="n">out_chs</span></em>, <em class="sig-param"><span class="n">depth</span></em>, <em class="sig-param"><span class="n">ini_chs</span><span class="o">=</span><span class="default_value">16</span></em>, <em class="sig-param"><span class="n">kernel_size</span><span class="o">=</span><span class="default_value">3</span></em>, <em class="sig-param"><span class="n">padding</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">scale_factor</span><span class="o">=</span><span class="default_value">2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tut_models.UNet.__init__" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">パラメータ</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>depth</strong> (<em>int</em>) -- UNets depth i.e # of downsampling layers</p></li>
+<li><p><strong>ini_chs</strong> (<em>int</em>) -- # of kernels in the first conv layer</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="tut_models.UNet.forward">
+<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tut_models.UNet.forward" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Defines the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="tut_models.UNet.training">
+<code class="sig-name descname">training</code><em class="property">: bool</em><a class="headerlink" href="#tut_models.UNet.training" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="tut_models.main">
+<code class="sig-prename descclassname">tut_models.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tut_models.main" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+</div>
 </div>
 
 
@@ -395,11 +541,20 @@ are prefixed with <cite>val_</cite>.</p></li>
 
   <div role="contentinfo">
     <p>
-        &copy; <a href="../copyright.html">Copyright</a> 2020, 人工知能画像診断学共同研究講座
+        
+        
+        &copy; <a href="../copyright.html">著作権</a> 2020, 人工知能画像診断学共同研究講座
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -410,7 +565,6 @@ are prefixed with <cite>val_</cite>.</p></li>
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
+<html class="writer-html5" lang="ja" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,13 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/alerts.css" type="text/css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/katex-math.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/logo.svg"/>
   
@@ -19,36 +25,29 @@
   
 
   
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
         <script src="../_static/translations.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"></script>
         <script src="../_static/katex_autorenderer.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/alerts.css" type="text/css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/katex-math.css" type="text/css" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="copyright" title="著作権" href="../copyright.html" />
     <link rel="next" title="チュートリアルで作成したモジュールと関数" href="modules.html" />
-    <link rel="prev" title="Arguments of ImageDataGenerator" href="imagedata_generator.html" /> 
+    <link rel="prev" title="その他" href="misc.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -62,7 +61,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> 深層学習チュートリアル
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> 深層学習チュートリアル
           
 
           
@@ -75,7 +74,7 @@
             
             
               <div class="version">
-                0.1.3
+                0.2.0
               </div>
             
           
@@ -92,6 +91,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -112,15 +112,9 @@
 </ul>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="misc.html">その他</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="imagedata_generator.html">Arguments of ImageDataGenerator</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">動作確認環境</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#Pythonのバージョン">Pythonのバージョン</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#パッケージのバージョン">パッケージのバージョン</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#GPU関連">GPU関連</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#CUDAのバージョン">CUDAのバージョン</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#GPUが認識できているかの確認">GPUが認識できているかの確認</a></li>
-</ul>
-</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="modules.html">チュートリアルで作成したモジュールと関数</a></li>
@@ -132,6 +126,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -170,7 +165,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="misc.html">その他</a> &raquo;</li>
         
@@ -196,21 +191,35 @@
 /* CSS for nbsphinx extension */
 
 /* remove conflicting styling from Sphinx themes */
-div.nbinput.container,
-div.nbinput.container div.prompt,
-div.nbinput.container div.input_area,
-div.nbinput.container div[class*=highlight],
-div.nbinput.container div[class*=highlight] pre,
-div.nboutput.container,
-div.nboutput.container div.prompt,
-div.nboutput.container div.output_area,
-div.nboutput.container div[class*=highlight],
-div.nboutput.container div[class*=highlight] pre {
-    background: none;
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
     border: none;
-    padding: 0 0;
+    padding: 0;
     margin: 0;
     box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
 }
 
 /* avoid gaps between output lines */
@@ -311,7 +320,7 @@ div.nboutput.container div.output_area {
 div.nbinput.container div.input_area {
     border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f5f5f5;
+    /*background: #f5f5f5;*/
 }
 
 /* override MathJax center alignment in output cells */
@@ -377,6 +386,7 @@ div.nboutput.container div.output_area.rendered_html,
 div.nboutput.container div.output_area > div.output_javascript,
 div.nboutput.container div.output_area:not(.rendered_html) > img{
     padding: 5px;
+    margin: 0;
 }
 
 /* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
@@ -465,7 +475,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-win32 3.7.0 (default, Jun 28 2018, 08:04:48) [MSC v.1912 64 bit (AMD64)]
+win32 3.8.5 (default, Sep  3 2020, 21:29:08) [MSC v.1916 64 bit (AMD64)]
 </pre></div></div>
 </div>
 </div>
@@ -482,7 +492,7 @@ win32 3.7.0 (default, Jun 28 2018, 08:04:48) [MSC v.1912 64 bit (AMD64)]
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;requirements.txt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
     <span class="n">requirements</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
     <span class="n">packages</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">package</span> <span class="ow">in</span> <span class="n">requirements</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">package</span> <span class="ow">in</span> <span class="n">requirements</span><span class="o">.</span><span class="n">split</span><span class="p">()</span><span class="o">+</span><span class="p">[</span><span class="s1">&#39;torch&#39;</span><span class="p">]:</span>
         <span class="n">packages</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
             <span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="n">pkg_resources</span><span class="o">.</span><span class="n">get_distribution</span><span class="p">(</span><span class="n">package</span><span class="p">)</span><span class="o">.</span><span class="n">version</span><span class="p">))</span>
 <span class="n">df_pkg</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">packages</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;package&#39;</span><span class="p">,</span> <span class="s1">&#39;version&#39;</span><span class="p">])</span>
@@ -523,115 +533,68 @@ win32 3.7.0 (default, Jun 28 2018, 08:04:48) [MSC v.1912 64 bit (AMD64)]
   </thead>
   <tbody>
     <tr>
+      <th>albumentations</th>
+      <td>0.5.2</td>
+    </tr>
+    <tr>
       <th>jupyter</th>
       <td>1.0.0</td>
     </tr>
     <tr>
       <th>numpy</th>
-      <td>1.18.4</td>
+      <td>1.19.4</td>
     </tr>
     <tr>
       <th>pandas</th>
-      <td>1.0.3</td>
+      <td>1.1.5</td>
     </tr>
     <tr>
       <th>Pillow</th>
-      <td>7.1.2</td>
+      <td>8.0.1</td>
     </tr>
     <tr>
       <th>scipy</th>
-      <td>1.4.1</td>
-    </tr>
-    <tr>
-      <th>tensorflow</th>
-      <td>2.1.0</td>
+      <td>1.5.4</td>
     </tr>
     <tr>
       <th>tqdm</th>
-      <td>4.46.0</td>
+      <td>4.54.1</td>
+    </tr>
+    <tr>
+      <th>torchviz</th>
+      <td>0.0.1</td>
+    </tr>
+    <tr>
+      <th>torch-summary</th>
+      <td>1.4.3</td>
+    </tr>
+    <tr>
+      <th>pytorch-lightning</th>
+      <td>1.1.1</td>
     </tr>
     <tr>
       <th>scikit-learn</th>
-      <td>0.22.2.post1</td>
+      <td>0.23.2</td>
     </tr>
     <tr>
       <th>matplotlib</th>
-      <td>3.2.1</td>
+      <td>3.3.3</td>
     </tr>
     <tr>
       <th>seaborn</th>
-      <td>0.10.1</td>
+      <td>0.11.1</td>
     </tr>
     <tr>
       <th>pydotplus</th>
       <td>2.0.2</td>
     </tr>
+    <tr>
+      <th>torch</th>
+      <td>1.7.1+cu101</td>
+    </tr>
   </tbody>
 </table>
 </div></div>
-</div>
-</div>
-<div class="section" id="GPU関連">
-<h2>GPU関連<a class="headerlink" href="#GPU関連" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="CUDAのバージョン">
-<h3>CUDAのバージョン<a class="headerlink" href="#CUDAのバージョン" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">tensorflow.python.platform</span> <span class="kn">import</span> <span class="n">build_info</span> <span class="k">as</span> <span class="n">tf_build_info</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;CUDA&#39;</span><span class="p">,</span> <span class="n">tf_build_info</span><span class="o">.</span><span class="n">cuda_version_number</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;cuDNN&#39;</span><span class="p">,</span> <span class="n">tf_build_info</span><span class="o">.</span><span class="n">cudnn_version_number</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-CUDA 10.1
-cuDNN 7
-</pre></div></div>
-</div>
-</div>
-<div class="section" id="GPUが認識できているかの確認">
-<h3>GPUが認識できているかの確認<a class="headerlink" href="#GPUが認識できているかの確認" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">tensorflow.python.client</span> <span class="kn">import</span> <span class="n">device_lib</span>
-<span class="n">device_lib</span><span class="o">.</span><span class="n">list_local_devices</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-[name: &#34;/device:CPU:0&#34;
- device_type: &#34;CPU&#34;
- memory_limit: 268435456
- locality {
- }
- incarnation: 5307439089478430462,
- name: &#34;/device:GPU:0&#34;
- device_type: &#34;GPU&#34;
- memory_limit: 10068632535
- locality {
-   bus_id: 1
-   links {
-   }
- }
- incarnation: 14747271655943245348
- physical_device_desc: &#34;device: 0, name: TITAN X (Pascal), pci bus id: 0000:01:00.0, compute capability: 6.1&#34;]
-</pre></div></div>
-</div>
 </div>
 </div>
 </div>
@@ -647,7 +610,7 @@ cuDNN 7
         <a href="modules.html" class="btn btn-neutral float-right" title="チュートリアルで作成したモジュールと関数" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="imagedata_generator.html" class="btn btn-neutral float-left" title="Arguments of ImageDataGenerator" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="misc.html" class="btn btn-neutral float-left" title="その他" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -656,11 +619,20 @@ cuDNN 7
 
   <div role="contentinfo">
     <p>
-        &copy; <a href="../copyright.html">Copyright</a> 2020, 人工知能画像診断学共同研究講座
+        
+        
+        &copy; <a href="../copyright.html">著作権</a> 2020, 人工知能画像診断学共同研究講座
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -671,7 +643,6 @@ cuDNN 7
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

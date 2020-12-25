@@ -1,9 +1,7 @@
 
 
-
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
+<html class="writer-html5" lang="ja" >
 <head>
   <meta charset="utf-8">
   
@@ -13,6 +11,13 @@
   
 
   
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/alerts.css" type="text/css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" type="text/css" />
+  <link rel="stylesheet" href="_static/katex-math.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="_static/logo.svg"/>
   
@@ -20,31 +25,24 @@
   
 
   
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
         <script src="_static/translations.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"></script>
         <script src="_static/katex_autorenderer.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/css/alerts.css" type="text/css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" type="text/css" />
-  <link rel="stylesheet" href="_static/katex-math.css" type="text/css" />
     <link rel="index" title="索引" href="#" />
     <link rel="search" title="検索" href="search.html" />
     <link rel="copyright" title="著作権" href="copyright.html" /> 
@@ -61,7 +59,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> 深層学習チュートリアル
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> 深層学習チュートリアル
           
 
           
@@ -74,7 +72,7 @@
             
             
               <div class="version">
-                0.1.3
+                0.2.0
               </div>
             
           
@@ -91,6 +89,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -117,6 +116,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -155,7 +155,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html">Docs</a> &raquo;</li>
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>索引</li>
     
@@ -179,18 +179,46 @@
 
 <div class="genindex-jumpbox">
  <a href="#_"><strong>_</strong></a>
+ | <a href="#A"><strong>A</strong></a>
  | <a href="#C"><strong>C</strong></a>
- | <a href="#O"><strong>O</strong></a>
+ | <a href="#D"><strong>D</strong></a>
+ | <a href="#E"><strong>E</strong></a>
+ | <a href="#F"><strong>F</strong></a>
+ | <a href="#L"><strong>L</strong></a>
+ | <a href="#M"><strong>M</strong></a>
  | <a href="#P"><strong>P</strong></a>
  | <a href="#S"><strong>S</strong></a>
  | <a href="#T"><strong>T</strong></a>
+ | <a href="#U"><strong>U</strong></a>
  | <a href="#モ"><strong>モ</strong></a>
  
 </div>
 <h2 id="_">_</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="notebooks/modules.html#tut_utils.ProgressBarCallback.__init__">__init__() (tut_utils.ProgressBarCallback のメソッド)</a>
+      <li><a href="notebooks/modules.html#tut_models.ConvBNReLU.__init__">__init__() (tut_models.ConvBNReLU のメソッド)</a>
+
+      <ul>
+        <li><a href="notebooks/modules.html#tut_models.Decoder.__init__">(tut_models.Decoder のメソッド)</a>
+</li>
+        <li><a href="notebooks/modules.html#tut_models.Encoder.__init__">(tut_models.Encoder のメソッド)</a>
+</li>
+        <li><a href="notebooks/modules.html#tut_models.SimpleCNN.__init__">(tut_models.SimpleCNN のメソッド)</a>
+</li>
+        <li><a href="notebooks/modules.html#tut_models.SimpleCNN.ConvBNReLU.__init__">(tut_models.SimpleCNN.ConvBNReLU のメソッド)</a>
+</li>
+        <li><a href="notebooks/modules.html#tut_models.UNet.__init__">(tut_models.UNet のメソッド)</a>
+</li>
+        <li><a href="notebooks/modules.html#tut_utils.AugmentedDataset.__init__">(tut_utils.AugmentedDataset のメソッド)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="A">A</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/modules.html#tut_utils.AugmentedDataset">AugmentedDataset (tut_utils のクラス)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -202,23 +230,65 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/modules.html#tut_models.ConvBNReLU">ConvBNReLU (tut_models のクラス)</a>
+</li>
       <li><a href="notebooks/modules.html#tut_utils.create_dataset_df">create_dataset_df() (tut_utils モジュール)</a>
 </li>
   </ul></td>
 </tr></table>
 
-<h2 id="O">O</h2>
+<h2 id="D">D</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="notebooks/modules.html#tut_utils.ProgressBarCallback.on_batch_begin">on_batch_begin() (tut_utils.ProgressBarCallback のメソッド)</a>
+      <li><a href="notebooks/modules.html#tut_models.Decoder">Decoder (tut_models のクラス)</a>
 </li>
-      <li><a href="notebooks/modules.html#tut_utils.ProgressBarCallback.on_batch_end">on_batch_end() (tut_utils.ProgressBarCallback のメソッド)</a>
+  </ul></td>
+</tr></table>
+
+<h2 id="E">E</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/modules.html#tut_models.Encoder">Encoder (tut_models のクラス)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="F">F</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/modules.html#tut_models.ConvBNReLU.forward">forward() (tut_models.ConvBNReLU のメソッド)</a>
+
+      <ul>
+        <li><a href="notebooks/modules.html#tut_models.Decoder.forward">(tut_models.Decoder のメソッド)</a>
+</li>
+        <li><a href="notebooks/modules.html#tut_models.Encoder.forward">(tut_models.Encoder のメソッド)</a>
+</li>
+        <li><a href="notebooks/modules.html#tut_models.SimpleCNN.forward">(tut_models.SimpleCNN のメソッド)</a>
+</li>
+        <li><a href="notebooks/modules.html#tut_models.SimpleCNN.ConvBNReLU.forward">(tut_models.SimpleCNN.ConvBNReLU のメソッド)</a>
+</li>
+        <li><a href="notebooks/modules.html#tut_models.UNet.forward">(tut_models.UNet のメソッド)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/modules.html#tut_utils.load_dataset">load_dataset() (tut_utils モジュール)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="notebooks/modules.html#tut_utils.ProgressBarCallback.on_epoch_begin">on_epoch_begin() (tut_utils.ProgressBarCallback のメソッド)</a>
+      <li><a href="notebooks/modules.html#tut_utils.load_img2img_dataset">load_img2img_dataset() (tut_utils モジュール)</a>
 </li>
-      <li><a href="notebooks/modules.html#tut_utils.ProgressBarCallback.on_epoch_end">on_epoch_end() (tut_utils.ProgressBarCallback のメソッド)</a>
+  </ul></td>
+</tr></table>
+
+<h2 id="M">M</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/modules.html#tut_models.main">main() (tut_models モジュール)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -228,13 +298,9 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="notebooks/modules.html#tut_utils.plot_roc_curves">plot_roc_curves() (tut_utils モジュール)</a>
 </li>
-      <li><a href="notebooks/modules.html#tut_utils.predict_binary">predict_binary() (tut_utils モジュール)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="notebooks/modules.html#tut_utils.predict_multiclass">predict_multiclass() (tut_utils モジュール)</a>
-</li>
-      <li><a href="notebooks/modules.html#tut_utils.ProgressBarCallback">ProgressBarCallback (tut_utils のクラス)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -245,11 +311,40 @@
       <li><a href="notebooks/modules.html#tut_utils.show_images_each_class">show_images_each_class() (tut_utils モジュール)</a>
 </li>
   </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/modules.html#tut_models.SimpleCNN">SimpleCNN (tut_models のクラス)</a>
+</li>
+      <li><a href="notebooks/modules.html#tut_models.SimpleCNN.ConvBNReLU">SimpleCNN.ConvBNReLU (tut_models のクラス)</a>
+</li>
+  </ul></td>
 </tr></table>
 
 <h2 id="T">T</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/modules.html#tut_models.ConvBNReLU.training">training (tut_models.ConvBNReLU の属性)</a>
+
+      <ul>
+        <li><a href="notebooks/modules.html#tut_models.Decoder.training">(tut_models.Decoder の属性)</a>
+</li>
+        <li><a href="notebooks/modules.html#tut_models.Encoder.training">(tut_models.Encoder の属性)</a>
+</li>
+        <li><a href="notebooks/modules.html#tut_models.SimpleCNN.training">(tut_models.SimpleCNN の属性)</a>
+</li>
+        <li><a href="notebooks/modules.html#tut_models.SimpleCNN.ConvBNReLU.training">(tut_models.SimpleCNN.ConvBNReLU の属性)</a>
+</li>
+        <li><a href="notebooks/modules.html#tut_models.UNet.training">(tut_models.UNet の属性)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    tut_models
+
+      <ul>
+        <li><a href="notebooks/modules.html#module-tut_models">モジュール</a>
+</li>
+      </ul></li>
       <li>
     tut_utils
 
@@ -260,6 +355,14 @@
   </ul></td>
 </tr></table>
 
+<h2 id="U">U</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="notebooks/modules.html#tut_models.UNet">UNet (tut_models のクラス)</a>
+</li>
+  </ul></td>
+</tr></table>
+
 <h2 id="モ">モ</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -267,6 +370,8 @@
     モジュール
 
       <ul>
+        <li><a href="notebooks/modules.html#module-tut_models">tut_models</a>
+</li>
         <li><a href="notebooks/modules.html#module-tut_utils">tut_utils</a>
 </li>
       </ul></li>
@@ -285,11 +390,20 @@
 
   <div role="contentinfo">
     <p>
-        &copy; <a href="copyright.html">Copyright</a> 2020, 人工知能画像診断学共同研究講座
+        
+        
+        &copy; <a href="copyright.html">著作権</a> 2020, 人工知能画像診断学共同研究講座
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -300,7 +414,6 @@
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

@@ -11,13 +11,20 @@
   {
    "cell_type": "code",
    "execution_count": 1,
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2020-12-25T04:07:07.011437Z",
+     "iopub.status.busy": "2020-12-25T04:07:07.010457Z",
+     "iopub.status.idle": "2020-12-25T04:07:07.015444Z",
+     "shell.execute_reply": "2020-12-25T04:07:07.014434Z"
+    }
+   },
    "outputs": [
     {
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "win32 3.7.0 (default, Jun 28 2018, 08:04:48) [MSC v.1912 64 bit (AMD64)]\n"
+      "win32 3.8.5 (default, Sep  3 2020, 21:29:08) [MSC v.1916 64 bit (AMD64)]\n"
      ]
     }
    ],
@@ -36,7 +43,14 @@
   {
    "cell_type": "code",
    "execution_count": 2,
-   "metadata": {},
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2020-12-25T04:07:07.019429Z",
+     "iopub.status.busy": "2020-12-25T04:07:07.018431Z",
+     "iopub.status.idle": "2020-12-25T04:07:07.578346Z",
+     "shell.execute_reply": "2020-12-25T04:07:07.578346Z"
+    }
+   },
    "outputs": [
     {
      "data": {
@@ -68,70 +82,90 @@
        "  </thead>\n",
        "  <tbody>\n",
        "    <tr>\n",
+       "      <th>albumentations</th>\n",
+       "      <td>0.5.2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
        "      <th>jupyter</th>\n",
        "      <td>1.0.0</td>\n",
        "    </tr>\n",
        "    <tr>\n",
        "      <th>numpy</th>\n",
-       "      <td>1.18.4</td>\n",
+       "      <td>1.19.4</td>\n",
        "    </tr>\n",
        "    <tr>\n",
        "      <th>pandas</th>\n",
-       "      <td>1.0.3</td>\n",
+       "      <td>1.1.5</td>\n",
        "    </tr>\n",
        "    <tr>\n",
        "      <th>Pillow</th>\n",
-       "      <td>7.1.2</td>\n",
+       "      <td>8.0.1</td>\n",
        "    </tr>\n",
        "    <tr>\n",
        "      <th>scipy</th>\n",
-       "      <td>1.4.1</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>tensorflow</th>\n",
-       "      <td>2.1.0</td>\n",
+       "      <td>1.5.4</td>\n",
        "    </tr>\n",
        "    <tr>\n",
        "      <th>tqdm</th>\n",
-       "      <td>4.46.0</td>\n",
+       "      <td>4.54.1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>torchviz</th>\n",
+       "      <td>0.0.1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>torch-summary</th>\n",
+       "      <td>1.4.3</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>pytorch-lightning</th>\n",
+       "      <td>1.1.1</td>\n",
        "    </tr>\n",
        "    <tr>\n",
        "      <th>scikit-learn</th>\n",
-       "      <td>0.22.2.post1</td>\n",
+       "      <td>0.23.2</td>\n",
        "    </tr>\n",
        "    <tr>\n",
        "      <th>matplotlib</th>\n",
-       "      <td>3.2.1</td>\n",
+       "      <td>3.3.3</td>\n",
        "    </tr>\n",
        "    <tr>\n",
        "      <th>seaborn</th>\n",
-       "      <td>0.10.1</td>\n",
+       "      <td>0.11.1</td>\n",
        "    </tr>\n",
        "    <tr>\n",
        "      <th>pydotplus</th>\n",
        "      <td>2.0.2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>torch</th>\n",
+       "      <td>1.7.1+cu101</td>\n",
        "    </tr>\n",
        "  </tbody>\n",
        "</table>\n",
        "</div>"
       ],
       "text/plain": [
-       "                   version\n",
-       "package                   \n",
-       "jupyter              1.0.0\n",
-       "numpy               1.18.4\n",
-       "pandas               1.0.3\n",
-       "Pillow               7.1.2\n",
-       "scipy                1.4.1\n",
-       "tensorflow           2.1.0\n",
-       "tqdm                4.46.0\n",
-       "scikit-learn  0.22.2.post1\n",
-       "matplotlib           3.2.1\n",
-       "seaborn             0.10.1\n",
-       "pydotplus            2.0.2"
+       "                       version\n",
+       "package                       \n",
+       "albumentations           0.5.2\n",
+       "jupyter                  1.0.0\n",
+       "numpy                   1.19.4\n",
+       "pandas                   1.1.5\n",
+       "Pillow                   8.0.1\n",
+       "scipy                    1.5.4\n",
+       "tqdm                    4.54.1\n",
+       "torchviz                 0.0.1\n",
+       "torch-summary            1.4.3\n",
+       "pytorch-lightning        1.1.1\n",
+       "scikit-learn            0.23.2\n",
+       "matplotlib               3.3.3\n",
+       "seaborn                 0.11.1\n",
+       "pydotplus                2.0.2\n",
+       "torch              1.7.1+cu101"
       ]
      },
-     "execution_count": 2,
+     "execution_count": 1,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -143,83 +177,12 @@
     "with open('requirements.txt') as f:\n",
     "    requirements = f.read()\n",
     "    packages = []\n",
-    "    for package in requirements.split():\n",
+    "    for package in requirements.split()+['torch']:\n",
     "        packages.append(\n",
     "            (package, pkg_resources.get_distribution(package).version))\n",
     "df_pkg = pd.DataFrame(packages, columns=['package', 'version'])\n",
     "df_pkg.set_index('package', inplace=True)\n",
     "df_pkg"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "## GPU関連\n",
-    "### CUDAのバージョン"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 3,
-   "metadata": {},
-   "outputs": [
-    {
-     "name": "stdout",
-     "output_type": "stream",
-     "text": [
-      "CUDA 10.1\n",
-      "cuDNN 7\n"
-     ]
-    }
-   ],
-   "source": [
-    "from tensorflow.python.platform import build_info as tf_build_info\n",
-    "print('CUDA', tf_build_info.cuda_version_number)\n",
-    "print('cuDNN', tf_build_info.cudnn_version_number)"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "### GPUが認識できているかの確認"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 4,
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/plain": [
-       "[name: \"/device:CPU:0\"\n",
-       " device_type: \"CPU\"\n",
-       " memory_limit: 268435456\n",
-       " locality {\n",
-       " }\n",
-       " incarnation: 5307439089478430462,\n",
-       " name: \"/device:GPU:0\"\n",
-       " device_type: \"GPU\"\n",
-       " memory_limit: 10068632535\n",
-       " locality {\n",
-       "   bus_id: 1\n",
-       "   links {\n",
-       "   }\n",
-       " }\n",
-       " incarnation: 14747271655943245348\n",
-       " physical_device_desc: \"device: 0, name: TITAN X (Pascal), pci bus id: 0000:01:00.0, compute capability: 6.1\"]"
-      ]
-     },
-     "execution_count": 4,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "from tensorflow.python.client import device_lib\n",
-    "device_lib.list_local_devices()"
    ]
   }
  ],
@@ -239,7 +202,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.7.0"
+   "version": "3.8.5"
   },
   "toc": {
    "base_numbering": 1,
@@ -253,6 +216,35 @@
    "toc_position": {},
    "toc_section_display": true,
    "toc_window_display": true
+  },
+  "varInspector": {
+   "cols": {
+    "lenName": 16,
+    "lenType": 16,
+    "lenVar": 40
+   },
+   "kernels_config": {
+    "python": {
+     "delete_cmd_postfix": "",
+     "delete_cmd_prefix": "del ",
+     "library": "var_list.py",
+     "varRefreshCmd": "print(var_dic_list())"
+    },
+    "r": {
+     "delete_cmd_postfix": ") ",
+     "delete_cmd_prefix": "rm(",
+     "library": "var_list.r",
+     "varRefreshCmd": "cat(var_dic_list()) "
+    }
+   },
+   "types_to_exclude": [
+    "module",
+    "function",
+    "builtin_function_or_method",
+    "instance",
+    "_Feature"
+   ],
+   "window_display": false
   }
  },
  "nbformat": 4,

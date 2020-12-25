@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
+<html class="writer-html5" lang="ja" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,13 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/alerts.css" type="text/css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/katex-math.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/logo.svg"/>
   
@@ -19,31 +25,24 @@
   
 
   
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
         <script src="../_static/translations.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"></script>
         <script src="../_static/katex_autorenderer.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/alerts.css" type="text/css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/katex-math.css" type="text/css" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="copyright" title="著作権" href="../copyright.html" />
@@ -62,7 +61,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> 深層学習チュートリアル
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> 深層学習チュートリアル
           
 
           
@@ -75,7 +74,7 @@
             
             
               <div class="version">
-                0.1.3
+                0.2.0
               </div>
             
           
@@ -92,6 +91,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -133,6 +133,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -171,7 +172,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>画像分類</li>
     
@@ -234,18 +235,26 @@
 <li class="toctree-l3"><a class="reference internal" href="pulmonary_nodule.html#データを読み込む">データを読み込む</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="pulmonary_nodule.html#Channels-firstに変更">Channels firstに変更</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pulmonary_nodule.html#ネットワーク作成">ネットワーク作成</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="pulmonary_nodule.html#ネットワーク構造の可視化">ネットワーク構造の可視化</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="pulmonary_nodule.html#デバイスの設定">デバイスの設定</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pulmonary_nodule.html#損失関数とOptimizer">損失関数とOptimizer</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pulmonary_nodule.html#DataLoaderの作成">DataLoaderの作成</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pulmonary_nodule.html#学習">学習</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pulmonary_nodule.html#学習経過をモニタするためのクラスを作成">学習経過をモニタするためのクラスを作成</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pulmonary_nodule.html#fit">fit</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pulmonary_nodule.html#学習履歴の可視化">学習履歴の可視化</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="pulmonary_nodule.html#評価">評価</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pulmonary_nodule.html#混同行列">混同行列</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pulmonary_nodule.html#混同行列">混同行列</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pulmonary_nodule.html#学習データでの評価">学習データでの評価</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pulmonary_nodule.html#テストデータでの評価">テストデータでの評価</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="pulmonary_nodule.html#ROCカーブ">ROCカーブ</a></li>
 </ul>
 </li>
@@ -259,15 +268,18 @@
 <li class="toctree-l3"><a class="reference internal" href="pulmonary_nodule_cv.html#データ読み込み用の関数を作成">データ読み込み用の関数を作成</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="pulmonary_nodule_cv.html#Data-augmentation">Data augmentation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pulmonary_nodule_cv.html#ネットワーク作成関数を作成">ネットワーク作成関数を作成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pulmonary_nodule_cv.html#Data-augmentation">Data augmentation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pulmonary_nodule_cv.html#試しに適用">試しに適用</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pulmonary_nodule_cv.html#ネットワーク定義">ネットワーク定義</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pulmonary_nodule_cv.html#学習を行う関数を作成">学習を行う関数を作成</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pulmonary_nodule_cv.html#K-Fold-交差検証">K-Fold 交差検証</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pulmonary_nodule_cv.html#評価">評価</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="pulmonary_nodule_cv.html#混同行列">混同行列</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pulmonary_nodule_cv.html#ROCカーブ">ROCカーブ</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pulmonary_nodule_cv.html#カットオフ値">カットオフ値</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pulmonary_nodule_cv.html#Probability-Calibration-curves">Probability Calibration curves</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pulmonary_nodule_cv.html#Decision-Curve-Analysis">Decision Curve Analysis</a></li>
 </ul>
 </li>
 </ul>
@@ -279,12 +291,19 @@
 <li class="toctree-l3"><a class="reference internal" href="skin_lesion.html#画像ファイルを基にpd.DataFrameを作成する">画像ファイルを基にpd.DataFrameを作成する</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skin_lesion.html#クラスごとの画像数を確認する">クラスごとの画像数を確認する</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skin_lesion.html#各クラスの画像を表示してみる">各クラスの画像を表示してみる</a></li>
-<li class="toctree-l3"><a class="reference internal" href="skin_lesion.html#データ読み込み用の関数を作成">データ読み込み用の関数を作成</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skin_lesion.html#画像読み込み用の関数を作成">画像読み込み用の関数を作成</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="skin_lesion.html#Data-augmentation">Data augmentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skin_lesion.html#Data-augmentation">Data augmentation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="skin_lesion.html#試しに適用">試しに適用</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="skin_lesion.html#モデル作成">モデル作成</a></li>
-<li class="toctree-l2"><a class="reference internal" href="skin_lesion.html#K-Fold-交差検証">K-Fold 交差検証</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skin_lesion.html#pytorch-lightning">pytorch-lightning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="skin_lesion.html#K-Fold-交差検証">K-Fold 交差検証</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="skin_lesion.html#テスト結果">テスト結果</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="skin_lesion.html#評価">評価</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="skin_lesion.html#混同行列">混同行列</a></li>
 <li class="toctree-l3"><a class="reference internal" href="skin_lesion.html#ROCカーブ">ROCカーブ</a></li>
@@ -303,7 +322,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="dld.html#Data-augmentation">Data augmentation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dld.html#ネットワーク作成関数を作成">ネットワーク作成関数を作成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dld.html#ネットワーク作成">ネットワーク作成</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dld.html#K-Fold-交差検証(train,-validate,-test)">K-Fold 交差検証(train, validate, test)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="dld.html#DataFrameに交差検証用の列を追加する">DataFrameに交差検証用の列を追加する</a></li>
 <li class="toctree-l3"><a class="reference internal" href="dld.html#train,-validate,-testを用いた交差検証を行う">train, validate, testを用いた交差検証を行う</a></li>
@@ -334,21 +353,22 @@
 <li class="toctree-l3"><a class="reference internal" href="lung_segmentation.html#データディレクトリの指定">データディレクトリの指定</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lung_segmentation.html#画像ファイルを基にpd.DataFrameを作成する">画像ファイルを基にpd.DataFrameを作成する</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lung_segmentation.html#画像を表示">画像を表示</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lung_segmentation.html#Data-augmentation">Data augmentation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lung_segmentation.html#ホールドアウト">ホールドアウト</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="lung_segmentation.html#モデル作成">モデル作成</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="lung_segmentation.html#Skip-connectionとデコーダー">Skip connectionとデコーダー</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lung_segmentation.html#ネットワーク構造の可視化">ネットワーク構造の可視化</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lung_segmentation.html#データの読み込み">データの読み込み</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="lung_segmentation.html#学習">学習</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="lung_segmentation.html#tf.data.Datasetを作成">tf.data.Datasetを作成</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lung_segmentation.html#Data-augmentation">Data augmentation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lung_segmentation.html#Fit">Fit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lung_segmentation.html#pytorch-lightining">pytorch-lightining</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="lung_segmentation.html#評価">評価</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="lung_segmentation.html#分布の確認">分布の確認</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lung_segmentation.html#ヒストグラム">ヒストグラム</a></li>
 <li class="toctree-l4"><a class="reference internal" href="lung_segmentation.html#Boxplot">Boxplot</a></li>
 <li class="toctree-l4"><a class="reference internal" href="lung_segmentation.html#Letter-value-plot">Letter value plot</a></li>
 <li class="toctree-l4"><a class="reference internal" href="lung_segmentation.html#Violinplot">Violinplot</a></li>
@@ -371,19 +391,20 @@
 <li class="toctree-l3"><a class="reference internal" href="img2img_unet.html#データディレクトリの指定">データディレクトリの指定</a></li>
 <li class="toctree-l3"><a class="reference internal" href="img2img_unet.html#画像ファイルを基にpd.DataFrameを作成する">画像ファイルを基にpd.DataFrameを作成する</a></li>
 <li class="toctree-l3"><a class="reference internal" href="img2img_unet.html#画像を表示">画像を表示</a></li>
+<li class="toctree-l3"><a class="reference internal" href="img2img_unet.html#Data-augmentation">Data augmentation</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="img2img_unet.html#モデル作成">モデル作成</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="img2img_unet.html#Compile">Compile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="img2img_unet.html#Lit-model">Lit model</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="img2img_unet.html#学習">学習</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="img2img_unet.html#ホールドアウト">ホールドアウト</a></li>
-<li class="toctree-l3"><a class="reference internal" href="img2img_unet.html#Data-augmentation">Data augmentation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="img2img_unet.html#fit">fit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="img2img_unet.html#Fit">Fit</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="img2img_unet.html#評価">評価</a></li>
+<li class="toctree-l2"><a class="reference internal" href="img2img_unet.html#保存">保存</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="img2img_pix2pix.html">Bone suppression(pix2pix)</a><ul>
@@ -392,23 +413,22 @@
 <li class="toctree-l3"><a class="reference internal" href="img2img_pix2pix.html#データディレクトリの指定">データディレクトリの指定</a></li>
 <li class="toctree-l3"><a class="reference internal" href="img2img_pix2pix.html#画像ファイルを基にpd.DataFrameを作成する">画像ファイルを基にpd.DataFrameを作成する</a></li>
 <li class="toctree-l3"><a class="reference internal" href="img2img_pix2pix.html#画像を表示">画像を表示</a></li>
+<li class="toctree-l3"><a class="reference internal" href="img2img_pix2pix.html#Data-augmentation">Data augmentation</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="img2img_pix2pix.html#モデル作成">モデル作成</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="img2img_pix2pix.html#Generator-model">Generator model</a></li>
-<li class="toctree-l3"><a class="reference internal" href="img2img_pix2pix.html#Generator-loss">Generator loss</a></li>
 <li class="toctree-l3"><a class="reference internal" href="img2img_pix2pix.html#Discriminator-model">Discriminator model</a></li>
-<li class="toctree-l3"><a class="reference internal" href="img2img_pix2pix.html#Discriminator-loss">Discriminator loss</a></li>
-<li class="toctree-l3"><a class="reference internal" href="img2img_pix2pix.html#Optimizer">Optimizer</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="img2img_pix2pix.html#学習">学習</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="img2img_pix2pix.html#ホールドアウト">ホールドアウト</a></li>
-<li class="toctree-l3"><a class="reference internal" href="img2img_pix2pix.html#Data-augmentation">Data augmentation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="img2img_pix2pix.html#fit">fit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="img2img_pix2pix.html#lit-model">lit model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="img2img_pix2pix.html#Fit">Fit</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="img2img_pix2pix.html#評価">評価</a></li>
+<li class="toctree-l2"><a class="reference internal" href="img2img_pix2pix.html#保存">保存</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="img2img_comparison.html">pix2pixとU-Netの比較</a><ul>
@@ -419,8 +439,11 @@
 <li class="toctree-l3"><a class="reference internal" href="img2img_comparison.html#ホールドアウトされたデータの取り出し">ホールドアウトされたデータの取り出し</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="img2img_comparison.html#pix2pix">pix2pix</a></li>
-<li class="toctree-l2"><a class="reference internal" href="img2img_comparison.html#U-Net">U-Net</a></li>
+<li class="toctree-l2"><a class="reference internal" href="img2img_comparison.html#画像変換">画像変換</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="img2img_comparison.html#U-Net">U-Net</a></li>
+<li class="toctree-l3"><a class="reference internal" href="img2img_comparison.html#pix2pix">pix2pix</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="img2img_comparison.html#比較">比較</a></li>
 </ul>
 </li>
@@ -448,11 +471,20 @@
 
   <div role="contentinfo">
     <p>
-        &copy; <a href="../copyright.html">Copyright</a> 2020, 人工知能画像診断学共同研究講座
+        
+        
+        &copy; <a href="../copyright.html">著作権</a> 2020, 人工知能画像診断学共同研究講座
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -463,7 +495,6 @@
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

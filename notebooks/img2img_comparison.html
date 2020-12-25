@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
+<html class="writer-html5" lang="ja" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,13 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/alerts.css" type="text/css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/katex-math.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="../_static/logo.svg"/>
   
@@ -19,31 +25,24 @@
   
 
   
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
         <script src="../_static/translations.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"></script>
         <script src="../_static/katex_autorenderer.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/alerts.css" type="text/css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/katex-math.css" type="text/css" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="copyright" title="著作権" href="../copyright.html" />
@@ -62,7 +61,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> 深層学習チュートリアル
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> 深層学習チュートリアル
           
 
           
@@ -75,7 +74,7 @@
             
             
               <div class="version">
-                0.1.3
+                0.2.0
               </div>
             
           
@@ -92,6 +91,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -119,8 +119,11 @@
 <li class="toctree-l4"><a class="reference internal" href="#ホールドアウトされたデータの取り出し">ホールドアウトされたデータの取り出し</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#pix2pix">pix2pix</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#U-Net">U-Net</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#画像変換">画像変換</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#U-Net">U-Net</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pix2pix">pix2pix</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#比較">比較</a></li>
 </ul>
 </li>
@@ -135,6 +138,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -173,7 +177,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="index.html">画像分類</a> &raquo;</li>
         
@@ -199,21 +203,35 @@
 /* CSS for nbsphinx extension */
 
 /* remove conflicting styling from Sphinx themes */
-div.nbinput.container,
-div.nbinput.container div.prompt,
-div.nbinput.container div.input_area,
-div.nbinput.container div[class*=highlight],
-div.nbinput.container div[class*=highlight] pre,
-div.nboutput.container,
-div.nboutput.container div.prompt,
-div.nboutput.container div.output_area,
-div.nboutput.container div[class*=highlight],
-div.nboutput.container div[class*=highlight] pre {
-    background: none;
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
     border: none;
-    padding: 0 0;
+    padding: 0;
     margin: 0;
     box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
 }
 
 /* avoid gaps between output lines */
@@ -314,7 +332,7 @@ div.nboutput.container div.output_area {
 div.nbinput.container div.input_area {
     border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f5f5f5;
+    /*background: #f5f5f5;*/
 }
 
 /* override MathJax center alignment in output cells */
@@ -380,6 +398,7 @@ div.nboutput.container div.output_area.rendered_html,
 div.nboutput.container div.output_area > div.output_javascript,
 div.nboutput.container div.output_area:not(.rendered_html) > img{
     padding: 5px;
+    margin: 0;
 }
 
 /* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
@@ -593,119 +612,90 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
-<span class="kn">import</span> <span class="nn">tqdm</span>
-
-<span class="n">INPUT_SHAPE</span> <span class="o">=</span> <span class="p">[</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">functools</span>
+<span class="kn">import</span> <span class="nn">tut_utils</span>
+<span class="n">INPUT_SHAPE</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">]</span>
 <span class="n">IMG_SHAPE</span> <span class="o">=</span> <span class="n">INPUT_SHAPE</span>
-<span class="n">N_COMPARE</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">N_COMPARE</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda:0&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">load_img</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_3d</span><span class="p">(</span>
-        <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">preprocessing</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load_img</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span>
-                                              <span class="n">color_mode</span><span class="o">=</span><span class="s1">&#39;grayscale&#39;</span><span class="p">,</span>
-                                              <span class="n">target_size</span><span class="o">=</span><span class="n">IMG_SHAPE</span><span class="p">))</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">IMG_SHAPE</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_3d</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">load_dataset</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
-    <span class="n">dataset</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_tensor_slices</span><span class="p">((</span>
-        <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span>
-            <span class="p">[</span><span class="n">load_img</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span> <span class="k">for</span> <span class="n">filepath</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="o">.</span><span class="n">tqdm</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;input_path&#39;</span><span class="p">])]),</span>
-        <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span>
-            <span class="p">[</span><span class="n">load_img</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span> <span class="k">for</span> <span class="n">filepath</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="o">.</span><span class="n">tqdm</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;truth_path&#39;</span><span class="p">])]),</span>
-    <span class="p">))</span>
-    <span class="k">return</span> <span class="n">dataset</span>
-
-
-<span class="k">def</span> <span class="nf">convert</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">truth</span><span class="p">):</span>
-    <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">convert_image_dtype</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
-    <span class="n">truth</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">convert_image_dtype</span><span class="p">(</span><span class="n">truth</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">image</span><span class="p">,</span> <span class="n">truth</span>
-
-
-<span class="n">test_dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="n">df_test</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">test_dataset</span><span class="o">.</span><span class="n">element_spec</span><span class="p">)</span>
+<span class="n">load_img2img_dataset</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">tut_utils</span><span class="o">.</span><span class="n">load_img2img_dataset</span><span class="p">,</span>
+                                         <span class="n">input_column</span><span class="o">=</span><span class="s1">&#39;input_path&#39;</span><span class="p">,</span>
+                                         <span class="n">target_column</span><span class="o">=</span><span class="s1">&#39;truth_path&#39;</span><span class="p">)</span>
+<span class="n">test_data</span><span class="p">,</span> <span class="n">test_labels</span> <span class="o">=</span> <span class="n">load_img2img_dataset</span><span class="p">(</span><span class="n">df_test</span><span class="p">[:</span><span class="n">N_COMPARE</span><span class="p">],</span> <span class="n">load_img</span><span class="p">)</span>
+<span class="n">test_data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">test_data</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">255</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
+<span class="n">test_data</span> <span class="o">=</span> <span class="n">test_data</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="n">device</span>
 </pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-100%|██████████| 57/57 [00:00&lt;00:00, 243.23it/s]
-100%|██████████| 57/57 [00:00&lt;00:00, 280.62it/s]
-</pre></div></div>
-</div>
 <div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-(TensorSpec(shape=(256, 256, 1), dtype=tf.uint8, name=None), TensorSpec(shape=(256, 256, 1), dtype=tf.uint8, name=None))
+device(type=&#39;cuda&#39;, index=0)
 </pre></div></div>
 </div>
 </div>
 </div>
-<div class="section" id="pix2pix">
-<h2>pix2pix<a class="headerlink" href="#pix2pix" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="nbinput docutils container">
+<div class="section" id="画像変換">
+<h2>画像変換<a class="headerlink" href="#画像変換" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="U-Net">
+<h3>U-Net<a class="headerlink" href="#U-Net" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">generator</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s1">&#39;pix2pix_generator.h5&#39;</span><span class="p">)</span>
+<span></span><span class="kn">from</span> <span class="nn">tut_models</span> <span class="kn">import</span> <span class="n">UNet</span>
+<span class="n">UNET_DEPTH</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">IN_CHS</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">OUT_CHS</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">INI_CHS</span> <span class="o">=</span> <span class="mi">16</span>
+
+<span class="n">net</span> <span class="o">=</span> <span class="n">UNet</span><span class="p">(</span><span class="n">IN_CHS</span><span class="p">,</span> <span class="n">OUT_CHS</span><span class="p">,</span> <span class="n">UNET_DEPTH</span><span class="p">)</span>
+<span class="n">net</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;unet_generator.ckpt&#39;</span><span class="p">))</span>
+<span class="n">net</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="n">net</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+<span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+    <span class="n">unet_prediction</span> <span class="o">=</span> <span class="n">net</span><span class="p">(</span><span class="n">test_data</span><span class="p">)</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
 </div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-2020-06-16 11:27:29,912 WARNING :No training configuration found in save file: the model was *not* compiled. Compile it manually.
-</pre></div></div>
-</div>
+<div class="section" id="pix2pix">
+<h3>pix2pix<a class="headerlink" href="#pix2pix" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">batch</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span>
-    <span class="nb">iter</span><span class="p">(</span><span class="n">test_dataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">convert</span><span class="p">)</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="n">N_COMPARE</span><span class="p">,</span> <span class="n">drop_remainder</span><span class="o">=</span><span class="kc">True</span><span class="p">)))</span>
-<span class="n">pix2pix_prediction</span> <span class="o">=</span> <span class="n">generator</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
-<span class="n">pix2pix_prediction</span> <span class="o">=</span> <span class="n">pix2pix_prediction</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+<span></span><span class="n">net</span> <span class="o">=</span> <span class="n">UNet</span><span class="p">(</span><span class="n">IN_CHS</span><span class="p">,</span> <span class="n">OUT_CHS</span><span class="p">,</span> <span class="n">UNET_DEPTH</span><span class="p">)</span>
+<span class="n">net</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;pix2pix_generator.ckpt&#39;</span><span class="p">))</span>
+<span class="n">net</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="n">net</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+<span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+    <span class="n">pix2pix_prediction</span> <span class="o">=</span> <span class="n">net</span><span class="p">(</span><span class="n">test_data</span><span class="p">)</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="U-Net">
-<h2>U-Net<a class="headerlink" href="#U-Net" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">generator</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s1">&#39;unet_generator.h5&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">unet_prediction</span> <span class="o">=</span> <span class="n">generator</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
-<span class="n">unet_prediction</span> <span class="o">=</span> <span class="n">unet_prediction</span>
-</pre></div>
 </div>
 </div>
 </div>
 <div class="section" id="比較">
 <h2>比較<a class="headerlink" href="#比較" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -714,11 +704,11 @@ div.rendered_html tbody tr:hover {
     <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">[</span><span class="n">margin</span><span class="p">:</span><span class="o">-</span><span class="n">margin</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="n">margin</span><span class="p">:</span><span class="o">-</span><span class="n">margin</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
 
 
-<span class="k">for</span> <span class="n">data</span><span class="p">,</span> <span class="n">pix2pix</span><span class="p">,</span> <span class="n">unet</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">batch</span><span class="p">),</span> <span class="n">pix2pix_prediction</span><span class="p">,</span>
-                               <span class="n">unet_prediction</span><span class="p">):</span>
+<span class="k">for</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">pix2pix</span><span class="p">,</span> <span class="n">unet</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">test_data</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">test_labels</span><span class="p">,</span>
+                                       <span class="n">pix2pix_prediction</span><span class="p">,</span> <span class="n">unet_prediction</span><span class="p">):</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="n">crop_and_show</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">squeeze</span><span class="p">())</span>
+    <span class="n">crop_and_show</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">squeeze</span><span class="p">())</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Input&#39;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
@@ -730,7 +720,7 @@ div.rendered_html tbody tr:hover {
     <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;U-Net&#39;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
-    <span class="n">crop_and_show</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">squeeze</span><span class="p">())</span>
+    <span class="n">crop_and_show</span><span class="p">(</span><span class="n">target</span><span class="o">.</span><span class="n">squeeze</span><span class="p">())</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Ground truth&#39;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -741,70 +731,35 @@ div.rendered_html tbody tr:hover {
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<a class="reference internal image-reference" href="../_images/notebooks_img2img_comparison_16_0.png"><img alt="../_images/notebooks_img2img_comparison_16_0.png" src="../_images/notebooks_img2img_comparison_16_0.png" style="width: 907px; height: 191px;" /></a>
+<img alt="../_images/notebooks_img2img_comparison_14_0.png" src="../_images/notebooks_img2img_comparison_14_0.png" />
 </div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<a class="reference internal image-reference" href="../_images/notebooks_img2img_comparison_16_1.png"><img alt="../_images/notebooks_img2img_comparison_16_1.png" src="../_images/notebooks_img2img_comparison_16_1.png" style="width: 907px; height: 191px;" /></a>
+<img alt="../_images/notebooks_img2img_comparison_14_1.png" src="../_images/notebooks_img2img_comparison_14_1.png" />
 </div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<a class="reference internal image-reference" href="../_images/notebooks_img2img_comparison_16_2.png"><img alt="../_images/notebooks_img2img_comparison_16_2.png" src="../_images/notebooks_img2img_comparison_16_2.png" style="width: 907px; height: 191px;" /></a>
+<img alt="../_images/notebooks_img2img_comparison_14_2.png" src="../_images/notebooks_img2img_comparison_14_2.png" />
 </div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<a class="reference internal image-reference" href="../_images/notebooks_img2img_comparison_16_3.png"><img alt="../_images/notebooks_img2img_comparison_16_3.png" src="../_images/notebooks_img2img_comparison_16_3.png" style="width: 907px; height: 191px;" /></a>
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<a class="reference internal image-reference" href="../_images/notebooks_img2img_comparison_16_4.png"><img alt="../_images/notebooks_img2img_comparison_16_4.png" src="../_images/notebooks_img2img_comparison_16_4.png" style="width: 907px; height: 191px;" /></a>
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<a class="reference internal image-reference" href="../_images/notebooks_img2img_comparison_16_5.png"><img alt="../_images/notebooks_img2img_comparison_16_5.png" src="../_images/notebooks_img2img_comparison_16_5.png" style="width: 907px; height: 191px;" /></a>
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<a class="reference internal image-reference" href="../_images/notebooks_img2img_comparison_16_6.png"><img alt="../_images/notebooks_img2img_comparison_16_6.png" src="../_images/notebooks_img2img_comparison_16_6.png" style="width: 907px; height: 191px;" /></a>
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<a class="reference internal image-reference" href="../_images/notebooks_img2img_comparison_16_7.png"><img alt="../_images/notebooks_img2img_comparison_16_7.png" src="../_images/notebooks_img2img_comparison_16_7.png" style="width: 907px; height: 191px;" /></a>
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<a class="reference internal image-reference" href="../_images/notebooks_img2img_comparison_16_8.png"><img alt="../_images/notebooks_img2img_comparison_16_8.png" src="../_images/notebooks_img2img_comparison_16_8.png" style="width: 907px; height: 191px;" /></a>
+<img alt="../_images/notebooks_img2img_comparison_14_3.png" src="../_images/notebooks_img2img_comparison_14_3.png" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<a class="reference internal image-reference" href="../_images/notebooks_img2img_comparison_16_9.png"><img alt="../_images/notebooks_img2img_comparison_16_9.png" src="../_images/notebooks_img2img_comparison_16_9.png" style="width: 907px; height: 191px;" /></a>
+<img alt="../_images/notebooks_img2img_comparison_14_4.png" src="../_images/notebooks_img2img_comparison_14_4.png" />
 </div>
 </div>
 </div>
@@ -830,11 +785,20 @@ div.rendered_html tbody tr:hover {
 
   <div role="contentinfo">
     <p>
-        &copy; <a href="../copyright.html">Copyright</a> 2020, 人工知能画像診断学共同研究講座
+        
+        
+        &copy; <a href="../copyright.html">著作権</a> 2020, 人工知能画像診断学共同研究講座
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -845,7 +809,6 @@ div.rendered_html tbody tr:hover {
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {
