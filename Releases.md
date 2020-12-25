@@ -1,5 +1,8 @@
 # Releases
 
+## 0.2.0
+- PyTorchに変更
+
 ## 0.1.2
 - img2img_pix2pix, img2img_comparisonを追加
 - bone_enhancement画像を追加
