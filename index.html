@@ -1,7 +1,8 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="ja" >
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   
@@ -11,13 +12,6 @@
   
 
   
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/css/alerts.css" type="text/css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" type="text/css" />
-  <link rel="stylesheet" href="_static/katex-math.css" type="text/css" />
-
-  
   
     <link rel="shortcut icon" href="_static/logo.svg"/>
   
@@ -25,24 +19,30 @@
   
 
   
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
         <script src="_static/translations.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script>
         <script src="_static/katex_autorenderer.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/alerts.css" type="text/css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" type="text/css" />
+  <link rel="stylesheet" href="_static/katex-math.css" type="text/css" />
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="検索" href="search.html" />
     <link rel="copyright" title="著作権" href="copyright.html" />
@@ -60,7 +60,7 @@
           
 
           
-            <a href="#" class="icon icon-home" alt="Documentation Home"> 深層学習チュートリアル
+            <a href="#" class="icon icon-home"> 深層学習チュートリアル
           
 
           
@@ -73,7 +73,7 @@
             
             
               <div class="version">
-                0.2.0
+                0.2.1
               </div>
             
           
@@ -90,7 +90,6 @@
           
         </div>
 
-        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -117,7 +116,6 @@
             
           
         </div>
-        
       </div>
     </nav>
 
@@ -156,7 +154,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
+      <li><a href="#">Docs</a> &raquo;</li>
         
       <li>深層学習チュートリアル</li>
     
@@ -208,8 +206,8 @@
 <li class="toctree-l3"><a class="reference internal" href="setup/setup.html#anaconda">Anacondaのインストール</a></li>
 <li class="toctree-l3"><a class="reference internal" href="setup/setup.html#env">チュートリアル用のenvを作成</a></li>
 <li class="toctree-l3"><a class="reference internal" href="setup/setup.html#id3">必要なパッケージをインストール</a></li>
-<li class="toctree-l3"><a class="reference internal" href="setup/setup.html#pytorch">PyTorchのインストール</a></li>
-<li class="toctree-l3"><a class="reference internal" href="setup/setup.html#gpu">GPUを使用するための追加作業</a></li>
+<li class="toctree-l3"><a class="reference internal" href="setup/setup.html#gpu-optional">GPUを使用するための準備(Optional)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="setup/setup.html#id5">PyTorchのインストール</a></li>
 <li class="toctree-l3"><a class="reference internal" href="setup/setup.html#graphviz-optional">Graphvizのインストール(Optional)</a></li>
 </ul>
 </li>
@@ -471,6 +469,25 @@
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="notebooks/misc.html">その他</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/DICOM.html">DICOM画像の扱い</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/DICOM.html#pydicom">pydicom</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="notebooks/DICOM.html#読み込みと表示">読み込みと表示</a></li>
+<li class="toctree-l4"><a class="reference internal" href="notebooks/DICOM.html#DICOMに保存されている画素値をCT値(Hounsfield-Unit)に変換する">DICOMに保存されている画素値をCT値(Hounsfield Unit)に変換する</a></li>
+<li class="toctree-l4"><a class="reference internal" href="notebooks/DICOM.html#Window設定">Window設定</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/DICOM.html#SimpleITK">SimpleITK</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="notebooks/DICOM.html#id2">読み込みと表示</a></li>
+<li class="toctree-l4"><a class="reference internal" href="notebooks/DICOM.html#コロナル断面で表示">コロナル断面で表示</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="notebooks/DICOM.html#画像の向きとボクセルサイズを考慮する">画像の向きとボクセルサイズを考慮する</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="notebooks/DICOM.html#別フォーマットで保存">別フォーマットで保存</a></li>
+<li class="toctree-l4"><a class="reference internal" href="notebooks/DICOM.html#保存した画像を読み込む">保存した画像を読み込む</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/test_environment.html">動作確認環境</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="notebooks/test_environment.html#Pythonのバージョン">Pythonのバージョン</a></li>
 <li class="toctree-l3"><a class="reference internal" href="notebooks/test_environment.html#パッケージのバージョン">パッケージのバージョン</a></li>
@@ -489,9 +506,10 @@
 <li class="toctree-l3"><a class="reference internal" href="copyright.html#id4">びまん性肺疾患</a></li>
 <li class="toctree-l3"><a class="reference internal" href="copyright.html#id7">皮膚がん</a></li>
 <li class="toctree-l3"><a class="reference internal" href="copyright.html#x">胸部X線画像</a></li>
+<li class="toctree-l3"><a class="reference internal" href="copyright.html#dicom">DICOM画像</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="copyright.html#id10">ロゴ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="copyright.html#id11">ロゴ</a></li>
 </ul>
 </li>
 </ul>
@@ -516,20 +534,11 @@
 
   <div role="contentinfo">
     <p>
-        
-        
-        &copy; <a href="copyright.html">著作権</a> 2020, 人工知能画像診断学共同研究講座
+        &copy; <a href="copyright.html">Copyright</a> 2020, 人工知能画像診断学共同研究講座
 
     </p>
   </div>
-    
-    
-    
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
-    
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -540,6 +549,7 @@
 
   </div>
   
+
 
   <script type="text/javascript">
       jQuery(function () {

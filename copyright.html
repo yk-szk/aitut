@@ -1,7 +1,8 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="ja" >
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   
@@ -11,13 +12,6 @@
   
 
   
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/css/alerts.css" type="text/css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" type="text/css" />
-  <link rel="stylesheet" href="_static/katex-math.css" type="text/css" />
-
-  
   
     <link rel="shortcut icon" href="_static/logo.svg"/>
   
@@ -25,24 +19,30 @@
   
 
   
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
         <script src="_static/translations.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script>
         <script src="_static/katex_autorenderer.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/alerts.css" type="text/css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" type="text/css" />
+  <link rel="stylesheet" href="_static/katex-math.css" type="text/css" />
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="検索" href="search.html" />
     <link rel="copyright" title="著作権" href="#" />
@@ -60,7 +60,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home" alt="Documentation Home"> 深層学習チュートリアル
+            <a href="index.html" class="icon icon-home"> 深層学習チュートリアル
           
 
           
@@ -73,7 +73,7 @@
             
             
               <div class="version">
-                0.2.0
+                0.2.1
               </div>
             
           
@@ -90,7 +90,6 @@
           
         </div>
 
-        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -117,9 +116,10 @@
 <li class="toctree-l3"><a class="reference internal" href="#id4">びまん性肺疾患</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id7">皮膚がん</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#x">胸部X線画像</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dicom">DICOM画像</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id10">ロゴ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id11">ロゴ</a></li>
 </ul>
 </li>
 </ul>
@@ -127,7 +127,6 @@
             
           
         </div>
-        
       </div>
     </nav>
 
@@ -166,7 +165,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><a href="index.html">Docs</a> &raquo;</li>
         
       <li>著作権・ライセンス表記</li>
     
@@ -241,8 +240,7 @@
 <h3>びまん性肺疾患<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p><a class="reference external" href="https://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 Unported License</a> で配布されている、
 <a class="reference external" href="https://wiki.cancerimagingarchive.net/display/Public/LIDC-IDRI">LIDC-IDRI</a> 及び、
-CC BY-NC-SAで配布されている[COVID-19 image dataset collection (volumes folder) March 30th 2020 - Academic Torrents](<a class="reference external" href="https://academictorrents.com/details/136ffddd0959108becb2b3a86630bec049fcb0ff">https://academictorrents.com/details/136ffddd0959108becb2b3a86630bec049fcb0ff</a>)
-をもとに作成したものです。</p>
+CC BY-NC-SAで配布されている <a class="reference external" href="https://academictorrents.com/details/136ffddd0959108becb2b3a86630bec049fcb0ff">COVID-19 image dataset collection (volumes folder) March 30th 2020 - Academic Torrents</a> をもとに作成したものです。</p>
 <p><a class="reference internal" href="#lidc-data"><span class="std std-ref">LIDC Data Citation</span></a>, <a class="reference internal" href="#lidc-publication"><span class="std std-ref">LIDC Publication Citation</span></a>, <a class="reference internal" href="#tcia"><span class="std std-ref">TCIA Citation</span></a></p>
 </div>
 <div class="section" id="id7">
@@ -256,12 +254,17 @@ CC BY-NC-SAで配布されている[COVID-19 image dataset collection (volumes f
 <a class="reference external" href="https://wiki.cancerimagingarchive.net/display/Public/LIDC-IDRI">LIDC-IDRI</a> をもとに作成したものです。</p>
 <p><a class="reference internal" href="#lidc-data"><span class="std std-ref">LIDC Data Citation</span></a>, <a class="reference internal" href="#lidc-publication"><span class="std std-ref">LIDC Publication Citation</span></a>, <a class="reference internal" href="#tcia"><span class="std std-ref">TCIA Citation</span></a></p>
 </div>
+<div class="section" id="dicom">
+<h3>DICOM画像<a class="headerlink" href="#dicom" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p><a class="reference internal" href="notebooks/DICOM.html"><span class="doc">DICOM画像の扱い</span></a> で使っているDICOMファイルは <a class="reference external" href="https://wiki.cancerimagingarchive.net/display/Public/LIDC-IDRI">LIDC-IDRI</a> のものです。</p>
+<p><a class="reference internal" href="#lidc-data"><span class="std std-ref">LIDC Data Citation</span></a>, <a class="reference internal" href="#lidc-publication"><span class="std std-ref">LIDC Publication Citation</span></a>, <a class="reference internal" href="#tcia"><span class="std std-ref">TCIA Citation</span></a></p>
 </div>
-<div class="section" id="id10">
-<h2>ロゴ<a class="headerlink" href="#id10" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="figure align-default" id="id11">
+</div>
+<div class="section" id="id11">
+<h2>ロゴ<a class="headerlink" href="#id11" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="figure align-default" id="id12">
 <a class="reference internal image-reference" href="_images/logo.svg"><img alt="画像の著作権表記" src="_images/logo.svg" width="30%" /></a>
-<p class="caption"><span class="caption-text">大阪大学「ワニ博士」</span><a class="headerlink" href="#id11" title="この画像へのパーマリンク">¶</a></p>
+<p class="caption"><span class="caption-text">大阪大学「ワニ博士」</span><a class="headerlink" href="#id12" title="この画像へのパーマリンク">¶</a></p>
 </div>
 </div>
 </div>
@@ -284,20 +287,11 @@ CC BY-NC-SAで配布されている[COVID-19 image dataset collection (volumes f
 
   <div role="contentinfo">
     <p>
-        
-        
-        &copy; <a href="#">著作権</a> 2020, 人工知能画像診断学共同研究講座
+        &copy; <a href="#">Copyright</a> 2020, 人工知能画像診断学共同研究講座
 
     </p>
   </div>
-    
-    
-    
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
-    
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -308,6 +302,7 @@ CC BY-NC-SAで配布されている[COVID-19 image dataset collection (volumes f
 
   </div>
   
+
 
   <script type="text/javascript">
       jQuery(function () {

@@ -1,7 +1,8 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="ja" >
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   
@@ -11,13 +12,6 @@
   
 
   
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/alerts.css" type="text/css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/katex-math.css" type="text/css" />
-
-  
   
     <link rel="shortcut icon" href="../_static/logo.svg"/>
   
@@ -25,24 +19,30 @@
   
 
   
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
         <script src="../_static/translations.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script>
         <script src="../_static/katex_autorenderer.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/alerts.css" type="text/css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/katex-math.css" type="text/css" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="copyright" title="著作権" href="../copyright.html" />
@@ -61,7 +61,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> 深層学習チュートリアル
+            <a href="../index.html" class="icon icon-home"> 深層学習チュートリアル
           
 
           
@@ -74,7 +74,7 @@
             
             
               <div class="version">
-                0.2.0
+                0.2.1
               </div>
             
           
@@ -91,7 +91,6 @@
           
         </div>
 
-        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -156,7 +155,6 @@
             
           
         </div>
-        
       </div>
     </nav>
 
@@ -195,7 +193,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><a href="../index.html">Docs</a> &raquo;</li>
         
           <li><a href="index.html">画像分類</a> &raquo;</li>
         
@@ -221,35 +219,21 @@
 /* CSS for nbsphinx extension */
 
 /* remove conflicting styling from Sphinx themes */
-div.nbinput.container div.prompt *,
-div.nboutput.container div.prompt *,
-div.nbinput.container div.input_area pre,
-div.nboutput.container div.output_area pre,
-div.nbinput.container div.input_area .highlight,
-div.nboutput.container div.output_area .highlight {
+div.nbinput.container,
+div.nbinput.container div.prompt,
+div.nbinput.container div.input_area,
+div.nbinput.container div[class*=highlight],
+div.nbinput.container div[class*=highlight] pre,
+div.nboutput.container,
+div.nboutput.container div.prompt,
+div.nboutput.container div.output_area,
+div.nboutput.container div[class*=highlight],
+div.nboutput.container div[class*=highlight] pre {
+    background: none;
     border: none;
-    padding: 0;
+    padding: 0 0;
     margin: 0;
     box-shadow: none;
-}
-
-div.nbinput.container > div[class*=highlight],
-div.nboutput.container > div[class*=highlight] {
-    margin: 0;
-}
-
-div.nbinput.container div.prompt *,
-div.nboutput.container div.prompt * {
-    background: none;
-}
-
-div.nboutput.container div.output_area .highlight,
-div.nboutput.container div.output_area pre {
-    background: unset;
-}
-
-div.nboutput.container div.output_area div.highlight {
-    color: unset;  /* override Pygments text color */
 }
 
 /* avoid gaps between output lines */
@@ -296,33 +280,20 @@ div.nboutput.container div.prompt pre {
 /* all prompts */
 div.nbinput.container div.prompt,
 div.nboutput.container div.prompt {
-    width: 4.5ex;
-    padding-top: 5px;
-    position: relative;
-    user-select: none;
+    min-width: 5ex;
+    padding-top: 0.3rem;
+    padding-right: 0.3rem;
+    text-align: right;
+    flex: 0;
 }
-
-div.nbinput.container div.prompt > div,
-div.nboutput.container div.prompt > div {
-    position: absolute;
-    right: 0;
-    margin-right: 0.3ex;
-}
-
 @media (max-width: 540px) {
     div.nbinput.container div.prompt,
     div.nboutput.container div.prompt {
-        width: unset;
         text-align: left;
         padding: 0.4em;
     }
     div.nboutput.container div.prompt.empty {
         padding: 0;
-    }
-
-    div.nbinput.container div.prompt > div,
-    div.nboutput.container div.prompt > div {
-        position: unset;
     }
 }
 
@@ -350,7 +321,7 @@ div.nboutput.container div.output_area {
 div.nbinput.container div.input_area {
     border: 1px solid #e0e0e0;
     border-radius: 2px;
-    /*background: #f5f5f5;*/
+    background: #f5f5f5;
 }
 
 /* override MathJax center alignment in output cells */
@@ -415,8 +386,7 @@ div.nboutput.container div.output_area div[class*=highlight].math,
 div.nboutput.container div.output_area.rendered_html,
 div.nboutput.container div.output_area > div.output_javascript,
 div.nboutput.container div.output_area:not(.rendered_html) > img{
-    padding: 5px;
-    margin: 0;
+    padding: 0.3rem;
 }
 
 /* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
@@ -1046,22 +1016,22 @@ device(type=&#39;cuda&#39;, index=0)
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-1 [0.4800982514725012, 0.7696078431372549]
-2 [0.37912389066289454, 0.8333333333333334]
-3 [0.3542075544303539, 0.8202614379084968]
-4 [0.33292939959495677, 0.8406862745098039]
-5 [0.3205324863174967, 0.8431372549019608]
-6 [0.2705793542897, 0.8537581699346405]
-7 [0.307313567538764, 0.8570261437908497]
-8 [0.2912334169388986, 0.8619281045751634]
-9 [0.22361558931423167, 0.9109477124183007]
-10 [0.19995970341066518, 0.9256535947712419]
-11 [0.19163463909325062, 0.928921568627451]
-12 [0.1775458262247198, 0.928921568627451]
-13 [0.19555565358970461, 0.9191176470588235]
-14 [0.18039954258311613, 0.9207516339869282]
-15 [0.17480702231199863, 0.9093137254901961]
-16 [0.20461151700959923, 0.9109477124183007]
+1 [0.6284318507886401, 0.7001633986928105]
+2 [0.4502704415251227, 0.7908496732026145]
+3 [0.4431070437033971, 0.7990196078431373]
+4 [0.4224901628114429, 0.8161764705882353]
+5 [0.3539216709049309, 0.852124183006536]
+6 [0.32284164034268437, 0.8423202614379085]
+7 [0.29961798833135295, 0.869281045751634]
+8 [0.26530590741073384, 0.9003267973856208]
+9 [0.25872835867545185, 0.8717320261437909]
+10 [0.2162282999020581, 0.9117647058823529]
+11 [0.233091899650354, 0.8897058823529411]
+12 [0.22418282692338906, 0.8946078431372549]
+13 [0.22900151074224828, 0.9084967320261438]
+14 [0.19482114122194402, 0.8995098039215687]
+15 [0.20342960776578561, 0.9166666666666666]
+16 [0.20640618440366404, 0.9117647058823529]
 Finish Training
 </pre></div></div>
 </div>
@@ -1162,13 +1132,13 @@ Finish Training
   <tbody>
     <tr>
       <th>benign</th>
-      <td>273</td>
-      <td>15</td>
+      <td>274</td>
+      <td>14</td>
     </tr>
     <tr>
       <th>malignant</th>
-      <td>10</td>
-      <td>108</td>
+      <td>9</td>
+      <td>109</td>
     </tr>
   </tbody>
 </table>
@@ -1179,7 +1149,7 @@ Finish Training
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Accuracy = 381 / 406 = 93.8%
+Accuracy = 383 / 406 = 94.3%
 </pre></div></div>
 </div>
 </div>
@@ -1228,13 +1198,13 @@ Accuracy = 381 / 406 = 93.8%
   <tbody>
     <tr>
       <th>benign</th>
-      <td>127</td>
-      <td>17</td>
+      <td>126</td>
+      <td>18</td>
     </tr>
     <tr>
       <th>malignant</th>
-      <td>19</td>
-      <td>40</td>
+      <td>8</td>
+      <td>51</td>
     </tr>
   </tbody>
 </table>
@@ -1245,7 +1215,7 @@ Accuracy = 381 / 406 = 93.8%
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Accuracy = 167 / 203 = 82.3%
+Accuracy = 177 / 203 = 87.2%
 </pre></div></div>
 </div>
 </div>
@@ -1304,20 +1274,11 @@ Accuracy = 167 / 203 = 82.3%
 
   <div role="contentinfo">
     <p>
-        
-        
-        &copy; <a href="../copyright.html">著作権</a> 2020, 人工知能画像診断学共同研究講座
+        &copy; <a href="../copyright.html">Copyright</a> 2020, 人工知能画像診断学共同研究講座
 
     </p>
   </div>
-    
-    
-    
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
-    
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -1328,6 +1289,7 @@ Accuracy = 167 / 203 = 82.3%
 
   </div>
   
+
 
   <script type="text/javascript">
       jQuery(function () {
