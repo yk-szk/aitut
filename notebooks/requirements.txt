@@ -7,8 +7,10 @@ scipy
 tqdm
 torchviz
 torch-summary
+pydicom
 pytorch-lightning
 scikit-learn
 matplotlib
 seaborn
+SimpleITK
 pydotplus
