@@ -37,7 +37,11 @@ extensions = [
     'sphinx.ext.napoleon',
     'sphinxcontrib.katex',
     'sphinx.ext.githubpages',
+    'sphinxcontrib.inkscapeconverter'
 ]
+inkscape_converter_bin = 'inkscape'
+if os.name == 'nt':
+  inkscape_converter_bin = r'C:\Program Files\Inkscape\bin\inkscape.com'
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']

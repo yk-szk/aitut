@@ -3,5 +3,6 @@ nbsphinx
 sphinx_rtd_theme
 sphinx-autobuild
 sphinxcontrib-katex
+sphinxcontrib-svg2pdfconverter
 doit
 nbdime
