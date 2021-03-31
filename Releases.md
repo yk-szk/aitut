@@ -1,5 +1,8 @@
 # Releases
 
+## 0.2.1
+- DICOM画像の扱いを追加
+
 ## 0.2.0
 - PyTorchに変更
 
