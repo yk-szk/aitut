@@ -54,7 +54,7 @@ class ProgressBarCallback(tf.keras.callbacks.Callback):
         self.bar = tqdm.tqdm(
             total=self.n_batches * self.batch_size,
             leave=leave,
-            unit='batch',
+            unit='it',
             desc='1/{n_epochs} epoch'.format(n_epochs=self.n_epochs))
 
     def __enter__(self):
@@ -85,7 +85,7 @@ class ProgressBarCallback(tf.keras.callbacks.Callback):
             duration_per_epoch)
         duration = ProgressBarCallback._duration2str(duration)
         self.bar.set_description(
-            '{epoch}/{n_epochs} epoch [{duration}/{expected_duration} ({epoch_duration}/epoch) last_epoch=({summary})]'
+            '{epoch}/{n_epochs} epoch [{duration}/{expected_duration} ({epoch_duration}/epoch) prev=({summary})]'
             .format(duration=duration,
                     expected_duration=expected_duration,
                     epoch_duration=duration_per_epoch,
@@ -97,7 +97,6 @@ class ProgressBarCallback(tf.keras.callbacks.Callback):
         pass
 
     def on_batch_end(self, batch, logs={}):
-        logs.pop('batch'), logs.pop('size')
         self.logs.append(logs)
         self.bar.update(self.batch_size)
         self.bar.set_postfix(logs)
